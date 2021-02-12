@@ -22,16 +22,16 @@ exports.register = asyncHandler(async (req, res, next) => {
 //@access   public
 
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-  //email and password fields are required
-  if (!email && !password) {
+  const { userName, password } = req.body;
+  //userNameand password fields are required
+  if (!userName&& !password) {
     return next(
-      new ErrorResponse("Email and password fields must be required"),
+      new ErrorResponse("userNameand password fields must be required"),
       400
     );
   }
   //Check for user
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ userName}).select("+password");
   console.log(user);
   if (!user) {
     return next(new ErrorResponse("Invalide credentials", 401));
