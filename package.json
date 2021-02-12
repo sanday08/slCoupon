@@ -30,6 +30,7 @@
     "nodemailer": "^6.4.10",
     "slugify": "^1.4.4",
     "socket.io": "^3.1.1",
+    "uniqid": "^5.2.0",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
