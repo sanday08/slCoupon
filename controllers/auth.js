@@ -22,11 +22,12 @@ exports.register = asyncHandler(async (req, res, next) => {
 //@access   public
 
 exports.login = asyncHandler(async (req, res, next) => {
+  console.log("sdndsa",req.body)
   const { userName, password } = req.body;
-  //userNameand password fields are required
+  //userName and password fields are required
   if (!userName&& !password) {
     return next(
-      new ErrorResponse("userNameand password fields must be required"),
+      new ErrorResponse("userName and password fields must be required"),
       400
     );
   }

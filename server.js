@@ -2,6 +2,7 @@ const path = require("path");
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const colors = require("colors");
@@ -38,6 +39,7 @@ app.use(fileUpload());
 
 //Body parser
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // To handle SQL injection
 app.use(mongoSanitize());
