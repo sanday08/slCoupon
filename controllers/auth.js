@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
 //@desc    Register a User
-//@route   Post /api/v1/auth
+//@route   Post /api/auth
 //@access  Private
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, referralId,mobile,role,userName,password,transactionPin,address,pinCode,creditPoint,commissionPercentage,sharingPercentage } = req.body;
@@ -18,7 +18,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 });
 
 //@desc     Login user
-//@route    Post /api/v1/auth/login
+//@route    Post /api/auth/login
 //@access   public
 
 exports.login = asyncHandler(async (req, res, next) => {
@@ -51,7 +51,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc    Log user out/ clear cookie
-//@route    GET /api/v1/auth/logout
+//@route    GET /api/auth/logout
 //@access   Private
 
 exports.logout = asyncHandler(async (req, res, next) => {
@@ -63,7 +63,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc     Get current logged in user
-//@route    GET /api/v1/auth/me
+//@route    GET /api/auth/me
 //@access   private
 
 exports.getMe = asyncHandler(async (req, res, next) => {
@@ -72,7 +72,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc     Update user details
-//@route    PUT /api/v1/auth/updatedetails
+//@route    PUT /api/auth/updatedetails
 //@access   private
 
 exports.updateDetails = asyncHandler(async (req, res, next) => {
@@ -88,7 +88,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc     Update Password
-//@route    PUT /api/v1/auth/updatepassword
+//@route    PUT /api/auth/updatepassword
 //@access   private
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
@@ -104,7 +104,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc    Forget password
-//@route    Post /api/v1/auth/forgetpassword
+//@route    Post /api/auth/forgetpassword
 //@access   public
 
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
@@ -118,7 +118,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   //Create reset url
   const resetUrl = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/auth/resetpassword/${resetToken}`;
+  )}/api/auth/resetpassword/${resetToken}`;
   const message = `You are receiving a email because you (or someone else) has requested the reset of a password. 
   Please make put reqest to:\n\n ${resetUrl}`;
   try {
@@ -141,7 +141,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 });
 
 ///@desc     Reset Password
-//@route    PUT /api/v1/auth/resetpassword/:resettoken
+//@route    PUT /api/auth/resetpassword/:resettoken
 //@access   public
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {

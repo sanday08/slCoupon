@@ -27,7 +27,7 @@ router
     }),
     getBootcamps
   )
-  .post(protect, authorize("publisher", "admin"), createBootcamp);
+  .post(protect, authorize("  ", "admin"), createBootcamp);
 router
   .route("/:id")
   .get(getBootcamp)
