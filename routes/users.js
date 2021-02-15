@@ -16,7 +16,7 @@ const router = express.Router();
 
 //use middleware to protect, authorize
 router.use(protect);
-router.use(authorize("admin"));
+router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
 
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);

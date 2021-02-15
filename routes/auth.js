@@ -12,11 +12,10 @@ const {
 const { protect,authorize } = require("../middleware/auth");
 const { route } = require("./courses");
 const router = express.Router();
-router.post("/", register);
+// router.post("/", register);
 router.post("/login", login);
 router.get("/logout", logout);
 router.route("/me").get( protect, authorize("Admin") , getMe);
-router.put("/updatedetails", protect, updateDetails);
+router.put( "updatedetails",protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
 module.exports = router;
-     
