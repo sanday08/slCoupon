@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
   userName:{
     type: Number,
     required: [true, "Please add a userName"],
-    unique: true,
+    unique: true, 
     maxlength:[6,"UserName must be at least 6 characters"],
     minlength:[6,"UserName must be at least 6 characters"],
   },

@@ -8,6 +8,7 @@ const {
   // resetPassword,
   updateDetails,
   updatePassword,
+  updateTransactionPin
 } = require("../controllers/auth");
 const { protect,authorize } = require("../middleware/auth");
 const { route } = require("./courses");
@@ -18,4 +19,5 @@ router.get("/logout", logout);
 router.route("/me").get( protect, authorize("Admin") , getMe);
 router.put( "updatedetails",protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
+router.put("/updateTransactionPin", protect, updateTransactionPin);
 module.exports = router;

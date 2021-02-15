@@ -189,3 +189,22 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .json({ success: true, token });
 };
+
+
+///@desc     Update Password
+//@route    PUT /api/auth/updateTransactionPin
+//@access   private
+
+exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
+  console.log("***************************************************sandip Shiroya");
+  const user = await User.findById(req.user.id).select("+password");
+  //Check current password (matchPassword method defined in User models)
+  if (user.password!=req.body.currentPassword || user.transactionPin!=req.body.currentTransactionPin) {
+    next(new ErrorResponse(`Your Password or TransactionPin is incorrect`, 401));
+  }
+  user.transactionPin = req.body.newTransactionPin;
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+});
+
