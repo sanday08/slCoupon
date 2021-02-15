@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
   referralId:{
     type:mongoose.Schema.ObjectId,
     ref: "User",
-    required: true,
+    
   },
   mobile: {
     type: String,
