@@ -67,7 +67,8 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/superdistributers
 //Access     Private/Admin
 exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
- let users= await User.find({role:'superDisributer'})
+  console.log("Sandip Shiroya");
+  const users= await User.find({role:'superDistributer'})
   res.status(200).json({ success: true, data: users});
 });
 
@@ -76,16 +77,16 @@ exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/distributer/:id
 //Access     Private/Admin
 exports.getDistributers = asyncHandler(async (req, res, next) => {
-  await User.find({$AND:[{role:'disributer'},{referralId:req.params.id}]})
-  res.status(200).json(res.advancedResults);
+  const users=await User.find({$AND:[{role:'distributer'},{referralId:req.params.id}]})
+  res.status(200).json({ success: true, data: users});
 });
 
 //@desc      Get all retailer via Disributer
 //@routes    GET /api/users/retailer/:id
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  await User.find({$AND:[{role:'retailer'},{referralId:req.params.id}]})
-  res.status(200).json(res.advancedResults);
+  const users=await User.find({$AND:[{role:'retailer'},{referralId:req.params.id}]})
+  res.status(200).json({ success: true, data: users});
 });
 
 
