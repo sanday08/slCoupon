@@ -204,7 +204,6 @@ exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
   }
   user.transactionPin = req.body.newTransactionPin;
   await user.save();
-
   sendTokenResponse(user, 200, res);
 });
 

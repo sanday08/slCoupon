@@ -151,7 +151,7 @@ db.persons.aggregate([
 //     "tags" : "voluptate"
 // }
 
-db.persons.aggregate([{ $unwind: "$tags" }, { $group: { _id: "$tags" } }]);
+db.persons.aggregate([{ $unwind: "$tags" }, { $group: { _id:  "$tags" } }]);
 //ABOVE EXAMPLE DISPLAY SEPRATE ubique tags value
 
 //Accumulators($sms,$avg,$max,$min) Operators

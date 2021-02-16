@@ -7,14 +7,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add a name"],
   },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Please add an email"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please add valid email",
-    ],
+  firmName:{
+    type:String,
+    required: [true, "Please Add FirmName"]
   },
   referralId:{
     type:mongoose.Schema.ObjectId,
@@ -34,14 +29,14 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please add a userName"],
     unique: true, 
-    maxlength:[6,"UserName must be at least 6 characters"],
-    minlength:[6,"UserName must be at least 6 characters"],
+    maxlength:[5,"UserName must be at least 6 characters"],
+    minlength:[5,"UserName must be at least 6 characters"],
   },
   password: {
     type: Number,
     required: [true, "Please add a password"],
-    minlength: [6,"Password must be at least 6 characters"],
-    maxlength:[6,"password must be at least 6 characters"],
+    minlength: [8,"Password must be at least 6 characters"],
+    maxlength:[8,"password must be at least 6 characters"],
     select: false,
   },
   transactionPin:{
@@ -52,7 +47,6 @@ const UserSchema = new mongoose.Schema({
   },
 
   address: String,
-  pinCode: Number,
   isActive: {
     type: Boolean,
     default: true,

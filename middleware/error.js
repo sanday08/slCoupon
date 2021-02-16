@@ -13,8 +13,8 @@ const errorHandler = (err, req, res, next) => {
   //Mongoose duplicates key
   if (err.code === 11000) {
     let message = "";
-    if (err.keyValue.email)
-      message = `${err.keyValue.email} User is already exists`;
+    if (err.keyValue)
+      message = `${err.keyValue} User is already exists`;
     else
       message = `Duplicate field value entered ${JSON.stringify(err.keyValue)}`;
     error = new ErrorResponse(message, 400);

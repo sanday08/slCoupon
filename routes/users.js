@@ -6,11 +6,15 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  getSuperDistributers,
+  getDistributers,
+  getRetailers,
+
 } = require("../controllers/users");
 const advancedResults = require("../middleware/advancedResults");
 const User = require("../models/User");
 const { protect, authorize } = require("../middleware/auth");
-const { route } = require("./courses");
+
 
 const router = express.Router();
 
@@ -18,19 +22,9 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
-
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
-
-//You can also write this is also right
-// router
-//   .route("/")
-//   .get(protect, authorize("admin"), advancedResults(User), getUsers)
-//   .post(protect, authorize("admin"), createUser);
-
-// router
-//   .route("/:id")
-//   .get(protect, authorize("admin"), getUser)
-//   .put(protect, authorize("admin"), updateUser)
-//   .delete(protect, authorize("admin"), deleteUser);
+router.route("/superDistributer").get(getSuperDistributers);
+router.route("/distributer/:id").get(getDistributers);
+router.route("/retailer/:id").get(getRetailers);
 
 module.exports = router;
