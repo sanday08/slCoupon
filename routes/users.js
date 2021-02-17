@@ -22,7 +22,7 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
-router.route("/superDistributers").get(getSingleSuperDistributer);
+router.route("/superDistributers").get(getSuperDistributers);
 router.route("/distributers").get(getDistributers);
 router.route("/retailers").get(getRetailers);
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
