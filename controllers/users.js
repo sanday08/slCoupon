@@ -77,7 +77,7 @@ exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/distributer/:id
 //Access     Private/Admin
 exports.getDistributers = asyncHandler(async (req, res, next) => {
-  console.log("Vijay lunde moklu**********************************************",req.body.id,req.params.id);
+  console.log("Vijay lunde moklu**********************************************",req.body.id,req.params.id,req.query.id);
   const users=await User.find({$and:[{role:'distributer'},{referralId:req.body.id}]})
   res.status(200).json({ success: true, data: users});
 });
