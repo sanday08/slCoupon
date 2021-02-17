@@ -77,7 +77,7 @@ exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/distributer/:id
 //Access     Private/Admin
 exports.getDistributers = asyncHandler(async (req, res, next) => {
-  const users=await User.find({$AND:[{role:'distributer'},{referralId:req.body.id}]})
+  const users=await User.find({$and:[{role:'distributer'},{referralId:req.body.id}]})
   res.status(200).json({ success: true, data: users});
 });
 
@@ -85,7 +85,7 @@ exports.getDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/retailer/:id
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users=await User.find({$AND:[{role:'retailer'},{referralId:req.body.id}]})
+  const users=await User.find({$and:[{role:'retailer'},{referralId:req.body.id}]})
   res.status(200).json({ success: true, data: users});
 });
 

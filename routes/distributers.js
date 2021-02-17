@@ -10,5 +10,5 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("distributers"));
 
+router.route("/distributers").get(getDistributers);
 router.route("/retailers").get(getRetailers);
-router.route("/retailer/:id").get(getRetailers);
