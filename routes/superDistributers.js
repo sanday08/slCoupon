@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require("../models/User");
+const{}=require("../controllers/distributers")
 const { protect, authorize } = require("../middleware/auth");
 
 
@@ -9,4 +10,4 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("superDistributer"));
 router.route("/").get(getUsers).post(createUser);
-router.route("/:id").get(getUser)
+router.route("distributers/").get(getDistributers);
