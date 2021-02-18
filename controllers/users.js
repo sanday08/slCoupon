@@ -127,7 +127,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
   console.log("$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^");
   if(superDistributers.length===1)
-  {1
+  {
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
