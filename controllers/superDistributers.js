@@ -18,11 +18,53 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: users});
 });
 
-//@desc      Get all retailer via Disributer
-//@routes    GET /api/users/addCreditPoint
+//@desc      POST add Credit To Disributer
+//@routes    POST /api/superDistributers/addCreditPoint
 //Access     Private/SuperDistributer
 exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
-  if(req.body.creditPoint===0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoin<0 || req.body.creditPoint===undefined )
+  {
+    return next(
+      new ErrorResponse(
+        `Please Add Credit Point And Credit Point should not be 0 or Negative`,
+        404
+      )
+    );
+  }
+  const distributers=await User.find({$and:[{role:'distributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+  const superDistributer= await User.findById(req.user.id);
+  if(superDistributer.creditPoint < req.body.creditPoint)
+  {
+    return next(
+      new ErrorResponse(
+        `Check Credit Point! Credit Point is insufficient..`,
+        404
+      )
+    );
+  }
+  if(distributers.length===1)
+  {
+
+    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    res.status(200).json({ success: true, data: user});
+  }
+  else 
+  {
+    return next(
+      new ErrorResponse(
+        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
+        401
+      )
+    );
+  }  
+});
+
+//@desc      POST Reduce Credit To Disributer
+//@routes    POST /api/superDistributers/reduceCreditPoint
+//Access     Private/Admin
+exports.reduceDestributerCreditPoint = asyncHandler(async (req, res, next) => {
+  if(req.body.creditPoint>0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -31,9 +73,20 @@ exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const distributers=await User.find({$and:[{role:'distributer'},{referralId:req.user.id}]})
+  const distributers=await User.find({$and:[{role:'distributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+ 
   if(distributers.length===1)
   {
+    if(distributers.creditPoint<req.body.creditPoint)
+    {
+      return next(
+        new ErrorResponse(
+          `Check Your Credit Point! Credit Point is insufficient..`,
+          404
+        )
+      );
+    }
+    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
   }
@@ -41,9 +94,10 @@ exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
   {
     return next(
       new ErrorResponse(
-        `You are not Authorized to Add Credit to this User..`,
+        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
         401
       )
     );
   }  
 });
+

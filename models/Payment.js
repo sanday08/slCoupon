@@ -24,3 +24,5 @@ const PaymentSchema= new mongoose.Schema({
         default:"Pending"
     }
 },{timeStamps: true})
+
+module.exports = mongoose.model("Payment", UserSchema);

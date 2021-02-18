@@ -1,7 +1,26 @@
 const asyncHandler = require("../middleware/async");
 const ErrorRespose = require("../utils/errorResponse");
-
+const Payment=require("../models/Payment");
 const User = require("../models/User");
+const Winning = require("../models/Winning");
+
+
+
+//@desc      Create users
+//@routes    Post /api/users
+//Access     Private/Admin
+exports.updateWinningPer = asyncHandler(async (req, res, next) => { 
+let user= await Winning.findByIdAndUpdate("602e55e9a494988def7acc25",{percent:req.body.percent}); 
+  
+
+res.status(200).json({ success: true, data: user });
+});
+
+
+
+
+
+
 
 //@desc      Get all users
 //@routes    GET /api/users
@@ -91,12 +110,11 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: users});
 });
 
-
-//@desc      Get all retailer via Disributer
-//@routes    GET /api/users/addCreditPoint
+//@desc      POST add Credit To Super Disributer
+//@routes    POST /api/users/addCreditPoint
 //Access     Private/Admin
 exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
-  if(req.body.creditPoint===0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoint<0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -105,10 +123,10 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
       )
     );
   }
-  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id}]})
+  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
   if(superDistributers.length===1)
-  {
-
+  {1
+    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
   }
@@ -116,7 +134,49 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   {
     return next(
       new ErrorResponse(
-        `You are not Authorized to Add Credit to this User..`,
+        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
+        401
+      )
+    );
+  }  
+});
+
+
+//@desc      POST Reduce Credit To Super Disributer
+//@routes    POST /api/users/reduceCreditPoint
+//Access     Private/Admin
+exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
+  if(req.body.creditPoint>0 || req.body.creditPoint===undefined )
+  {
+    return next(
+      new ErrorResponse(
+        `Please Add Credit Point And Credit Point should not be 0`,
+        404
+      )
+    );
+  }
+  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+
+  if(superDistributers.length===1)
+  {
+    if(superDistributers.creditPoint<req.body.creditPoint)
+    {
+      return next(
+        new ErrorResponse(
+          `Check Credit Point! Credit Point is insufficient..`,
+          404
+        )
+      );
+    }
+    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    res.status(200).json({ success: true, data: user});
+  }
+  else 
+  {
+    return next(
+      new ErrorResponse(
+        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
         401
       )
     );
