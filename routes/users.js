@@ -9,6 +9,7 @@ const {
   getSuperDistributers,
   getDistributers,
   getRetailers,
+  addSuperDistributerCreditPoint
 
 } = require("../controllers/users");
 const advancedResults = require("../middleware/advancedResults");
@@ -22,6 +23,7 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
+router.route("/addCreditPoint").post(addSuperDistributerCreditPoint)
 router.route("/superDistributers").get(getSuperDistributers);
 router.route("/distributers").get(getDistributers);
 router.route("/retailers").get(getRetailers);

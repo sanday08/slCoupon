@@ -25,6 +25,8 @@ connectDB();
 //Routes files
 const auth = require("./routes/auth");
 const users = require("./routes/users");
+const superDistributers=require("./routes/superDistributers");
+const distributers=require("./routes/distributers");
 const cors = require("cors");
 const app = express();
 
@@ -75,6 +77,8 @@ if (process.env.NODE_ENV === "development") {
 //Mount routers
 app.use("/api/auth", auth);
 app.use("/api/users", users);
+app.use("/api/superDistributers",superDistributers);
+app.use("/api/distributers",distributers);
 
 
 //custome error handling from express error handler (Always write below the Mount Routes)

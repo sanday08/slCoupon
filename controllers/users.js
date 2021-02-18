@@ -1,5 +1,6 @@
 const asyncHandler = require("../middleware/async");
 const ErrorRespose = require("../utils/errorResponse");
+
 const User = require("../models/User");
 
 //@desc      Get all users
@@ -13,7 +14,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/:id
 //Access     Private/Admin
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select("+password");
   res.status(200).json({ success: true, data: user });
 });
 
@@ -35,7 +36,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
         userName=30001;     
       else if(req.body.role==="distributer")
         userName=50001;
-      else if(req.body.role==="retailers")
+      else if(req.body.role==="retailer")
         userName=70001;
     }
  console.log(userName)
@@ -74,7 +75,7 @@ exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
 
 
 //@desc      Get all Distributers via superDisributer
-//@routes    GET /api/users/distributer/:id
+//@routes    GET /api/users/distributer
 //Access     Private/Admin
 exports.getDistributers = asyncHandler(async (req, res, next) => {
   console.log("Vijay lunde moklu**********************************************",req.body.id,req.params.id,req.query.id);
@@ -83,7 +84,7 @@ exports.getDistributers = asyncHandler(async (req, res, next) => {
 });
 
 //@desc      Get all retailer via Disributer
-//@routes    GET /api/users/retailer/:id
+//@routes    GET /api/users/retailer
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
   const users=await User.find({$and:[{role:'retailer'},{referralId:req.query.id}]})
@@ -91,3 +92,33 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 });
 
 
+//@desc      Get all retailer via Disributer
+//@routes    GET /api/users/addCreditPoint
+//Access     Private/Admin
+exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
+  if(req.body.creditPoint===0 || req.body.creditPoint===undefined )
+  {
+    return next(
+      new ErrorResponse(
+        `Please Add Credit Point And Credit Point should not be 0`,
+        404
+      )
+    );
+  }
+  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id}]})
+  if(superDistributers.length===1)
+  {
+
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    res.status(200).json({ success: true, data: user});
+  }
+  else 
+  {
+    return next(
+      new ErrorResponse(
+        `You are not Authorized to Add Credit to this User..`,
+        401
+      )
+    );
+  }  
+});

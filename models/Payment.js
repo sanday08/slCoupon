@@ -19,5 +19,8 @@ const PaymentSchema= new mongoose.Schema({
         type:String,
         required:[true,"Your System is not Verified"]
     },
-
+    status:{
+        type:String,
+        default:"Pending"
+    }
 },{timeStamps: true})
