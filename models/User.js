@@ -90,7 +90,7 @@ const UserSchema = new mongoose.Schema({
 
 //Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id,role:this.role, userName:this.userName, creditPoint:this.creditPoint,name:this.name }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this._id,role:this.role, userName:this.userName, creditPoint:this.creditPoint,name:this.name,transactionPin:this.transactionPin }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };

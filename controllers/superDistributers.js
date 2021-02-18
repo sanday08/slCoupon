@@ -73,7 +73,16 @@ exports.reduceDistributerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const distributers=await User.find({$and:[{role:'distributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+  if(req.body.transactionPin!=req.user.transactionPin)
+  {
+    return next(
+      new ErrorResponse(
+        `Your Transaction PIn is Wrong.. `,
+        401
+      )
+    );
+  }
+  const distributers=await User.find({$and:[{role:'distributer'},{referralId:req.user.id}]})
  
   if(distributers.length===1)
   {
@@ -94,7 +103,7 @@ exports.reduceDistributerCreditPoint = asyncHandler(async (req, res, next) => {
   {
     return next(
       new ErrorResponse(
-        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
+        `You are not Authorized to Add Credit to this User`,
         401
       )
     );

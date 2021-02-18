@@ -124,7 +124,17 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
     );
   }
 
-  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+  if(req.body.transactionPin!=req.user.transactionPin)
+  {
+    return next(
+      new ErrorResponse(
+        `Your Transaction PIn is Wrong.. `,
+        401
+      )
+    );
+  }
+
+  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id}]})
   console.log("#####################",superDistributers);
   if(superDistributers.length===1)
   {
@@ -138,7 +148,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   {
     return next(
       new ErrorResponse(
-        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
+        `You are not Authorized to Add Credit to this User `,
         401
       )
     );
@@ -159,7 +169,17 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
       )
     );
   }
-  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+
+  if(req.body.transactionPin!=req.user.transactionPin)
+  {
+    return next(
+      new ErrorResponse(
+        `Your Transaction PIn is Wrong.. `,
+        401
+      )
+    );
+  }
+  const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id}]})
 
   if(superDistributers.length===1)
   {
@@ -180,7 +200,7 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
   {
     return next(
       new  ErrorResponse(
-        `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
+        `You are not Authorized to Add Credit to this User.`,
         401
       )
     );
