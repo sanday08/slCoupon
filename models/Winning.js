@@ -7,4 +7,4 @@ const PaymentSchema= new mongoose.Schema({
     }
     
 },{timeStamps: true})
-module.exports = mongoose.model("Winning", UserSchema);
+module.exports = mongoose.model("Winning", PaymentSchema);

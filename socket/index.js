@@ -111,23 +111,7 @@ io.on("connection", (socket) => {
       }
     });
   
-    //Place bet on Casino table
-  
-    socket.on("reJoin", ({ userId, roomId }) => {
-      console.log("Rejoin Event", socket.id);
-      let remainingTime =
-        (liveRooms[roomId].startTime + 30 * 1000 - new Date().getTime()) / 1000;
-      socket.emit("res", {
-        data: { remainingTime },
-        en: "reJoin",
-        status: 1,
-      });
-      // io.to(socket.id).emit("res", {
-      //   data: { remainingTime },
-      //   en: "reJoin",
-      //   status: 1,
-      // });
-    });
+
     socket.on("placeBet", async ({ userId, betAmount, position, roomId }) => {
       console.log("bet nakhi bhaiye", betAmount, position);
       const totalAmount = await placeBet(userId, betAmount);
@@ -139,15 +123,7 @@ io.on("connection", (socket) => {
     });
   
     //Undo bet on Casino table
-    socket.on("removeBet", async ({ userId, betAmount, position, roomId }) => {
-      console.log("bet nakhi bhaiye", betAmount, position);
-      const totalAmount = await placeBet(userId, betAmount);
-      socket.broadcast.to(roomId).emit("res", {
-        data: { userId, betAmount, position, totalAmount },
-        en: "removeBet",
-        status: 1,
-      });
-    });
+   
   
     //Win the bet
     socket.on("winAmount", async ({ userId, roomId, winAmount }) => {

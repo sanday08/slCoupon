@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("superDistributer"));
 router.route("/addCreditPoint").post(addDistributerCreditPoint);
-router.route("/reduceCreditPoint").post(reduceDistributerCreditPoint)
+router.route("/reduceCreditPoint").post(reduceDistributerCreditPoint);
 router.route("/distributers").get(getDistributers);
 router.route("/retailers").get(getRetailers);
 module.exports = router;

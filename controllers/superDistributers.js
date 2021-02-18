@@ -63,7 +63,7 @@ exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
 //@desc      POST Reduce Credit To Disributer
 //@routes    POST /api/superDistributers/reduceCreditPoint
 //Access     Private/Admin
-exports.reduceDestributerCreditPoint = asyncHandler(async (req, res, next) => {
+exports.reduceDistributerCreditPoint = asyncHandler(async (req, res, next) => {
   if(req.body.creditPoint>0 || req.body.creditPoint===undefined )
   {
     return next(
