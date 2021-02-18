@@ -113,6 +113,7 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 //@routes    POST /api/users/addCreditPoint
 //Access     Private/Admin
 exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
+  console.log("call addSuperDistributerCreditPoint")
   if(req.body.creditPoint<0 || req.body.creditPoint===undefined )
   {
     return next(
