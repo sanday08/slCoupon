@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const ErrorRespose = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/errorResponse");
 const Payment=require("../models/Payment");
 const User = require("../models/User");
 const Winning = require("../models/Winning");
@@ -126,7 +126,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
 
   const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
   console.log("#####################",superDistributers);
-  if(superDistributers.length===[])
+  if(superDistributers.length===1)
   {
     console.log("&&&&&&&&&&&&&&&&&&&")
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
@@ -179,7 +179,7 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
   else 
   {
     return next(
-      new ErrorResponse(
+      new  ErrorResponse(
         `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
         401
       )
