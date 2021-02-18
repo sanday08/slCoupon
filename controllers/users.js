@@ -125,7 +125,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   }
 
   const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
-
+  console.log("#####################",superDistributers);
   if(superDistributers.length===1)
   {
     console.log("&&&&&&&&&&&&&&&&&&&")
