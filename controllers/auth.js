@@ -50,6 +50,46 @@ exports.login = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+
+//@desc     Login Retailer only for app
+//@route    Post /api/auth/retailer/login
+//@access   public
+
+exports.loginRetailer = asyncHandler(async (req, res, next) => {
+
+  const { userName, password } = req.body;
+  //userName and password fields are required
+  if (!userName&& !password) {
+    return next(
+      new ErrorResponse("userName and password fields must be required"),
+      400
+    );
+  }
+  //Check for user
+  const user = await User.findOne({ userName}).select("+password");
+
+  if(user.role!="retailer") {
+    return next(new ErrorResponse("You are not authorized to access this application.", 401));
+  }
+  console.log(user);
+  if (!user) {
+    return next(new ErrorResponse("Invalide credentials", 401));
+  }
+  //Check if Password matches
+
+  console.log();
+  if (user.password != password) {
+    return next(new ErrorResponse("Invalide credentials", 401));
+  }
+
+  if(!user.isActive){
+    return next(new ErrorResponse("Your Account is Blocked Please contact your Admin",))
+  }
+  sendTokenResponse(user, 200, res);
+});
+
+
+
 ///@desc    Log user out/ clear cookie
 //@route    GET /api/auth/logout
 //@access   Private

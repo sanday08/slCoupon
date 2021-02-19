@@ -15,7 +15,7 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 //@routes    POST /api/distributers/addCreditPoint
 //Access     Private/Distributer
 exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
-  if(req.body.creditPoint===0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoint<=0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -24,8 +24,18 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const retailers=await User.find({$and:[{role:'retailer'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+  const retailers=await User.find({$and:[{role:'retailer'},{referralId:req.user.id}]})
   const distributer= await User.findById(req.user.id);
+  if(req.body.transactionPin!=distributer.transactionPin)
+  {
+    return next(
+      new ErrorResponse(
+        `Your Transaction PIn is Wrong.. `,
+        401
+      )
+    );
+  }
+
   if(distributer.creditPoint < req.body.creditPoint)
   {
     return next(
@@ -39,6 +49,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   {
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    await User.findByIdAndUpdate(req.user.id,{$inc:{creditPoint:-req.body.creditPoint}});
     res.status(200).json({ success: true, data: user});
   }
   else 
@@ -58,7 +69,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
 //@routes    POST /api/distributers/reduceCreditPoint
 //Access     Private/Admin
 exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
-  if(req.body.creditPoint>0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoint<=0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -67,7 +78,18 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const retailers=await User.find({$and:[{role:'retailers'},{referralId:req.user.id},{transactionPin:req.body.transactionPin}]})
+
+  if(req.body.transactionPin!=req.user.transactionPin)
+  {
+    return next(
+      new ErrorResponse(
+        `Your Transaction PIn is Wrong.. `,
+        401
+      )
+    );
+  }
+
+  const retailers=await User.find({$and:[{role:'retailers'},{referralId:req.user.id}]})
   
   if(retailers.length===1)
   {
@@ -81,7 +103,8 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       );
     }
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
-    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:-req.body.creditPoint}});
+    await User.findByIdAndUpdate(req.user.id,{$inc:{creditPoint:req.body.creditPoint}});
     res.status(200).json({ success: true, data: user});
   }
   else 

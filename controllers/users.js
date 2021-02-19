@@ -114,7 +114,7 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
   console.log("call addSuperDistributerCreditPoint")
-  if(req.body.creditPoint<0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoint<=0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -137,11 +137,9 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   const superDistributers=await User.find({$and:[{role:'superDistributer'},{referralId:req.user.id}]})
   console.log("#####################",superDistributers);
   if(superDistributers.length===1)
-  {
-    console.log("&&&&&&&&&&&&&&&&&&&")
+  {   
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
-    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
-    console.log("%%%%%%%%%%%%%%%%%%%%",user);
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}}) 
     res.status(200).json({ success: true, data: user});
   }
   else 
@@ -160,7 +158,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
 //@routes    POST /api/users/reduceCreditPoint
 //Access     Private/Admin
 exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => {
-  if(req.body.creditPoint>0 || req.body.creditPoint===undefined )
+  if(req.body.creditPoint<=0 || req.body.creditPoint===undefined )
   {
     return next(
       new ErrorResponse(
@@ -193,7 +191,7 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
       );
     }
     await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
-    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
+    const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:-req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
   }
   else 
