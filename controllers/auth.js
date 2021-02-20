@@ -58,6 +58,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
   const { userName, password } = req.body;
+  console.log("gggggggggggggggg",username,password);
   //userName and password fields are required
   if (!userName&& !password) {
     return next(
