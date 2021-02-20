@@ -14,16 +14,9 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
+ 
 
-const { customAlphabet } =require( 'nanoid')
-const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
-let arr=[];
-{
-  let rand=nanoid();
-  if(arr.includes(rand))
-    console.log(rand);
-arr.push(rand)
-}
+
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
