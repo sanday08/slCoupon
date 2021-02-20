@@ -67,7 +67,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   }
   //Check for user
   const user = await User.findOne({ userName}).select("+password");
-
+console.log("Retailer...",user);
   if(user.role!="retailer") {
     return next(new ErrorResponse("You are not authorized to access this application.", 401));
   }
