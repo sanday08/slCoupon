@@ -7,6 +7,7 @@ const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const bet ={
   retailerID:{Series:{A:{10:2,5:4}}}
 }
+const liveRooms={};
 
 const totalBet=0;
 const dailyTotalBet=0;
@@ -30,8 +31,8 @@ io.on("connection", (socket) => {
 
     socket.on("placeBet", async ({ userId, series, position,totalBetPoint }) => {
       totalBet+=totalBetPoint;
-      dailyTotalBet+=TotalBetPoint;
-      remainingBetPoint+=TotalBetPoint;
+      dailyTotalBet+=totalBetPoint;
+      remainingBetPoint+=totalBetPoint;
       console.log("**********",position);
 
 
@@ -111,7 +112,3 @@ io.on("connection", (socket) => {
     });
   }, 1000);
 
-
-  const getRanome=()=>{
-
-  }
