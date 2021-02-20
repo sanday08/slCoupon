@@ -1,127 +1,46 @@
 const _ = require("lodash");
 const uniqid = require("uniqid");
 const { io } = require("../server");
+const {getUserInfoBytoken} = require("./utils/users");
+const { customAlphabet } =require( 'nanoid')
+const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
+const bet ={
+  retailerID:{Series:{A:{10:2,5:4}}}
+}
 
-const liveRooms={}
+const totalBet=0;
+const dailyTotalBet=0;
+const remainingBetPoint=0;
+
+const roundBet={
+  Series:{A:{num:2}}
+}
 
 io.on("connection", (socket) => {
-    console.log("Socketconnected");
-    socket.on("join", async ({ token }) => {
-      try {
-        const user = await getUserInfo(token);
-  
-        //Check the all room one by one that room have any space?
-        if (Object.keys(liveRooms).length > 0) {
-          console.log(liveRooms);
-          Object.keys(liveRooms).forEach((room) => {
-            console.log(Object.keys(liveRooms[room]));
-            //  usersRoom[user.id]={socketId}
-            if (Object.keys(liveRooms[room].users).length < 5) {
-              socket.join(room);
-              console.log("same table user:", liveRooms);
-  
-              pendingRooms[socket.id] = {
-                userId: user._id,
-                roomId: room,
-              };
-              liveRooms[room].remainingTime =
-                (liveRooms[room].startTime + 30 * 1000 - new Date().getTime()) /
-                1000;
-              liveRooms[room].users[user._id] = {
-                name: user.name,
-                balance: user.amount,
-                avtarId: user.avtarId,
-                roomId: room,
-              };
-              console.log("add thayo", JSON.stringify(liveRooms));
-              io.in(room).emit("res", {
-                data: liveRooms[room],
-                en: "join",
-                status: 1,
-              });
-            } else {
-              const room = uniqid();
-              // const startTime = setInterval(function () {}, 30000);
-              socket.join(room);
-              pendingRooms[socket.id] = {
-                userId: user._id,
-                roomId: room,
-              };
-              liveRooms = {
-                [room]: {
-                  users: {
-                    [user._id]: {
-                      name: user.name,
-                      balance: user.amount,
-                      avtarId: user.avtarId,
-                      roomId: room,
-                      userTime: new Date().getTime(),
-                      //startTime,
-                    },
-                  },
-                  lastFive: [21, 17, 8, 34, 2],
-                  // startTime,
-                  startTime: new Date().getTime(),
-                  remainingTime: 30,
-                },
-              };
-              console.log("new add thayo", JSON.stringify(liveRooms));
-              io.in(room).emit("res", {
-                data: liveRooms[room],
-                en: "join",
-                status: 1,
-              });
-            }
-          });
-        } else {
-          const room = uniqid();
-          // const startTime = setInterval(function () {}, 30000);
-          socket.join(room);
-          pendingRooms[socket.id] = {
-            userId: user._id,
-            roomId: room,
-          };
-          liveRooms = {
-            [room]: {
-              users: {
-                [user._id]: {
-                  name: user.name,
-                  balance: user.amount,
-                  avtarId: user.avtarId,
-                  roomId: room,
-                  //startTime,
-                  userTime: new Date().getTime(),
-                },
-              },
-              //startTime,
-              lastFive: [21, 17, 8, 34, 2],
-              startTime: new Date().getTime(),
-              remainingTime: 30,
-            },
-          };
-          console.log("new add thayo", JSON.stringify(liveRooms));
-          io.in(room).emit("res", {
-            data: liveRooms[room],
-            en: "join",
-            status: 1,
-          });
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
+    console.log("SocketConnected");
+    socket.on("join", async ({ token }) => {    
+        const user = await getUserInfoBytoken(token);
+        socket.emit("res", {
+          data: { user,currentTime: new Date().getTime()},
+          en: "join",
+          status: 1,
+        });
     });
   
 
-    socket.on("placeBet", async ({ userId, betAmount, position, roomId }) => {
-      console.log("bet nakhi bhaiye", betAmount, position);
-      const totalAmount = await placeBet(userId, betAmount);
-      socket.broadcast.to(roomId).emit("res", {
-        data: { userId, betAmount, position, totalAmount },
-        en: "placeBet",
-        status: 1,
-      });
+    socket.on("placeBet", async ({ userId, series, position,totalBetPoint }) => {
+      totalBet+=totalBetPoint;
+      dailyTotalBet+=TotalBetPoint;
+      remainingBetPoint+=TotalBetPoint;
+      console.log("**********",position);
+
+
     });
   
+
+
+
+
     //Undo bet on Casino table
    
   
@@ -131,16 +50,7 @@ io.on("connection", (socket) => {
       if (winAmount != 0) await addHistory(userId, winAmount);
     });
   
-    //Get Last Fives
-    socket.on("getLastFive", ({ roomId }) => {
-      io.in(roomId).emit("res", {
-        data: { lastFive: liveRooms[roomId].lastFive },
-        en: "getLastFive",
-        status: 1,
-      });
-    });
-  
-    //Leave the room
+   //Leave the room 
     socket.on("leaveRoom", ({ userId, roomId }) => {
       console.log("Disconnect thay gyo", roomId);
       console.log("Disconnect thay gyo", userId);
@@ -200,3 +110,8 @@ io.on("connection", (socket) => {
       }
     });
   }, 1000);
+
+
+  const getRanome=()=>{
+
+  }
