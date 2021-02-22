@@ -36,8 +36,8 @@ io.on("connection", (socket) => {
       console.log("**********",position);
 
 
-     bet={[]}
-
+     bet={[retailerId]:{[series]:[position]}}
+      console.log("############",bet);
 
     });
   
