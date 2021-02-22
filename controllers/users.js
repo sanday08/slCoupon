@@ -7,7 +7,7 @@ const Winning = require("../models/Winning");
 
 
 //@desc      Create users
-//@routes    Post /api/users/updatePersentage
+//@routes    Post /api/users/updatePercentage
 //Access     Private/Admin
 exports.updateWinningPer = asyncHandler(async (req, res, next) => { 
   console.log("tere moh moh k dhage",req.body.percent);
@@ -18,7 +18,7 @@ res.status(200).json({ success: true, data: user });
 
 
 //@desc      Create users
-//@routes    Get /api/users/getPersantage
+//@routes    Get /api/users/getPercentage
 //Access     Private/Admin
 exports.getWinningPer = asyncHandler(async (req, res, next) => { 
   let user= await Winning.findById("602e55e9a494988def7acc25"); 
