@@ -97,7 +97,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const data=await User.findOneAndDelete(req.params.id);
+  const data=await User.findByIdAndDelete(req.params.id);
   res.status(200).json({ success: true, data: data });
 });
 
