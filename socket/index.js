@@ -31,7 +31,8 @@ io.on("connection", (socket) => {
         });
     });
   
-
+    // To: Sandip -------------------------------------
+    // {"userId":"70001","series":1,"position":{"A":{"00":"1","11":"1"},"B":{"00":"1","11":"1"}},"totalBetPoint":8}
     socket.on("placeBet", async ({ retailerId, series, position,totalBetPoint }) => {
       totalBet+=totalBetPoint;
       dailyTotalBet+=totalBetPoint;
@@ -39,7 +40,16 @@ io.on("connection", (socket) => {
       console.log("**********",position);
       //Set user position to our functions
 
-      
+      for (alpha in position) {
+        if(allBet.series)
+        {
+        
+        }
+        else
+        {
+          allBet[series]
+        }
+      }
 
 
 
