@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const PaymentSchema= new mongoose.Schema({
+const WinningSchema= new mongoose.Schema({
     percent: {
         type:Number,
         default:0
     }
     
 },{timeStamps: true})
-module.exports = mongoose.model("Winning", PaymentSchema);
+module.exports = mongoose.model("Winning", WinningSchema);
