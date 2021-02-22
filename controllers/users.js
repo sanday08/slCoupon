@@ -11,9 +11,9 @@ const Winning = require("../models/Winning");
 //Access     Private/Admin
 exports.updateWinningPer = asyncHandler(async (req, res, next) => { 
   console.log("tere moh moh k dhage",req.body.percent);
-let user= await Winning.findByIdAndUpdate("602e55e9a494988def7acc25",{percent:req.body.percent});  
+//let user= await Winning.findByIdAndUpdate("602e55e9a494988def7acc25",{percent:req.body.percent});  
 
-res.status(200).json({ success: true, data: user });
+res.status(200).json({ success: true, data: "sassaas" });
 });
 
 
