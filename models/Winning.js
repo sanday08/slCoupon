@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const PaymentSchema= new mongoose.Schema({
     percent: {
-        type:String,
+        type:Number,
         default:0
     }
     
