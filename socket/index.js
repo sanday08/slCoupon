@@ -4,8 +4,11 @@ const { io } = require("../server");
 const {getUserInfoBytoken} = require("./utils/users");
 const { customAlphabet } =require( 'nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
-const bet ={
-  retailerID:{series:{A:{10:2,5:4}}}
+const userBet ={
+  retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
+}
+const allBet={
+  1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}
 }
 const liveRooms={};
 
@@ -34,6 +37,10 @@ io.on("connection", (socket) => {
       dailyTotalBet+=totalBetPoint;
       remainingBetPoint+=totalBetPoint;
       console.log("**********",position);
+      //Set user position to our functions
+
+      
+
 
 
      bet={[retailerId]:{[series]:[position]}}

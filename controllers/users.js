@@ -86,8 +86,18 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 //@routes    DELETE /api/users/:id
 //Access     Private/Admin
 exports.deleteUser = asyncHandler(async (req, res, next) => {
-  await User.findOneAndDelete(req.params.id);
-  res.status(200).json({ success: true, data: {} });
+  console.log("userID is is",req.params.id);
+  const user=await User.findById(req.params.id);
+  if(user){
+    return next(
+      new  ErrorResponse(
+        `He have referal Users so first Delete his referal users...`,
+        401
+      )
+    );
+  }
+  const data=await User.findOneAndDelete(req.params.id);
+  res.status(200).json({ success: true, data: data });
 });
 
 
