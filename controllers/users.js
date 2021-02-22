@@ -87,7 +87,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   console.log("userID is is",req.params.id);
-  const user=await User.findById(req.params.id);
+  const user=await User.find({referralId:req.params.id});
   console.log("users=",user)
   if(user){
     return next(
