@@ -89,7 +89,7 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   console.log("userID is is",req.params.id);
   const user=await User.find({referralId:req.params.id});
   console.log("users=",user)
-  if(user){
+  if(user!=[]){
     return next(
       new  ErrorResponse(
         `He have referal Users so first Delete his referal users...`,
