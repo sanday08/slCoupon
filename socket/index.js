@@ -23,6 +23,8 @@ const roundBet={
 io.on("connection", (socket) => {
     console.log("SocketConnected");
     socket.on("join", async ({ token }) => {    
+
+      console.log("Socket join call");
         const user = await getUserInfoBytoken(token);
         socket.emit("res", {
           data: { user,currentTime: new Date().getTime()},
@@ -34,6 +36,7 @@ io.on("connection", (socket) => {
     // To: Sandip -------------------------------------
     // {"userId":"70001","series":1,"position":{"A":{"00":"1","11":"1"},"B":{"00":"1","11":"1"}},"totalBetPoint":8}
     socket.on("placeBet", async ({ retailerId, series, position,totalBetPoint }) => {
+      console.log("Pila ye call karu..")
       totalBet+=totalBetPoint;
       dailyTotalBet+=totalBetPoint;
       remainingBetPoint+=totalBetPoint;
