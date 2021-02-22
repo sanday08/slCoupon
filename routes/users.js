@@ -11,7 +11,8 @@ const {
   getRetailers,
   addSuperDistributerCreditPoint,
   reduceSuperDistributerCreditPoint,
-  updateWinningPer
+  updateWinningPer,
+  getWinningPer
 } = require("../controllers/users");
 const advancedResults = require("../middleware/advancedResults");
 const User = require("../models/User");
