@@ -10,7 +10,7 @@ async function getUserInfo(userId) {
     return err.message;
   }
 }
-   getUserInfoBytoken=async(tokenId)=> {
+async function getUserInfoBytoken (tokenId) {
   let token;
   //Set token from Bearer token in header
   token = tokenId.split(" ")[1];
