@@ -24,6 +24,10 @@ const roundBet={
 io.on("connection", socket => {
   console.log("Yor Socket Id is:,",socket.id);
     console.log("SocketConnected");
+
+
+
+    //Join Event When Application is Start
     socket.on("join", async ({ token }) => {    
 
       console.log("Socket join call");
