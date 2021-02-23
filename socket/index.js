@@ -33,7 +33,7 @@ io.on("connection", socket => {
       console.log("Socket join call");
         const user = await getUserInfoBytoken(token);
         socket.emit("res", {
-          data: { user,currentTime: new Date().getTime()},
+          data: { user,currentTime: new Date().getTime().toString()},
           en: "join",
           status: 1,
         });
