@@ -21,7 +21,7 @@ const roundBet={
   Series:{A:{num:2}}
 }
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   console.log("Yor Socket Id is:,",socket.id);
     console.log("SocketConnected");
     socket.on("join", async ({ token }) => {    
