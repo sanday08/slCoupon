@@ -13,9 +13,9 @@ const allBet={
 }
 const liveRooms={};
 
-const totalBet=0;
-const dailyTotalBet=0;
-const remainingBetPoint=0;
+let totalBet=0;
+let dailyTotalBet=0;
+let remainingBetPoint=0;
 
 const roundBet={
   Series:{A:{num:2}}
