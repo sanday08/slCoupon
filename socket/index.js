@@ -67,73 +67,11 @@ io.on("connection", (socket) => {
 
 
 
-    //Undo bet on Casino table
-   
-  
-    //Win the bet
-    socket.on("winAmount", async ({ userId, roomId, winAmount }) => {
-      if (winAmount > 0) await placeBet(userId, winAmount);
-      if (winAmount != 0) await addHistory(userId, winAmount);
-    });
-  
-   //Leave the room 
-    socket.on("leaveRoom", ({ userId, roomId }) => {
-      console.log("Disconnect thay gyo", roomId);
-      console.log("Disconnect thay gyo", userId);
-  
-      delete pendingRooms[socket.id];
-      if (liveRooms[roomId]) {
-        delete liveRooms[roomId].users[userId];
-        if (Object.keys(liveRooms[roomId].users).length === 0)
-          delete liveRooms[roomId];
-      }
-      io.in(roomId).emit("res", {
-        data: userId,
-        en: "disconnect",
-        status: 1,
-      });
-    });
-  
     //Disconnect the users
     socket.on("disconnect", () => {
-      console.log(socket.id);
-      if (pendingRooms[socket.id] != undefined) {
-        const room = pendingRooms[socket.id].roomId;
-        const userId = pendingRooms[socket.id].userId;
-        console.log("Disconnect thay gyo", room);
-        console.log("Disconnect thay gyo", userId);
-  
-        delete pendingRooms[socket.id];
-        if (liveRooms[room]) {
-          delete liveRooms[room].users[userId];
-          if (Object.keys(liveRooms[room].users).length === 0)
-            delete liveRooms[room];
-        }
-        io.in(room).emit("res", {
-          data: userId,
-          en: "disconnect",
-          status: 1,
-        });
-      }
     });
   });
-  // setInterval(() => {
-  //   Object.keys(liveRooms).forEach((room) => {
-  //     console.log("Start Time", liveRooms[room].startTime);
-  //     if (liveRooms[room].startTime + 30000 < new Date().getTime()) {
-  //       console.log("Live Time", new Date().getTime());
-  //       console.log("Start Time", liveRooms[room].startTime);
-  //       let randNo = Math.floor(Math.random() * 37);
-  //       liveRooms[room].startTime = new Date().getTime();
-  //       console.log(randNo);
-  //       liveRooms[room].lastFive.shift();
-  //       liveRooms[room].lastFive.push(randNo);
-  //       io.in(room).emit("res", {
-  //         data: { randNo, lastFive: liveRooms[room].lastFive },
-  //         en: "getRandomNo",
-  //         status: 1,
-  //       });
-  //     }
-  //   });
-  // }, 1000);
+  setInterval(() => {
+   
+  }, 1000);
 
