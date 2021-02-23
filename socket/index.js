@@ -4,6 +4,7 @@ const { io } = require("../server");
 const {getUserInfoBytoken} = require("./utils/users");
 const { customAlphabet } =require( 'nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
+const immutable=require("object-path-immutable"); 
 const userBet ={
   retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 }
@@ -21,6 +22,7 @@ const roundBet={
 }
 
 io.on("connection", (socket) => {
+  console.log("Yor Socket Id is:,",socket.id);
     console.log("SocketConnected");
     socket.on("join", async ({ token }) => {    
 
@@ -115,23 +117,23 @@ io.on("connection", (socket) => {
       }
     });
   });
-  setInterval(() => {
-    Object.keys(liveRooms).forEach((room) => {
-      console.log("Start Time", liveRooms[room].startTime);
-      if (liveRooms[room].startTime + 30000 < new Date().getTime()) {
-        console.log("Live Time", new Date().getTime());
-        console.log("Start Time", liveRooms[room].startTime);
-        let randNo = Math.floor(Math.random() * 37);
-        liveRooms[room].startTime = new Date().getTime();
-        console.log(randNo);
-        liveRooms[room].lastFive.shift();
-        liveRooms[room].lastFive.push(randNo);
-        io.in(room).emit("res", {
-          data: { randNo, lastFive: liveRooms[room].lastFive },
-          en: "getRandomNo",
-          status: 1,
-        });
-      }
-    });
-  }, 1000);
+  // setInterval(() => {
+  //   Object.keys(liveRooms).forEach((room) => {
+  //     console.log("Start Time", liveRooms[room].startTime);
+  //     if (liveRooms[room].startTime + 30000 < new Date().getTime()) {
+  //       console.log("Live Time", new Date().getTime());
+  //       console.log("Start Time", liveRooms[room].startTime);
+  //       let randNo = Math.floor(Math.random() * 37);
+  //       liveRooms[room].startTime = new Date().getTime();
+  //       console.log(randNo);
+  //       liveRooms[room].lastFive.shift();
+  //       liveRooms[room].lastFive.push(randNo);
+  //       io.in(room).emit("res", {
+  //         data: { randNo, lastFive: liveRooms[room].lastFive },
+  //         en: "getRandomNo",
+  //         status: 1,
+  //       });
+  //     }
+  //   });
+  // }, 1000);
 

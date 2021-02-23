@@ -19,7 +19,7 @@ router.post("/login", login);
 router.post("/retailer/login",loginRetailer);
 router.get("/logout", logout);
 router.route("/me").get( protect, authorize("Admin") , getMe);
-router.put( "updatedetails",protect, updateDetails);
+router.put("updatedetails",protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
 router.put("/updateTransactionPin", protect, updateTransactionPin);
 module.exports = router;

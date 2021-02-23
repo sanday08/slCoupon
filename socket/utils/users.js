@@ -23,4 +23,4 @@ async function getUserInfo(userId) {
     return err.message;
   }
 } 
-module.exports = { getUserInfo };
+module.exports = { getUserInfo,getUserInfoBytoken };
