@@ -17,6 +17,7 @@ async function getUserInfoBytoken (tokenId) {
   //Verify Token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("decoded Id is ",decoded)
     user = await User.findById(decoded.id);
     return user;
   } catch (err) {

@@ -31,7 +31,9 @@ io.on("connection", socket => {
     socket.on("join", async ({ token }) => {    
 
       console.log("Socket join call");
-        const user = await getUserInfoBytoken(token);
+        let user = await getUserInfoBytoken(token);
+        if(user.role!='retailer')
+            user="You are not Authorized to access this Applications";
         socket.emit("res", {
           data: { user,currentTime: new Date().getTime().toString()},
           en: "join",
