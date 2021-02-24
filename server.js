@@ -16,7 +16,7 @@ const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 
 console.log("Old Date",new Date());
-const nDate = new Date().toLocaleString('en-US', {
+const nDate = new Date().getHours().toLocaleString('en-US', {
   timeZone: 'Asia/Calcutta'
 });
 console.log("New Date",new Date());
