@@ -23,8 +23,10 @@ console.log("Old Date",new Date());
 const nDate = new Date().getHours().toLocaleString('en-US', {
   timeZone: 'Asia/Calcutta'
 });
-console.log("New Date",new Date().getHours());
-console.log("Old Date",new Date());
+console.log("New Date",new Date().getHours(),":");
+console.log("Old Date",new Date().toLocaleDateString('en-US', {
+  timeZone: 'Asia/Calcutta'
+}))
 
 //Database connections
 connectDB();
