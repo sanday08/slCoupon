@@ -30,7 +30,9 @@ io.on("connection", socket => {
       console.log("Socket join call");
         let user = await getUserInfoBytoken(token);
         socket.emit("res", {
-          data: { user,currentTime: new Date()},
+          data: { user,currentTime: new Date().toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Calcutta'
+          })},
           en: "join",
           status: 1,
         });
@@ -74,6 +76,7 @@ io.on("connection", socket => {
    if(new Date().getHours()>8&&new Date().getHours()<22){
       if(new Date().getMinutes()%15==0&& lastMinutes!=new Date().getMinutes()){
         lastMinutes=new Date().getMinutes();
+
 
       }
    }
