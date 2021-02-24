@@ -5,9 +5,9 @@ const {getUserInfoBytoken} = require("./utils/users");
 const { customAlphabet } =require( 'nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const immutable=require("object-path-immutable"); 
-const userBet ={
-  retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
-}
+const userBet ={};
+  //retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
+
 const allBet={
   1:{},2:{},3:{},4:{}
 }
@@ -40,7 +40,7 @@ io.on("connection", socket => {
      
       console.log("**********",position);
 
-      adminBalance[series]= adminBalance[series]+(totalBetPoint*10/100)
+      adminBalance[series]= adminBalance[series]+(totalBetPoint-totalBetPoint*10/100)
       //Set user position to our functions      
       for (alfa of Object.keys(position)) {
         if(allBet[series][alfa])
