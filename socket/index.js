@@ -51,7 +51,7 @@ io.on("connection", socket => {
         else 
           allBet[series]=immutable.set(allBet[series],alfa,position[alfa]);  
         }
-      console.log("This is ",allBet,"******",adminBalance);
+      console.log("This is ",allBet,"******",JSON.stringify(adminBalance));
       
 
      bet={[retailerId]:{[series]:[position]}}
