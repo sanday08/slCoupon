@@ -13,7 +13,7 @@ const userBet ={
 const allBet={
   1:{},3:{},5:{},6:{}
 }
-const lastMinutes=0;
+let lastMinutes=0;
 const liveRooms={};
 
 const adminBalance={ 1:0,3:0,5:0,6:0}
@@ -73,12 +73,63 @@ io.on("connection", socket => {
     });
   });
   setInterval(() => {
-   if(new Date().getHours()>8&&new Date().getHours()<22){
+   if(new Date().getHours()>8 && new Date().getHours()<22){
       if(new Date().getMinutes()%15==0&& lastMinutes!=new Date().getMinutes()){
         lastMinutes=new Date().getMinutes();
+
+
+        //Winner Logic
+        for (let i of Object.keys(allBet)) {
+
+          const alphaArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+          shuffle(alphaArray)
+          for (let [ai, alpha] of alphaArray.entries()) {
+              const winnerNumber = Math.random(0, 99)
+              if (ai > 6) {
+                  const entryKeys = Object.keys(allBet[i][alpha])
+                  const random = Math.floor(Math.random() * entryKeys.length);
+                  winnerNumber = entryKeys[random]
+              }
+              if (allBet[i][alpha][winnerNumber]) {
+                  let a = 0;
+                  while (allBet[i][alpha][winnerNumber] * 90 > adminBalance[i] && a < 100) {
+                      winnerNumber = random(0, 99);
+                      a++;
+                  }
+                  adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
+              }
+              winnerNumbers[i][alpha] = winnerNumber
+          }
+      }
+      
+     
+      
+
+
+
+
 
 
       }
    }
   }, 1000);
 
+//ShuffleArray
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}

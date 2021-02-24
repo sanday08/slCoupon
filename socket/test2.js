@@ -1,1 +1,2 @@
-console.log( new Date().getMinutes())
+process.env.TZ = 'Europe/Amsterdam';
+console.log( new Date())
