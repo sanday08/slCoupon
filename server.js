@@ -23,7 +23,7 @@ console.log("Old Date",new Date());
 const nDate = new Date().getHours().toLocaleString('en-US', {
   timeZone: 'Asia/Calcutta'
 });
-console.log("New Date",new Date().toLocaleTimeString());
+console.log("New Date",new Date().getHours());
 
 
 //Database connections
@@ -34,6 +34,7 @@ const users = require("./routes/users");
 const superDistributers=require("./routes/superDistributers");
 const distributers=require("./routes/distributers");
 const cors = require("cors");
+const { options } = require("./routes/auth");
 const app = express();
 
 
