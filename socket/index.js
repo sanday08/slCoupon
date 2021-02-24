@@ -9,7 +9,7 @@ const userBet ={};
   //retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
 const allBet={
-  1:{},2:{},3:{},4:{}
+  1:{},3:{},5:{},6:{}
 }
 const liveRooms={};
 
@@ -36,7 +36,7 @@ io.on("connection", socket => {
     // To: Sandip -------------------------------------
     // {"userId":"70001","series":1,"position":{"A":{"00":"1","11":"1"},"B":{"00":"1","11":"1"}},"totalBetPoint":8}
     socket.on("placeBet", async ({ retailerId, series, position,totalBetPoint }) => {
-      console.log("Pila ye call karu..")
+      console.log("Pila ye call karu..",series)
      
       console.log("**********",position);
 
