@@ -224,3 +224,20 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
     );
   }  
 });
+
+
+//@desc      Get all Username
+//@routes    GET /api/users/userName
+//Access     Private/Admin
+exports.getUserName = asyncHandler(async (req, res, next) => {
+  const users=await User.find().select({username});
+  res.status(200).json({ success: true, data: users});
+});
+
+// //@desc      Get all userInfo via Username
+// //@routes    GET /api/users/userName
+// //Access     Private/Admin
+// exports.getUsers = asyncHandler(async (req, res, next) => {
+//   const users=await User.find({username: req.query.username});
+//   res.status(200).json({ success: true, data: users});
+// });

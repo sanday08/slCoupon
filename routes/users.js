@@ -12,7 +12,8 @@ const {
   addSuperDistributerCreditPoint,
   reduceSuperDistributerCreditPoint,
   updateWinningPer,
-  getWinningPer
+  getWinningPer,
+  getUserName
 } = require("../controllers/users");
 const advancedResults = require("../middleware/advancedResults");
 const User = require("../models/User");
@@ -25,6 +26,7 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
+router.route("/userName").get(getUserName);
 router.route("/getPercentage").get(getWinningPer);
 router.route("/updatePercentage").put(updateWinningPer);
 router.route("/addCreditPoint").post(addSuperDistributerCreditPoint);
