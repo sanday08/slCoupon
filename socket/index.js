@@ -13,7 +13,7 @@ const allBet={
 }
 const liveRooms={};
 
-const adminBalance={ 1:0,2:0,3:0,4:0}
+const adminBalance={ 1:0,3:0,5:0,6:0}
 
 io.on("connection", socket => {
   console.log("Yor Socket Id is:,",socket.id);
