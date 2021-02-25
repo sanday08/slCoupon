@@ -22,7 +22,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 //@access   public
 
 exports.login = asyncHandler(async (req, res, next) => {
-  console.log("sdndsa",req.body)
+
   const { userName, password } = req.body;
   //userName and password fields are required
   if (!userName&& !password) {
@@ -33,13 +33,13 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
   //Check for user
   const user = await User.findOne({ userName}).select("+password");
-  console.log(user);
+
   if (!user) {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
   //Check if Password matches
 
-  console.log();
+
   if (user.password != password) {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
@@ -67,17 +67,17 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   }
   //Check for user
   const user = await User.findOne({ userName}).select("+password");
-console.log("Retailer...",user);
+
   if(user.role!="retailer") {
     return next(new ErrorResponse("You are not authorized to access this application.", 401));
   }
-  console.log(user);
+
   if (!user) {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
   //Check if Password matches
 
-  console.log();
+
   if (user.password != password) {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
@@ -132,7 +132,7 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 //@access   private
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-  console.log("***************************************************sandip Shiroya");
+ 
   const user = await User.findById(req.user.id).select("+password");
   //Check current password (matchPassword method defined in User models)
   if (user.password!=req.body.currentPassword) {
@@ -236,7 +236,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 //@access   private
 
 exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
-  console.log("***************************************************sandip Shiroya");
+ 
   const user = await User.findById(req.user.id).select("+password");
   //Check current password (matchPassword method defined in User models)
   if (user.password!=req.body.currentPassword || user.transactionPin!=req.body.currentTransactionPin) {

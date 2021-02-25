@@ -6,6 +6,7 @@ const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const immutable = require("object-path-immutable");
 const { all } = require("../routes/auth");
+const { json } = require("body-parser");
 let userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
 let allBet = {
@@ -50,8 +51,15 @@ io.on("connection", socket => {
           }
       }    
     adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
-    console.log("Userbets",userBets,"This is ", allBet, "******", JSON.stringify(adminBalance));
-      // console.log("############",bet);
+
+
+
+
+
+console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ userBets",JSON.stringify(userBets));
+console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& allBet", JSON.stringify(allBet));
+console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% adminBalance",JSON.stringify(adminBalance));
+   
 
   });
 
