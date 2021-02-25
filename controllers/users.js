@@ -158,7 +158,7 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
   console.log("#####################",superDistributers);
   if(superDistributers.length===1)
   {   
-    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    await Payment.create({toId:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}}) 
     res.status(200).json({ success: true, data: user});
   }
@@ -210,7 +210,7 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
         )
       );
     }
-    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    await Payment.create({toId:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:-req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
   }
@@ -233,6 +233,15 @@ exports.getUserName = asyncHandler(async (req, res, next) => {
   const users=await User.find().select({username});
   res.status(200).json({ success: true, data: users});
 });
+
+//@desc      Get all Username
+//@routes    GET /api/users/transactions
+//Access     Private/Admin
+exports.getTransactions = asyncHandler(async (req, res, next) => {
+  const users=await Payment.find({$or:[{toId:req.user.id},{fromId:req.user.id}]});
+  res.status(200).json({ success: true, data: users});
+});
+
 
 // //@desc      Get all userInfo via Username
 // //@routes    GET /api/users/userName

@@ -247,3 +247,11 @@ exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+//@desc      Get all Username
+//@routes    GET /api/auth/transactions
+//Access     Private/Admin
+exports.getTransactions = asyncHandler(async (req, res, next) => {
+  const users=await Payment.find({$or:[{toId:req.user.id},{fromId:req.user.id}]});
+  res.status(200).json({ success: true, data: users});
+});
+

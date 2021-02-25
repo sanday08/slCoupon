@@ -26,6 +26,7 @@ const router = express.Router();
 router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
+
 router.route("/userName").get(getUserName);
 router.route("/getPercentage").get(getWinningPer);
 router.route("/updatePercentage").put(updateWinningPer);

@@ -56,7 +56,7 @@ exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
   if(distributers.length===1)
   {
 
-    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    await Payment.create({toId:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:req.body.creditPoint}})
     await User.findByIdAndUpdate(req.user.id,{$inc:{creditPoint:-req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
@@ -107,7 +107,7 @@ exports.reduceDistributerCreditPoint = asyncHandler(async (req, res, next) => {
         )
       );
     }
-    await Payment.create({toid:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
+    await Payment.create({toId:req.body.id,fromId:req.user.id,creditPoint:req.body.creditPoint,macAddress:req.body.macAddress});
     const user=await User.findByIdAndUpdate(req.body.id,{$inc:{creditPoint:-req.body.creditPoint}})
     await User.findByIdAndUpdate(req.user.id,{$inc:{creditPoint:req.body.creditPoint}})
     res.status(200).json({ success: true, data: user});
