@@ -12,8 +12,8 @@ let allBet = {
 }
 const winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} }
 let lastMinutes = 0;
-
-
+let winnerUsers={};
+let ticketIdBase={};
 const adminBalance = { 1: 0, 3: 0, 5: 0, 6: 0 }
 
 io.on("connection", socket => {
@@ -45,7 +45,7 @@ io.on("connection", socket => {
     console.log("Pila ye call karu..", series)
         for (let alpha in position) {
           for (let number in position[alpha]) {         
-              userBets = immutable.update(userBets, [retailerId,ticketId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number]);
+              userBets = immutable.update(userBets, [ticketId, retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number]);
               allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alpha][number] : position[alpha][number]);
           }
       }    
@@ -109,7 +109,22 @@ setInterval(() => {
           winnerNumbers[i][alpha] = winnerNumber
         }
       }
-      console.log(winnerNumbers)
+      console.log(winnerNumbers);
+      for(let ticketId in userBets) {
+        for(let userId in userBets[ticketId]) {
+          for (let series in userBets[ticketId][userId]) {
+            for (let alpha in userBets[ticketId][userId][series]){
+              for (let number in userBets[ticketId][userId][series][alpha]){
+                if(winnerNumbers[series][alpha][number])
+                {
+                  winnerUsers=immutable.update(winnerUsers,[userId])
+                }
+              }
+            }
+          }
+        }
+      }
+
 
       console.log("Admin Balance is",adminBalance)
     }
