@@ -87,7 +87,7 @@ setInterval(() => {
         shuffle(alphaArray);
         console.log(alphaArray);
         for (let [ai, alpha] of alphaArray.entries()) {
-          const winnerNumber = Math.round(Math.random() * 99)
+          let winnerNumber = Math.round(Math.random() * 99)
           if (allBet[i][alpha])// mene dala
           {
             if (ai > 6) {
