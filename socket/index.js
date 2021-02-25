@@ -99,7 +99,7 @@ setInterval(() => {
             if (allBet[i][alpha][winnerNumber]) {
               let a = 0;
               while (allBet[i][alpha][winnerNumber] * 90 > adminBalance[i] && a < 100) {
-                winnerNumber = Math.random(0, 99);
+                winnerNumber =Math.round( Math.random()*99);
                 a++;
               }
               adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
