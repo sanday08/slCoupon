@@ -6,7 +6,7 @@ const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const immutable = require("object-path-immutable");
 const { all } = require("../routes/auth");
-const userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
+let userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
 const allBet = {
   1: {}, 3: {}, 5: {}, 6: {}
