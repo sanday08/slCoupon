@@ -6,17 +6,14 @@ const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const immutable = require("object-path-immutable");
 const { all } = require("../routes/auth");
-const userBet = {
-  1: {}, 3: {}, 5: {}, 6: {}
-};
-//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
+const userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
 const allBet = {
   1: {}, 3: {}, 5: {}, 6: {}
 }
 const winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} }
 let lastMinutes = 0;
-const liveRooms = {};
+
 
 const adminBalance = { 1: 0, 3: 0, 5: 0, 6: 0 }
 
@@ -46,24 +43,15 @@ io.on("connection", socket => {
   // {"userId":"70001","series":1,"position":{"A":{"00":"1","11":"1"},"B":{"00":"1","11":"1"}},"totalBetPoint":8}
   socket.on("placeBet", async ({ retailerId, series, position, totalBetPoint }) => {
     console.log("Pila ye call karu..", series)
-
-    console.log("**********", position);
-
+        for (let alpha in position) {
+          for (let number in position[alpha]) {
+              userBets = immutable.update(bets, [userId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
+              allBet[series]=immutable.update(allBet[series],[alpha,number],v => v ? v + position[alfa][number] : position[alfa][number])
+          }
+      }    
     adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
-    //Set user position to our functions      
-    for (alfa of Object.keys(position)) {
-      if (allBet[series][alfa]) {
-        for (number of Object.keys(position[alfa]))
-          allBet[series][alfa] = immutable.update(allBet[series][alfa], [number], r => r ? r + position[alfa][number] : position[alfa][number])
-      }
-      else
-        allBet[series] = immutable.set(allBet[series], alfa, position[alfa]);
-    }
-    console.log("This is ", allBet, "******", JSON.stringify(adminBalance));
-
-
-    bet = { [retailerId]: { [series]: [position] } }
-    // console.log("############",bet);
+    console.log("Userbets",userBets,"This is ", allBet, "******", JSON.stringify(adminBalance));
+    bet = { [retailerId]: { [series]: [position] } }    // console.log("############",bet);
 
   });
 
@@ -93,9 +81,8 @@ setInterval(() => {
             if (ai > 6) {
               const entryKeys = Object.keys(allBet[i][alpha])
               const random = Math.floor(Math.random() * entryKeys.length);
-              winnerNumber = entryKeys[random]
-              console.log("winnerNumber is",winnerNumber);
-            }
+              winnerNumber = parseInt(entryKeys[random]);
+             }
             if (allBet[i][alpha][winnerNumber]) {
               let a = 0;
               while (allBet[i][alpha][winnerNumber] * 90 > adminBalance[i] && a < 100) {
