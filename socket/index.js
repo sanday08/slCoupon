@@ -41,7 +41,7 @@ io.on("connection", socket => {
   
   socket.on("placeBet", async ({ retailerId, series, position, totalBetPoint }) => {
     const ticketId=nanoid();
-    placeBet(retailerId,ticketId,series,position,totalBetPoin)
+    placeBet(retailerId,ticketId,series,position,totalBetPoint)
     console.log("Pila ye call karu..", series)
         for (let alpha in position) {
           for (let number in position[alpha]) {         
@@ -110,6 +110,7 @@ setInterval(() => {
         }
       }
       console.log(winnerNumbers)
+
       console.log("Admin Balance is",adminBalance)
     }
   }
