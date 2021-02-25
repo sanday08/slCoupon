@@ -47,7 +47,7 @@ io.on("connection", socket => {
         for (let alpha in position) {
           for (let number in position[alpha]) {
               console.log(series);
-              userBets[retailerId] = immutable.update(userBets[retailerId], [ series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
+              userBets = immutable.update(userBets, [retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
               allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alpha][number] : position[alpha][number])
           }
       }    
