@@ -8,7 +8,7 @@ const immutable = require("object-path-immutable");
 const { all } = require("../routes/auth");
 let userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
-const allBet = {
+let allBet = {
   1: {}, 3: {}, 5: {}, 6: {}
 }
 const winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} }
@@ -46,7 +46,7 @@ io.on("connection", socket => {
         for (let alpha in position) {
           for (let number in position[alpha]) {
               userBets = immutable.update(userBets, [retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
-              allBet[series]=immutable.update(allBet[series],[alpha,number],v => v ? v + position[alfa][number] : position[alfa][number])
+              allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alfa][number] : position[alfa][number])
           }
       }    
     adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
