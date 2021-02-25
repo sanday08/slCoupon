@@ -46,7 +46,7 @@ io.on("connection", socket => {
         for (let alpha in position) {
           for (let number in position[alpha]) {
               userBets = immutable.update(userBets, [retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
-              allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alfa][number] : position[alfa][number])
+              allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alpha][number] : position[alpha][number])
           }
       }    
     adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
