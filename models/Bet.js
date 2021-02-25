@@ -17,7 +17,7 @@ const BetSchema= new mongoose.Schema({
     },
 
     claim:{
-        type:boolean,
+        type:Boolean,
         default:false,
     },
     SeriesNo:{
