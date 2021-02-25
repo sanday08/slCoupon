@@ -45,13 +45,13 @@ io.on("connection", socket => {
     console.log("Pila ye call karu..", series)
         for (let alpha in position) {
           for (let number in position[alpha]) {
-              userBets = immutable.update(bets, [userId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
+              userBets = immutable.update(bets, [retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
               allBet[series]=immutable.update(allBet[series],[alpha,number],v => v ? v + position[alfa][number] : position[alfa][number])
           }
       }    
     adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
     console.log("Userbets",userBets,"This is ", allBet, "******", JSON.stringify(adminBalance));
-    bet = { [retailerId]: { [series]: [position] } }    // console.log("############",bet);
+      // console.log("############",bet);
 
   });
 
