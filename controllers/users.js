@@ -10,7 +10,6 @@ const Winning = require("../models/Winning");
 //@routes    Post /api/users/updatePercentage
 //Access     Private/Admin
 exports.updateWinningPer = asyncHandler(async (req, res, next) => { 
-  console.log("tere moh moh k dhage",req.body.percent);
   let user= await Winning.findByIdAndUpdate("602e55e9a494988def7acc25",{percent:req.body.percent});  
 
 res.status(200).json({ success: true, data: user });
@@ -54,7 +53,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
       let lastUser=await User.findOne({role: req.body.role}).sort({userName:-1});
       if(lastUser)
         userName=lastUser.userName+1;
-  console.log(userName);
+ 
     if(userName===0)
     {
       if(req.body.role==="admin")
@@ -66,7 +65,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
       else if(req.body.role==="retailer")
         userName=70001;
     }
- console.log(userName)
+
   const user = await User.create({...req.body,userName});
   res.status(200).json({ success: true, data: user });
 });
@@ -231,14 +230,6 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
 //Access     Private/Admin
 exports.getUserName = asyncHandler(async (req, res, next) => {
   const users=await User.find().select({username});
-  res.status(200).json({ success: true, data: users});
-});
-
-//@desc      Get all Username
-//@routes    GET /api/users/transactions
-//Access     Private/Admin
-exports.getTransactions = asyncHandler(async (req, res, next) => {
-  const users=await Payment.find({$or:[{toId:req.user.id},{fromId:req.user.id}]});
   res.status(200).json({ success: true, data: users});
 });
 

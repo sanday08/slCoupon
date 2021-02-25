@@ -1,12 +1,10 @@
-const _ = require("lodash");
-const uniqid = require("uniqid");
+
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
+const {placeBet}=require("./utils/bet");
 const { customAlphabet } = require('nanoid')
 const nanoid = customAlphabet('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ', 10)
 const immutable = require("object-path-immutable");
-const { all } = require("../routes/auth");
-const { json } = require("body-parser");
 let userBets ={};//retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
 
 let allBet = {
@@ -40,20 +38,27 @@ io.on("connection", socket => {
     });
   });
 
-  // To: Sandip -------------------------------------
-  // {"userId":"70001","series":1,"position":{"A":{"00":"1","11":"1"},"B":{"00":"1","11":"1"}},"totalBetPoint":8}
+  
   socket.on("placeBet", async ({ retailerId, series, position, totalBetPoint }) => {
+    const ticketId=nanoid();
+    placeBet(retailerId,ticketId,series,position,totalBetPoin)
     console.log("Pila ye call karu..", series)
         for (let alpha in position) {
           for (let number in position[alpha]) {         
-              userBets = immutable.update(userBets, [retailerId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number])
-              allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alpha][number] : position[alpha][number])
+              userBets = immutable.update(userBets, [retailerId,ticketId, series, alpha, number], v => v ? v + position[alpha][number] : position[alpha][number]);
+              allBet=immutable.update(allBet,[series, alpha,number],v => v ? v + position[alpha][number] : position[alpha][number]);
           }
       }    
-    adminBalance[series] = adminBalance[series] + (totalBetPoint - totalBetPoint * 10 / 100)
+    adminBalance[series] = adminBalance[series] +Math.round( (totalBetPoint - totalBetPoint * 10 / 100),2);
 
 
-
+    socket.emit("res", {
+      data: {
+       ticketId
+      },
+      en: "placeBet",
+      status: 1,
+    });
 
 
 console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ userBets",JSON.stringify(userBets));

@@ -5,7 +5,7 @@ const User = require("../models/User");
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
   req.authorization = req.headers['authorization']
-  console.log("*********************",req.authorization);
+
   if (req.authorization && req.authorization.startsWith("Bearer")) {
     //Set token from Bearer token in header
     token = req.authorization.split(" ")[1];
@@ -23,7 +23,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
   //Verify Token
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+
     req.user = await User.findById(decoded.id);
     next();
   } catch (err) {
@@ -35,7 +35,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      console.log("sandip")
+  
       next(
         new ErrorResponse(
           `User role ${req.user.role} is not authorized to access this route`,

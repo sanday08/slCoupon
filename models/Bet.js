@@ -10,8 +10,11 @@ const BetSchema= new mongoose.Schema({
         type:String,
         required: true,
     },
-    Bet:Number,
-    Won:Number,
+    betPoint:Number,
+    won:{
+        type:Number,
+        default:0
+    },
 
     claim:{
         type:boolean,
