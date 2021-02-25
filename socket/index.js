@@ -94,7 +94,7 @@ setInterval(() => {
               const entryKeys = Object.keys(allBet[i][alpha])
               const random = Math.floor(Math.random() * entryKeys.length);
               winnerNumber = entryKeys[random]
-
+              console.log("winnerNumber is",winnerNumber);
             }
             if (allBet[i][alpha][winnerNumber]) {
               let a = 0;
@@ -102,6 +102,7 @@ setInterval(() => {
                 winnerNumber =Math.round( Math.random()*99);
                 a++;
               }
+              console.log("Mere to l lag gaye",allBet[i][alpha][winnerNumber] * 90)
               adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
             }
           }
