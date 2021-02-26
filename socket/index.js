@@ -139,14 +139,16 @@ setInterval(async () => {
         await updateGameResult(i, winnerNumbersArray[i]);
       }
       console.log("Winner Array Is ", winnerNumbersArray);
-      if (ticketIdBase[series])
+      if (ticketIdBase)
         for (let series in winnerNumbers) {
           for (let alpha in winnerNumbers[series]) {
             let number = winnerNumbers[series][alpha];
-            for (t in ticketIdBase[series][alpha][number]) {
-              let price = ticketIdBase[series][alpha][number][t] * 90;
-              await winGamePay(ticketIdBase[t], price, t);
-            }
+            if (ticketIdBase[series][alpha])
+              if (ticketIdBase[series][alpha][number])
+                for (t in ticketIdBase[series][alpha][number]) {
+                  let price = ticketIdBase[series][alpha][number][t] * 90;
+                  await winGamePay(ticketIdBase[t], price, t);
+                }
           }
         }
 
