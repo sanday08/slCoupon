@@ -9,6 +9,7 @@ const WinResult = require("../models/WinResult");
 exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
     var now = new Date();
     var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const users = await WinResult.find({ DrDate: req.body.date });
+    console.log(req.query.date, req.body.date, req.param.date)
+    const users = await WinResult.find({ DrDate: req.param.date });
     res.status(200).json({ success: true, data: users });
 });
