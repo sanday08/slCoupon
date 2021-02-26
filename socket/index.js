@@ -93,7 +93,7 @@ io.on("connection", (socket) => {
   //Disconnect the users
   socket.on("disconnect", () => { });
 });
-setInterval(() => {
+setInterval(async () => {
   if (new Date().getHours() > 8 && new Date().getHours() < 22) {
     if (
       new Date().getMinutes() % 2 == 0 &&
