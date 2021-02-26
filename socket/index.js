@@ -185,5 +185,5 @@ function shuffle(array) {
 //Get all results in Array
 
 function getResultArray(winResult) {
-  return [winnerNumber["A"], winnerNumber["B"], winnerNumber["C"], winnerNumber["D"], winnerNumber["E"], winnerNumber["F"], winnerNumber["G"], winnerNumber["H"], winnerNumber["I"], winnerNumber["J"]]
+  return [winResult["A"], winResult["B"], winResult["C"], winResult["D"], winResult["E"], winResult["F"], winResult["G"], winResult["H"], winResult["I"], winResult["J"]]
 }
