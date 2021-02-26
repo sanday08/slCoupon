@@ -13,7 +13,7 @@ async function placeBet(retailerId, ticketId, betPoint, SeriesNo, ticketBets) {
   }
 }
 
-async function winGamePay({ retailerId, price, ticketId }) {
+async function winGamePay(retailerId, price, ticketId) {
   try {
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: +price } });
     await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: +price } });
@@ -24,7 +24,7 @@ async function winGamePay({ retailerId, price, ticketId }) {
 
 async function updateGameResult(series, betResult) {
   try {
-    await WinResult.create({ seriesNo: parseInt(series), A: betResult[0], B: betResult[1], C: betResult[2], D: betResult[3], E: betResult[4], F: betResult[5], G: betResult[6], H: betResult[7], I: betResult[8], J: betResult[8] })
+    await WinResult.create({ seriesNo: parseInt(series), A: betResult[0], B: betResult[1], C: betResult[2], D: betResult[3], E: betResult[4], F: betResult[5], G: betResult[6], H: betResult[7], I: betResult[8], J: betResult[9] })
     await Bet.updateMany({ $and: [{ seriesNo: parseInt(series) }, { winPositions: [] }] }, { winPositions: betResult })
   } catch (err) {
     return err.message;
@@ -32,4 +32,4 @@ async function updateGameResult(series, betResult) {
 }
 
 
-module.exports = { placeBet, winGamePay };
+module.exports = { placeBet, winGamePay, updateGameResult };
