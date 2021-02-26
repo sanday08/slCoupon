@@ -12,7 +12,7 @@ let allBet = {
   5: {},
   6: {},
 };
-const winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} };
+let winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} };
 let winnerNumbersArray = {}
 let lastMinutes = 0;
 let winnerUsers = {};
@@ -158,7 +158,9 @@ setInterval(async () => {
         en: "resultUpdate",
         status: 1,
       });
+      flushALL();
     }
+
   }
 }, 1000);
 
@@ -187,4 +189,19 @@ function shuffle(array) {
 
 function getResultArray(winResult) {
   return [winResult["A"], winResult["B"], winResult["C"], winResult["D"], winResult["E"], winResult["F"], winResult["G"], winResult["H"], winResult["I"], winResult["J"]]
+}
+
+function flushALL() {
+  userBets = {};
+  allBet = {
+    1: {},
+    3: {},
+    5: {},
+    6: {},
+  };
+  winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} };
+  winnerNumbersArray = {}
+  lastMinutes = 0;
+  winnerUsers = {};
+  ticketIdBase = {};
 }
