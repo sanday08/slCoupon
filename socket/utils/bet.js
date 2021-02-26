@@ -1,29 +1,35 @@
 
 const User = require("../../models/User");
-const Bet= require("../../models/Bet");
-
-async function placeBet(retailerId,ticketId,betPoint,SeriesNo,ticketBets) {
+const Bet = require("../../models/Bet");
+const WinResult = require("../../models/WinResult");
+async function placeBet(retailerId, ticketId, betPoint, SeriesNo, ticketBets) {
   //Verify Token
   try {
-    bet = await Bet.create({retailerId,ticketId,betPoint,SeriesNo,ticketBets})
-    await User.findByIdAndUpdate(retailerId,{$inc:{creditPoint:-betPoint}})
+    bet = await Bet.create({ retailerId, ticketId, betPoint, SeriesNo, ticketBets })
+    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
     return bet;
   } catch (err) {
     return err.message;
   }
 }
-async function getUserInfoBytoken (tokenId) {
-  let token;
-  //Set token from Bearer token in header
-  token = tokenId.split(" ")[1];
-  //Verify Token
+
+async function winGamePay({ retailerId, price, ticketId }) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("decoded Id is ",decoded)
-    user = await User.findById(decoded.id);
-    return user;
+    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: +price } });
+    await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: +price } });
   } catch (err) {
     return err.message;
   }
-} 
-module.exports = { placeBet,getUserInfoBytoken };
+}
+
+async function updateGameResult(series, betResult) {
+  try {
+    await WinResult.create({ seriesNo: parseInt(series), A: betResult[0], B: betResult[1], C: betResult[2], D: betResult[3], E: betResult[4], F: betResult[5], G: betResult[6], H: betResult[7], I: betResult[8], J: betResult[8] })
+    await Bet.updateMany({ $and: [{ seriesNo: parseInt(series) }, { winPositions: [] }] }, { winPositions: betResult })
+  } catch (err) {
+    return err.message;
+  }
+}
+
+
+module.exports = { placeBet, winGamePay };
