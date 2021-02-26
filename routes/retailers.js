@@ -13,5 +13,5 @@ router.use(authorize("retailer"));
 // router.route("/distributers").get(getDistributers);
 // router.route("/retailers").get(getRetailers);
 
-router.route("/winResultByDate").get(getWinnerResultsByDate);
+router.route("/winResultByDate/:date").get(getWinnerResultsByDate);
 module.exports = router;
