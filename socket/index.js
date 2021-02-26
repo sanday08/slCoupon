@@ -154,7 +154,7 @@ setInterval(async () => {
         }
 
       console.log("Admin Balance is", adminBalance);
-      socket.emit("res", {
+      io.emit("res", {
         data: {
           winnerNumbers
         },
