@@ -102,7 +102,7 @@ setInterval(async () => {
       lastMinutes = new Date().getMinutes();
       //Winner Logic
       for (let i of Object.keys(allBet)) {
-        const alphaArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+        const alphaArray = [A, B, C, D, E, F, G, H, I, J];
         shuffle(alphaArray);
         console.log(alphaArray);
         for (let [ai, alpha] of alphaArray.entries()) {
