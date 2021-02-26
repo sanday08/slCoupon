@@ -28,8 +28,8 @@ connectDB();
 //Routes files
 const auth = require("./routes/auth");
 const users = require("./routes/users");
-const superDistributers=require("./routes/superDistributers");
-const distributers=require("./routes/distributers");
+const superDistributers = require("./routes/superDistributers");
+const distributers = require("./routes/distributers");
 const cors = require("cors");
 const { options } = require("./routes/auth");
 const app = express();
@@ -81,8 +81,9 @@ if (process.env.NODE_ENV === "development") {
 //Mount routers
 app.use("/api/auth", auth);
 app.use("/api/users", users);
-app.use("/api/superDistributers",superDistributers);
-app.use("/api/distributers",distributers);
+app.use("/api/superDistributers", superDistributers);
+app.use("/api/distributers", distributers);
+app.use("/api/retailers", retailers);
 
 
 //custome error handling from express error handler (Always write below the Mount Routes)
@@ -105,4 +106,4 @@ process.on("unhandledRejection", (err, promise) => {
 });
 
 module.exports = { io };
-require("./socket/index");  
+require("./socket/index");
