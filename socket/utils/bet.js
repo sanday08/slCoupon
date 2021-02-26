@@ -5,7 +5,7 @@ const WinResult = require("../../models/WinResult");
 async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
   //Verify Token
   try {
-    bet = await Bet.create({ retailerId, ticketId, betPoint, seriesNo, ticketBets })
+    bet = await Bet.create({ retailerId, ticketId, betPoint, seriesNo: parseInt(seriesNo), ticketBets })
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
     return bet;
   } catch (err) {
