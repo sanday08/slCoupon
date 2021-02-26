@@ -9,6 +9,7 @@ async function placeBet(retailerId, ticketId, betPoint, SeriesNo, ticketBets) {
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
     return bet;
   } catch (err) {
+    console.log("Error on place bet", err.message);
     return err.message;
   }
 }
