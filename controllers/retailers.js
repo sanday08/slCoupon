@@ -8,7 +8,7 @@ const WinResult = require("../models/WinResult");
 //Access     Private/Admin
 exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 
-    console.log(req.query.date, req.body.date, req.param.date)
-    const users = await WinResult.find({ DrDate: req.param.date });
+    console.log(req.query.date, req.body.date, req.params.date)
+    const users = await WinResult.find({ DrDate: req.params.date });
     res.status(200).json({ success: true, data: users });
 });
