@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint }) => {
       const ticketId = nanoid();
-      await placeBet(retailerId, ticketId, series, position, totalBetPoint);
+      await placeBet(retailerId, ticketId, totalBetPoint, series, position);
       console.log("Pila ye call karu..", series);
       for (let alpha in position) {
         for (let number in position[alpha]) {
