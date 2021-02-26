@@ -2,10 +2,10 @@
 const User = require("../../models/User");
 const Bet = require("../../models/Bet");
 const WinResult = require("../../models/WinResult");
-async function placeBet(retailerId, ticketId, betPoint, SeriesNo, ticketBets) {
+async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
   //Verify Token
   try {
-    bet = await Bet.create({ retailerId, ticketId, betPoint, SeriesNo, ticketBets })
+    bet = await Bet.create({ retailerId, ticketId, betPoint, seriesNo, ticketBets })
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
     return bet;
   } catch (err) {
