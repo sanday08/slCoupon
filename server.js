@@ -30,6 +30,7 @@ const auth = require("./routes/auth");
 const users = require("./routes/users");
 const superDistributers = require("./routes/superDistributers");
 const distributers = require("./routes/distributers");
+const retailers = require("./routes/retailers");
 const cors = require("cors");
 const { options } = require("./routes/auth");
 const app = express();
