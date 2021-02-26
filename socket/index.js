@@ -139,15 +139,16 @@ setInterval(async () => {
         await updateGameResult(i, winnerNumbersArray[i]);
       }
       console.log("Winner Array Is ", winnerNumbersArray);
-      for (let series in winnerNumbers) {
-        for (let alpha in winnerNumbers[series]) {
-          let number = winnerNumbers[series][alpha];
-          for (t in ticketIdBase[series][alpha][number]) {
-            let price = ticketIdBase[series][alpha][number][t] * 90;
-            await winGamePay(ticketIdBase[t], price, t);
+      if (ticketIdBase[series])
+        for (let series in winnerNumbers) {
+          for (let alpha in winnerNumbers[series]) {
+            let number = winnerNumbers[series][alpha];
+            for (t in ticketIdBase[series][alpha][number]) {
+              let price = ticketIdBase[series][alpha][number][t] * 90;
+              await winGamePay(ticketIdBase[t], price, t);
+            }
           }
         }
-      }
 
       console.log("Admin Balance is", adminBalance);
       socket.emit("res", {
