@@ -1,5 +1,5 @@
 const express = require('express');
-const { getWinnerResults } = require("../controllers/retailers")
+const { getWinnerResultsByDate } = require("../controllers/retailers")
 const { protect, authorize } = require("../middleware/auth");
 
 
@@ -13,5 +13,5 @@ router.use(authorize("retailer"));
 // router.route("/distributers").get(getDistributers);
 // router.route("/retailers").get(getRetailers);
 
-router.route("/winResult").get(getWinnerResults);
+router.route("/winResultByDate").get(getWinnerResultsByDate);
 module.exports = router;

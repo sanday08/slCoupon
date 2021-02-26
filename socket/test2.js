@@ -1,4 +1,3 @@
-let position={"B":{"00":2,"01":2,"10":2,"11":2,"20":2,"21":2,"30":2,"31":2,"40":2,"41":2,"50":2,"51":2,"60":2,"61":2,"70":2,"71":2,"80":2,"81":2,"90":2,"91":2}};
 
-for (let pos in position)
-    console.log("This is Rocks    :    ",pos);
+var now = new Date();
+console.log(new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString())

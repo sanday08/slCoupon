@@ -22,7 +22,7 @@ const WinResultSchema = new mongoose.Schema({
     },
     DrDate: {
         type: String,
-        default: new Date().getFullYear().toString() + " : " + (new Date().getMonth() + 1).toString() + " : " + new Date().getDate().toString(),
+        default: new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
     }
 }, { timeStamps: true })
 
