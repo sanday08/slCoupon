@@ -10,5 +10,5 @@ exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 
     console.log(req.query.date, req.body.date, req.params.date)
     const users = await WinResult.find({ DrDate: req.params.date });
-    res.status(200).json({ success: true, data: users, count: Object.keys(users).length });
+    res.status(200).json({ success: true, count: user.length, data: users });
 });
