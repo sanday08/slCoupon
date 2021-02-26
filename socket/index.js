@@ -204,7 +204,6 @@ function flushALL() {
   };
   winnerNumbers = { 1: {}, 3: {}, 5: {}, 6: {} };
   winnerNumbersArray = {}
-  lastMinutes = 0;
   winnerUsers = {};
   ticketIdBase = {};
 }
