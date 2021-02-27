@@ -41,7 +41,9 @@ exports.updateAnnouncement = asyncHandler(async (req, res, next) => {
 //@routes    Get /api/users/announcement
 //Access     Private/Admin
 exports.getAnnouncement = asyncHandler(async (req, res, next) => {
+  console.log("Vijay lodu");
   let announcement = await Announcement.findById("60364d6538ebe177c168e1fa");
+  console.log("object",announcement)
   res.status(200).json({ success: true, data: announcement });
 });
 
