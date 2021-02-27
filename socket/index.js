@@ -33,7 +33,7 @@ io.on("connection", (socket) => {
         currentTime: new Date().toLocaleTimeString("en-US", {
           timeZone: "Asia/Calcutta",
         }),
-        winnerResults=getLastWinnerResults()
+        //winnerResults=getLastWinnerResults()
 
       },
       en: "join",
