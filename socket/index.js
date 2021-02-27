@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
   socket.on(
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint }) => {
-      const ticketId = nanoid();
+      let ticketId = nanoid();
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position);
       console.log("Pila ye call karu..", series);
       for (let alpha in position) {
