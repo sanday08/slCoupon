@@ -33,4 +33,18 @@ async function updateGameResult(series, betResult) {
 }
 
 
-module.exports = { placeBet, winGamePay, updateGameResult };
+
+async function getLastWinnerResults() {
+  try {
+    let result = await WinResult.find().sort("-createdAt").limit(4);
+    console.log("results", result);
+
+  } catch (err) {
+    return err.message;
+  }
+}
+
+
+
+
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults };
