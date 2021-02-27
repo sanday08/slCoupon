@@ -60,8 +60,9 @@ async function getLastTicketNo(retailerId) {
   const tickets = await Bet.find({ retailerId }).sort("-createdAt").limit(1);
   console.log("lAST tICKET iD IS ", tickets);
   if (tickets.length > 0) {
-    return tickets[0].ticketId;
     console.log(tickets[0].ticketId);
+    return tickets[0].ticketId;
+
   }
   return 0000;
 }
