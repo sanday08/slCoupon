@@ -6,7 +6,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
   //Verify Token
   try {
     user = await User.findById(retailerId);
-    if (User.creditPoint >= betPoint) {
+    if (user.creditPoint >= betPoint) {
       bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets })
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
       return bet;
