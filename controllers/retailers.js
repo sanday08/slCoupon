@@ -9,7 +9,7 @@ const Bet = require("../models/Bet");
 
 
 //@desc      Get all Bet History
-//@routes    GET /api/retailer/betHistroy/:retailerId
+//@routes    GET /api/retailers/betHistroy/:retailerId
 //Access     Private/Admin
 exports.getBetHistroy = asyncHandler(async (req, res, next) => {
 
@@ -21,7 +21,7 @@ exports.getBetHistroy = asyncHandler(async (req, res, next) => {
 
 
 //@desc      Get all Online Retailer
-//@routes    GET /api/retailer/online
+//@routes    GET /api/retailers/online
 //Access     Private/Admin
 exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
 
@@ -35,7 +35,7 @@ exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
 
 
 //@desc      Get all Win Result History
-//@routes    GET /api/retailer/winResultByDate
+//@routes    GET /api/retailers/winResultByDate
 //Access     Private/Admin
 exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 
@@ -45,7 +45,7 @@ exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 });
 
 //@desc      Claime Ticket
-//@routes    Put /api/retailer/claim
+//@routes    Put /api/retailers/claim
 //Access     Private/Admin
 exports.claimeTicket = asyncHandler(async (req, res, next) => {
 

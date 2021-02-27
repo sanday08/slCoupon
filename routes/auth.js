@@ -10,18 +10,20 @@ const {
   updatePassword,
   updateTransactionPin,
   loginRetailer,
-  getTransactions
+  getTransactions,
+  logoutRetailer
 } = require("../controllers/auth");
-const { protect,authorize } = require("../middleware/auth");
+const { protect, authorize } = require("../middleware/auth");
 
 const router = express.Router();
 // router.post("/", register);
 router.post("/login", login);
-router.post("/retailer/login",loginRetailer);
+router.post("/retailer/login", loginRetailer);
 router.get("/logout", logout);
-router.get("/transactions",protect,getTransactions);
-router.route("/me").get( protect, authorize("Admin") , getMe);
-router.put("updatedetails",protect, updateDetails);
+router.get("/retailerLogout", logoutRetailer);
+router.get("/transactions", protect, getTransactions);
+router.route("/me").get(protect, authorize("Admin"), getMe);
+router.put("updatedetails", protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
 router.put("/updateTransactionPin", protect, updateTransactionPin);
 module.exports = router;

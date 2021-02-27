@@ -93,18 +93,33 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
 
 ///@desc    Log user out/ clear cookie
-//@route    GET /api/auth/logout
+//@route    GET /api/auth/logout/
 //@access   Private
 
 exports.logout = asyncHandler(async (req, res, next) => {
-  console.log(req.user)
-  await user.findByIdAndUpdate(req.user.id, { isLogin: false });
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
   res.status(200).json({ success: true, data: {} });
 });
+
+///@desc    Log retailer out/ clear cookie
+//@route    GET /api/auth/retailerLogout/:id
+//@access   Private
+
+exports.logoutRetailer = asyncHandler(async (req, res, next) => {
+  console.log(req.params.id)
+  await user.findByIdAndUpdate(req.params.id, { isLogin: false });
+  res.cookie("token", "none", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ success: true, data: {} });
+});
+
+
+
 
 ///@desc     Get current logged in user
 //@route    GET /api/auth/me
