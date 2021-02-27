@@ -110,7 +110,7 @@ exports.logout = asyncHandler(async (req, res, next) => {
 
 exports.logoutRetailer = asyncHandler(async (req, res, next) => {
   console.log(req.params.id)
-  await user.findByIdAndUpdate(req.params.id, { isLogin: false });
+  await User.findByIdAndUpdate(req.params.id, { isLogin: false });
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,

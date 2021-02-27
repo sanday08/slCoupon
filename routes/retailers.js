@@ -1,5 +1,5 @@
 const express = require('express');
-const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers } = require("../controllers/retailers")
+const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy } = require("../controllers/retailers")
 const { protect, authorize } = require("../middleware/auth");
 
 
@@ -7,6 +7,7 @@ const router = express.Router();
 
 //use middleware to protect, authorize
 router.use(protect);
+router.get("/betHistroy/", getAllBetHistroy)
 router.get("/betHistroy/:retailerId", getBetHistroy)
 router.get("/online", getOnlineRetailers);
 
