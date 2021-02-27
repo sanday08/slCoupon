@@ -1,6 +1,6 @@
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
-const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, getLastTicketNo } = require("./utils/bet");
+const { placeBet, winGamePay, updateGameResult, getLastWinnerResults } = require("./utils/bet");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
@@ -23,6 +23,7 @@ io.on("connection", (socket) => {
 
   console.log("Yor Socket Id is:,", socket.id);
   console.log("SocketConnected");
+  const { ticketId, lastBet } = await getLastTicketNo(user._id);
 
   //Join Event When Application is Start
   socket.on("join", async ({ token }) => {
@@ -34,8 +35,8 @@ io.on("connection", (socket) => {
         currentTime: new Date().toLocaleTimeString("en-US", {
           timeZone: "Asia/Calcutta",
         }),
+
         winnerResults: await getLastWinnerResults(),
-        ticketId: await getLastTicketNo(user._id)
       },
       en: "join",
       status: 1,

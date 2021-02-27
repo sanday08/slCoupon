@@ -8,7 +8,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
     user = await User.findById(retailerId);
     if (user.creditPoint >= betPoint) {
       bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets })
-      await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
+      await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint }, lastTicketId: ticketId, lastBetAmount: betPoint })
       return bet;
     }
     return 0;
@@ -56,17 +56,8 @@ async function getLastWinnerResults() {
   }
 }
 
-async function getLastTicketNo(retailerId) {
-  const tickets = await Bet.find({ retailerId }).sort("-createdAt").limit(1);
-  console.log("lAST tICKET iD IS ", tickets);
-  if (tickets.length > 0) {
-    console.log(tickets[0].ticketId);
-    return tickets[0].ticketId;
-
-  }
-  return 0000;
-}
 
 
 
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, getLastTicketNo };
+
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults };

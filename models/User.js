@@ -77,6 +77,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "000",
   },
+  lastBetAmount: {
+    type: Number,
+    default: 0
+  },
   isLogin: {
     type: Boolean,
     default: false
