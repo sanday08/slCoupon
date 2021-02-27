@@ -39,6 +39,14 @@ async function getLastWinnerResults() {
     let result = await WinResult.find().sort("-createdAt").limit(4);
     console.log("results", result);
 
+    if (result.length == 4) {
+      return {
+        [result[0].seriesNo]: { "A": result[0].A, "B": result[0].B, "C": result[0].C, "D": result[0].D, "E": result[0].E, "F": result[0].F, "G": result[0].G, "H": result[0].H, "I": result[0].I, "J": result[0].J },
+        [result[1].seriesNo]: { "A": result[1].A, "B": result[1].B, "C": result[1].C, "D": result[1].D, "E": result[1].E, "F": result[1].F, "G": result[1].G, "H": result[1].H, "I": result[1].I, "J": result[1].J },
+        [result[2].seriesNo]: { "A": result[2].A, "B": result[2].B, "C": result[2].C, "D": result[2].D, "E": result[2].E, "F": result[2].F, "G": result[2].G, "H": result[2].H, "I": result[2].I, "J": result[2].J },
+        [result[3].seriesNo]: { "A": result[3].A, "B": result[3].B, "C": result[3].C, "D": result[3].D, "E": result[3].E, "F": result[3].F, "G": result[3].G, "H": result[3].H, "I": result[3].I, "J": result[3].J },
+      }
+    }
   } catch (err) {
     return err.message;
   }
