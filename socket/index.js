@@ -23,7 +23,7 @@ io.on("connection", (socket) => {
 
   console.log("Yor Socket Id is:,", socket.id);
   console.log("SocketConnected");
-  const { ticketId, lastBet } = await getLastTicketNo(user._id);
+
 
   //Join Event When Application is Start
   socket.on("join", async ({ token }) => {
