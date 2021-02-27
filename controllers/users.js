@@ -31,7 +31,7 @@ exports.getWinningPer = asyncHandler(async (req, res, next) => {
 //@routes    Put /api/users/announcement
 //Access     Private/Admin
 exports.updateAnnouncement = asyncHandler(async (req, res, next) => {
-  let announcement = await Announcement.findByIdAndUpdate("60364d6538ebe177c168e1fa", { announcement: req.body.announcement });
+  let announcement = await Announcement.findByIdAndUpdate("6039ea5b9ee94d505a90dd3e", { announcement: req.body.announcement });
 
   res.status(200).json({ success: true, data: announcement });
 });
@@ -42,7 +42,7 @@ exports.updateAnnouncement = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getAnnouncement = asyncHandler(async (req, res, next) => {
   console.log("Vijay lodu");
-  let announcement = await Announcement.findById("60364d6538ebe177c168e1fa");
+  let announcement = await Announcement.findById("6039ea5b9ee94d505a90dd3e");
   console.log("object",announcement)
   res.status(200).json({ success: true, data: announcement });
 });
