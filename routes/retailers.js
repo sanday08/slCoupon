@@ -7,7 +7,7 @@ const router = express.Router();
 
 //use middleware to protect, authorize
 router.use(protect);
-router.route("/betHistroy/:retailerId").get(authorize('Admin', "retailer", "distributer", "superDistributer"), getBetHistroy)
+router.get("/betHistroy/:retailerId", getBetHistroy)
 router.get("/online", getOnlineRetailers);
 
 router.use(authorize("retailer"));
