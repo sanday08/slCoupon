@@ -31,7 +31,7 @@ exports.getWinningPer = asyncHandler(async (req, res, next) => {
 //@routes    Put /api/users/announcement
 //Access     Private/Admin
 exports.updateAnnouncement = asyncHandler(async (req, res, next) => {
-  let announcement = await Announcement.findByIdAndUpdate("60364d6538ebe177c168e1fa", { percent: req.body.announcement });
+  let announcement = await Announcement.findByIdAndUpdate("60364d6538ebe177c168e1fa", { announcement: req.body.announcement });
 
   res.status(200).json({ success: true, data: announcement });
 });
