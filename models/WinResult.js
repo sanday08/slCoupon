@@ -24,6 +24,6 @@ const WinResultSchema = new mongoose.Schema({
         type: String,
         default: new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
     }
-}, { timeStamps: true })
+}, { timestamps: true })
 
 module.exports = mongoose.model("WinResult", WinResultSchema);

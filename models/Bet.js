@@ -35,7 +35,7 @@ const BetSchema = new mongoose.Schema({
         required: true
     }
 
-}, { timeStamps: true })
+}, { timestamps: true })
 
 module.exports = mongoose.model("Bet", BetSchema);
 

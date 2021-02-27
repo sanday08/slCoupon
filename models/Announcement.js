@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const AnnouncementSchema= new mongoose.Schema({
+const AnnouncementSchema = new mongoose.Schema({
     announcement: {
-        type:String,
-        default:""
+        type: String,
+        default: ""
     }
-    
-},{timeStamps: true})
+
+}, { timetamps: true })
 module.exports = mongoose.model("Announcement", AnnouncementSchema);

@@ -36,7 +36,7 @@ async function updateGameResult(series, betResult) {
 
 async function getLastWinnerResults() {
   try {
-    // let result = await WinResult.find(,).sort("-createdAt").limit(4);
+    let result = await WinResult.find().sort({ createdAt: -1 }).limit(4);
     console.log("results", result);
 
   } catch (err) {

@@ -85,7 +85,7 @@ const UserSchema = new mongoose.Schema({
   // resetPasswordToken: String,
   // resetPasswordExpire: Date, 
 
-}, { timeStamps: true });
+}, { timestamps: true });
 //Encrypt password us bcrypt
 // UserSchema.pre("save", async function () {
 //   //this condition used when forgot password
