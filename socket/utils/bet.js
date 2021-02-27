@@ -5,12 +5,16 @@ const WinResult = require("../../models/WinResult");
 async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
   //Verify Token
   try {
-    bet = await Bet.create({ retailerId, ticketId, betPoint, seriesNo: parseInt(seriesNo), ticketBets })
-    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
-    return bet;
+    user = await User.findById(retailerId);
+    if (User.creditPoint >= betPoint) {
+      bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets })
+      await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint } })
+      return bet;
+    }
+    return 0;
   } catch (err) {
     console.log("Error on place bet", err.message);
-    return err.message;
+    return;
   }
 }
 
@@ -41,10 +45,10 @@ async function getLastWinnerResults() {
 
     if (result.length == 4) {
       return {
-        [result[0].seriesNo]: { "A": result[0].A, "B": result[0].B, "C": result[0].C, "D": result[0].D, "E": result[0].E, "F": result[0].F, "G": result[0].G, "H": result[0].H, "I": result[0].I, "J": result[0].J },
-        [result[1].seriesNo]: { "A": result[1].A, "B": result[1].B, "C": result[1].C, "D": result[1].D, "E": result[1].E, "F": result[1].F, "G": result[1].G, "H": result[1].H, "I": result[1].I, "J": result[1].J },
-        [result[2].seriesNo]: { "A": result[2].A, "B": result[2].B, "C": result[2].C, "D": result[2].D, "E": result[2].E, "F": result[2].F, "G": result[2].G, "H": result[2].H, "I": result[2].I, "J": result[2].J },
-        [result[3].seriesNo]: { "A": result[3].A, "B": result[3].B, "C": result[3].C, "D": result[3].D, "E": result[3].E, "F": result[3].F, "G": result[3].G, "H": result[3].H, "I": result[3].I, "J": result[3].J },
+        [result[0].seriesNo]: { "A": parseInt(result[0].A), "B": parseInt(result[0].B), "C": parseInt(result[0].C), "D": parseInt(result[0].D), "E": parseInt(result[0].E), "F": parseInt(result[0].F), "G": parseInt(result[0].G), "H": parseInt(result[0].H), "I": parseInt(result[0].I), "J": parseInt(result[0].J) },
+        [result[1].seriesNo]: { "A": parseInt(result[1].A), "B": parseInt(result[1].B), "C": parseInt(result[1].C), "D": parseInt(result[1].D), "E": parseInt(result[1].E), "F": parseInt(result[1].F), "G": parseInt(result[1].G), "H": parseInt(result[1].H), "I": parseInt(result[1].I), "J": parseInt(result[1].J) },
+        [result[2].seriesNo]: { "A": parseInt(result[2].A), "B": parseInt(result[2].B), "C": parseInt(result[2].C), "D": parseInt(result[2].D), "E": parseInt(result[2].E), "F": parseInt(result[2].F), "G": parseInt(result[2].G), "H": parseInt(result[2].H), "I": parseInt(result[2].I), "J": parseInt(result[2].J) },
+        [result[3].seriesNo]: { "A": parseInt(result[3].A), "B": parseInt(result[3].B), "C": parseInt(result[3].C), "D": parseInt(result[3].D), "E": parseInt(result[3].E), "F": parseInt(result[3].F), "G": parseInt(result[3].G), "H": parseInt(result[3].H), "I": parseInt(result[3].I), "J": parseInt(result[3].J) },
       }
     }
   } catch (err) {

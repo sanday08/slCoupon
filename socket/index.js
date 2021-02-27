@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint }) => {
       const ticketId = nanoid();
-      await placeBet(retailerId, ticketId, totalBetPoint, series, position);
+      let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position);
       console.log("Pila ye call karu..", series);
       for (let alpha in position) {
         for (let number in position[alpha]) {
@@ -68,7 +68,9 @@ io.on("connection", (socket) => {
       adminBalance[series] =
         adminBalance[series] +
         Math.round(totalBetPoint - (totalBetPoint * 10) / 100, 2);
-
+      if (bet == 0) {
+        ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
+      }
       socket.emit("res", {
         data: {
           ticketId,

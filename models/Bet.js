@@ -15,7 +15,9 @@ const BetSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-
+    startPoint: Number,
+    userName: String,
+    name: String,
     claim: {
         type: Boolean,
         default: false,
