@@ -86,7 +86,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Your Account is Blocked Please contact your Admin",))
   }
 
-  await user.findByIdAndUpdate(user._id, { isLogin: true });
+  await User.findByIdAndUpdate(user._id, { isLogin: true });
   sendTokenResponse(user, 200, res);
 });
 
