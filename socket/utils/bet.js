@@ -56,7 +56,11 @@ async function getLastWinnerResults() {
   }
 }
 
+async function getLastTicketNo(retailerId) {
+  const tickets = await Bet.find({ retailerId }).sort("-createdAt").limit(1);
+  return tickets[0].ticketId;
+}
 
 
 
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults };
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, getLastTicketNo };
