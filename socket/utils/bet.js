@@ -58,7 +58,9 @@ async function getLastWinnerResults() {
 
 async function getLastTicketNo(retailerId) {
   const tickets = await Bet.find({ retailerId }).sort("-createdAt").limit(1);
-  return tickets[0].ticketId;
+  if (tickets.length > 0)
+    return tickets[0].ticketId;
+  return 0000;
 }
 
 
