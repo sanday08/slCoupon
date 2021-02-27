@@ -20,7 +20,7 @@ const router = express.Router();
 router.post("/login", login);
 router.post("/retailer/login", loginRetailer);
 router.get("/logout", logout);
-router.get("/retailerLogout", logoutRetailer);
+router.get("/retailerLogout/:id", logoutRetailer);
 router.get("/transactions", protect, getTransactions);
 router.route("/me").get(protect, authorize("Admin"), getMe);
 router.put("updatedetails", protect, updateDetails);
