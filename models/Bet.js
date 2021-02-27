@@ -20,6 +20,7 @@ const BetSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+
     seriesNo: {
         type: Number,
         enum: [1, 3, 5, 6],

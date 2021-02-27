@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
 // const crypto = require("crypto");
 // const bcrypt = require("bcrypt");
- const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please add a name"],
   },
-  firmName:{
-    type:String,
+  firmName: {
+    type: String,
     required: [true, "Please Add FirmName"]
   },
-  referralId:{
-    type:mongoose.Schema.ObjectId,
+  referralId: {
+    type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: true,    
+    required: true,
   },
   mobile: {
     type: String,
@@ -22,28 +22,28 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["retailer", "distributer","superDistributer","Admin"], //if you write admin than its display error "`admin` is not a valid enum value for path `role`".
+    enum: ["retailer", "distributer", "superDistributer", "Admin"], //if you write admin than its display error "`admin` is not a valid enum value for path `role`".
     default: "retailer",
   },
-  userName:{
+  userName: {
     type: Number,
     required: [true, "Please add a userName"],
-    unique: true, 
-    maxlength:[5,"UserName must be at least 6 characters"],
-    minlength:[5,"UserName must be at least 6 characters"],
+    unique: true,
+    maxlength: [5, "UserName must be at least 6 characters"],
+    minlength: [5, "UserName must be at least 6 characters"],
   },
   password: {
     type: Number,
     required: [true, "Please add a password"],
-    minlength: [8,"Password must be at least 6 characters"],
-    maxlength:[8,"password must be at least 6 characters"],
+    minlength: [8, "Password must be at least 6 characters"],
+    maxlength: [8, "password must be at least 6 characters"],
     select: false,
   },
-  transactionPin:{
+  transactionPin: {
     type: Number,
     required: [true, "Please add a transactionPin"],
-    minlength:[4,"TransactionPin must be at least 4 characters"],
-    maxlength:[4,"TransactionPin must be at least 4 characters"]
+    minlength: [4, "TransactionPin must be at least 4 characters"],
+    maxlength: [4, "TransactionPin must be at least 4 characters"]
   },
 
   address: String,
@@ -51,37 +51,41 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  creditPoint:{
+  creditPoint: {
     type: Number,
-    default:0
+    default: 0
   },
-  commissionPoint:{
-    type:Number,
-    default:0
+  commissionPoint: {
+    type: Number,
+    default: 0
   },
   commissionPercentage: {
     type: Number,
-    default:0,
-    maxlength:2
+    default: 0,
+    maxlength: 2
   },
-  sharingPoint:{
+  sharingPoint: {
     type: Number,
-    default:0,
-    maxlength:2
+    default: 0,
+    maxlength: 2
   },
   sharingPercentage: {
     type: Number,
-    default:0
+    default: 0
   },
   lastTicketId: {
-    type:String,
-    default:"000",
+    type: String,
+    default: "000",
   },
- 
+  isLogin: {
+    type: Boolean,
+    default: false
+  }
+
   // resetPasswordToken: String,
   // resetPasswordExpire: Date, 
 
-},{timeStamps: true});
+}, { timeStamps: true });
 //Encrypt password us bcrypt
 // UserSchema.pre("save", async function () {
 //   //this condition used when forgot password
@@ -94,7 +98,7 @@ const UserSchema = new mongoose.Schema({
 
 //Sign JWT and return
 UserSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id,role:this.role, userName:this.userName, creditPoint:this.creditPoint,name:this.name,transactionPin:this.transactionPin }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this._id, role: this.role, userName: this.userName, creditPoint: this.creditPoint, name: this.name, transactionPin: this.transactionPin }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };

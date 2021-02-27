@@ -8,9 +8,9 @@ const sendEmail = require("../utils/sendEmail");
 //@route   Post /api/auth
 //@access  Private
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, referralId,mobile,role,userName,password,transactionPin,address,pinCode,creditPoint,commissionPercentage,sharingPercentage } = req.body;
+  const { name, email, referralId, mobile, role, userName, password, transactionPin, address, pinCode, creditPoint, commissionPercentage, sharingPercentage } = req.body;
   //Create User
-  const user = await User.create({ name, email, referralId,mobile,role,userName,password,transactionPin,address,pinCode,creditPoint,commissionPercentage,sharingPercentage });
+  const user = await User.create({ name, email, referralId, mobile, role, userName, password, transactionPin, address, pinCode, creditPoint, commissionPercentage, sharingPercentage });
   //Create Token
   //   const token = user.getSignedJwtToken();
   //   res.status(200).json({ success: true, token });
@@ -25,14 +25,14 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const { userName, password } = req.body;
   //userName and password fields are required
-  if (!userName&& !password) {
+  if (!userName && !password) {
     return next(
       new ErrorResponse("userName and password fields must be required"),
       400
     );
   }
   //Check for user
-  const user = await User.findOne({ userName}).select("+password");
+  const user = await User.findOne({ userName }).select("+password");
 
   if (!user) {
     return next(new ErrorResponse("Invalide credentials", 401));
@@ -44,7 +44,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
 
-  if(!user.isActive){
+  if (!user.isActive) {
     return next(new ErrorResponse("Your Account is Blocked Please contact your Admin",))
   }
   sendTokenResponse(user, 200, res);
@@ -59,16 +59,16 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
   const { userName, password } = req.body;
   //userName and password fields are required
-  if (!userName&& !password) {
+  if (!userName && !password) {
     return next(
       new ErrorResponse("userName and password fields must be required"),
       400
     );
   }
   //Check for user
-  const user = await User.findOne({ userName}).select("+password");
+  const user = await User.findOne({ userName }).select("+password");
 
-  if(user.role!="retailer") {
+  if (user.role != "retailer") {
     return next(new ErrorResponse("You are not authorized to access this application.", 401));
   }
 
@@ -82,9 +82,11 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse("Invalide credentials", 401));
   }
 
-  if(!user.isActive){
+  if (!user.isActive) {
     return next(new ErrorResponse("Your Account is Blocked Please contact your Admin",))
   }
+
+  await user.findByIdAndUpdate(user._id, { isLogin: true });
   sendTokenResponse(user, 200, res);
 });
 
@@ -95,10 +97,12 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
 //@access   Private
 
 exports.logout = asyncHandler(async (req, res, next) => {
+  await user.findByIdAndUpdate(req.user.id, { isLogin: false });
   res.cookie("token", "none", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
+
   res.status(200).json({ success: true, data: {} });
 });
 
@@ -132,10 +136,10 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 //@access   private
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
- 
+
   const user = await User.findById(req.user.id).select("+password");
   //Check current password (matchPassword method defined in User models)
-  if (user.password!=req.body.currentPassword) {
+  if (user.password != req.body.currentPassword) {
     next(new ErrorResponse(`Password is incorrect`, 401));
   }
   user.password = req.body.newPassword;
@@ -236,10 +240,10 @@ const sendTokenResponse = (user, statusCode, res) => {
 //@access   private
 
 exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
- 
+
   const user = await User.findById(req.user.id).select("+password");
   //Check current password (matchPassword method defined in User models)
-  if (user.password!=req.body.currentPassword || user.transactionPin!=req.body.currentTransactionPin) {
+  if (user.password != req.body.currentPassword || user.transactionPin != req.body.currentTransactionPin) {
     next(new ErrorResponse(`Your Password or TransactionPin is incorrect`, 401));
   }
   user.transactionPin = req.body.newTransactionPin;
@@ -251,7 +255,7 @@ exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/auth/transactions
 //Access     Private/Admin
 exports.getTransactions = asyncHandler(async (req, res, next) => {
-  const users=await Payment.find({$or:[{toId:req.user.id},{fromId:req.user.id}]});
-  res.status(200).json({ success: true, data: users});
+  const users = await Payment.find({ $or: [{ toId: req.user.id }, { fromId: req.user.id }] });
+  res.status(200).json({ success: true, data: users });
 });
 

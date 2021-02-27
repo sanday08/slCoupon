@@ -13,7 +13,9 @@ const {
   reduceSuperDistributerCreditPoint,
   updateWinningPer,
   getWinningPer,
-  getUserName
+  getUserName,
+  getAnnouncement,
+  updateAnnouncement
 } = require("../controllers/users");
 const advancedResults = require("../middleware/advancedResults");
 const User = require("../models/User");
@@ -28,6 +30,7 @@ router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
 
 router.route("/userName").get(getUserName);
+router.route("/announcement").get(getAnnouncement).put(updateAnnouncement);
 router.route("/getPercentage").get(getWinningPer);
 router.route("/updatePercentage").put(updateWinningPer);
 router.route("/addCreditPoint").post(addSuperDistributerCreditPoint);

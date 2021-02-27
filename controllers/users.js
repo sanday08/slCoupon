@@ -3,11 +3,11 @@ const ErrorResponse = require("../utils/errorResponse");
 const Payment = require("../models/Payment");
 const User = require("../models/User");
 const Winning = require("../models/Winning");
+const Announcement=require("../models/Announcement");
 
 
-
-//@desc      Create users
-//@routes    Post /api/users/updatePercentage
+//@desc      Update Winning Percentade
+//@routes    Put /api/users/updatePercentage
 //Access     Private/Admin
 exports.updateWinningPer = asyncHandler(async (req, res, next) => {
   let user = await Winning.findByIdAndUpdate("602e55e9a494988def7acc25", { percent: req.body.percent });
@@ -16,7 +16,7 @@ exports.updateWinningPer = asyncHandler(async (req, res, next) => {
 });
 
 
-//@desc      Create users
+//@desc      Get Winning Percentage
 //@routes    Get /api/users/getPercentage
 //Access     Private/Admin
 exports.getWinningPer = asyncHandler(async (req, res, next) => {
@@ -25,6 +25,25 @@ exports.getWinningPer = asyncHandler(async (req, res, next) => {
 });
 
 
+
+
+//@desc      Update Announcement
+//@routes    Put /api/users/announcement
+//Access     Private/Admin
+exports.updateAnnouncement = asyncHandler(async (req, res, next) => {
+  let announcement = await Announcement.findByIdAndUpdate("60364d6538ebe177c168e1fa", { percent: req.body.announcement });
+
+  res.status(200).json({ success: true, data: announcement });
+});
+
+
+//@desc      Get Announcement
+//@routes    Get /api/users/announcement
+//Access     Private/Admin
+exports.getAnnouncement = asyncHandler(async (req, res, next) => {
+  let announcement = await Announcement.findById("60364d6538ebe177c168e1fa");
+  res.status(200).json({ success: true, data: announcement });
+});
 
 
 
