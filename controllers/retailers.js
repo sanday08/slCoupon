@@ -24,8 +24,6 @@ exports.getBetHistroy = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/retailers/online
 //Access     Private/Admin
 exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
-
-    console.log(req.query.date, req.body.date, req.params.date)
     const users = await User.find({ isLogin: true });
     res.status(200).json({ success: true, count: users.length, data: users });
 });
