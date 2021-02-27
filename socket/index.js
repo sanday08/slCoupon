@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
           timeZone: "Asia/Calcutta",
         }),
         winnerResults: await getLastWinnerResults(),
-        ticketId: getLastTicketNo(user._id)
+        ticketId: await getLastTicketNo(user._id)
       },
       en: "join",
       status: 1,
