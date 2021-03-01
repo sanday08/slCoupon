@@ -280,6 +280,6 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 //Access     Private/
 exports.getUserName = asyncHandler(async (req, res, next) => {
   console.log(req.body.userName, req.query.userName, req.params.userName)
-  const users = await User.find({ userName: "/^" + req.query.userName + "/" });
+  const users = await User.find({ userName: "/^" + req.body.userName + "/" });
   res.status(200).json({ success: true, data: users });
 });
