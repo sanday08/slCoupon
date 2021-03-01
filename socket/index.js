@@ -76,6 +76,7 @@ io.on("connection", (socket) => {
       socket.emit("res", {
         data: {
           ticketId,
+          series
 
         },
         en: "placeBet",

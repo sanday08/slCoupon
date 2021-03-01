@@ -287,6 +287,6 @@ exports.getUserName = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/:id
 //Access     Private/for users
 exports.getUser = asyncHandler(async (req, res, next) => {
-  const user = await User.find({ _id: req.params.id }).populate("name", "userName");
+  const user = await User.findById({ _id: req.params.id }).populate("name", "userName");
   res.status(200).json({ success: true, data: user });
 });
