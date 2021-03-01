@@ -13,7 +13,7 @@ const {
   reduceSuperDistributerCreditPoint,
   updateWinningPer,
   getWinningPer,
-  getUserName,
+
   getAnnouncement,
   updateAnnouncement
 } = require("../controllers/users");
@@ -29,7 +29,7 @@ router.use(protect);
 router.use(authorize("Admin"));
 router.route("/").get(advancedResults(User), getUsers).post(createUser);
 
-router.route("/userName").get(getUserName);
+
 router.route("/announcement").get(getAnnouncement).put(updateAnnouncement);
 router.route("/getPercentage").get(getWinningPer);
 router.route("/updatePercentage").put(updateWinningPer);
