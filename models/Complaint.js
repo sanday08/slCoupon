@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const ComplaintSchema = new mongoose.Schema({
-    Complaint: {
+    title: {
+        type: String,
+        required: true
+    },
+    contant: {
         type: String,
         default: ""
     }

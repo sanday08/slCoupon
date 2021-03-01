@@ -3,7 +3,7 @@ const ErrorRespose = require("../utils/errorResponse");
 const User = require("../models/User");
 const WinResult = require("../models/WinResult");
 const Bet = require("../models/Bet");
-
+const Complaint = require("../models/Complaint");
 
 
 
@@ -86,3 +86,16 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({ success: true, data: result });
 });
+
+
+
+//@desc      Post all Bet History
+//@routes    Post /api/retailers/complaint
+//Access     Private/Admin
+exports.addComplaint = asyncHandler(async (req, res, next) => {
+    const bets = await Complaint.create({ title: req.body.title, content: req.body.content });
+    res.status(200).json({ success: true, count: bets.length, data: bets });
+});
+
+
+

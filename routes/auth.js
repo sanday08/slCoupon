@@ -11,7 +11,8 @@ const {
   updateTransactionPin,
   loginRetailer,
   getTransactions,
-  logoutRetailer
+  logoutRetailer,
+  getUserName
 } = require("../controllers/auth");
 const { protect, authorize } = require("../middleware/auth");
 
@@ -26,4 +27,5 @@ router.route("/me").get(protect, authorize("Admin"), getMe);
 router.put("updatedetails", protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
 router.put("/updateTransactionPin", protect, updateTransactionPin);
+router.get("/userName", protect, getUserName);
 module.exports = router;

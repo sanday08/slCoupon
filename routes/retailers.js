@@ -1,5 +1,5 @@
 const express = require('express');
-const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy } = require("../controllers/retailers")
+const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy, addComplaint } = require("../controllers/retailers")
 const { protect, authorize } = require("../middleware/auth");
 
 
@@ -19,4 +19,5 @@ router.use(authorize("retailer"));
 
 router.route("/winResultByDate/:date").get(getWinnerResultsByDate);
 router.route("/claim").put(claimeTicket);
+router.route("/complaint").post(addComplaint);
 module.exports = router;
