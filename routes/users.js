@@ -13,7 +13,8 @@ const {
   reduceSuperDistributerCreditPoint,
   updateWinningPer,
   getWinningPer,
-
+  getComplaints,
+  deleteComplaints,
   getAnnouncement,
   updateAnnouncement
 } = require("../controllers/users");
@@ -38,5 +39,8 @@ router.route("/reduceCreditPoint").post(reduceSuperDistributerCreditPoint)
 router.route("/superDistributers").get(getSuperDistributers);
 router.route("/distributers").get(getDistributers);
 router.route("/retailers").get(getRetailers);
+router.route("/complaint").get(getComplaints);
+router.route("/complaint/:id").delete(deleteComplaints);
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
+
 module.exports = router;

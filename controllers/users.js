@@ -4,7 +4,7 @@ const Payment = require("../models/Payment");
 const User = require("../models/User");
 const Winning = require("../models/Winning");
 const Announcement = require("../models/Announcement");
-
+const Complaint = require("../models/Complaint");
 
 //@desc      Update Winning Percentade
 //@routes    Put /api/users/updatePercentage
@@ -235,10 +235,19 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
 
 
 
-// //@desc      Get all userInfo via Username
-// //@routes    GET /api/users/userName
-// //Access     Private/Admin
-// exports.getUsers = asyncHandler(async (req, res, next) => {
-//   const users=await User.find({username: req.query.username});
-//   res.status(200).json({ success: true, data: users});
-// });
+//@desc      Get all Complaints
+//@routes    GET /api/users/complaint
+//Access     Private/Admin
+exports.getComplaints = asyncHandler(async (req, res, next) => {
+  const complaints = await Complaint.find({ username: req.query.username });
+  res.status(200).json({ success: true, data: complaints });
+});
+
+
+//@desc      Delete Complaints
+//@routes    Delete /api/users/complaint/:id
+//Access     Private/Admin
+exports.deleteComplaints = asyncHandler(async (req, res, next) => {
+  const complaints = await Complaint.findByIdAndDelete(req.params.id);
+  res.status(200).json({ success: true, data: "Deleted Successfully..!" });
+});

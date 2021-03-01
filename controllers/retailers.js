@@ -27,7 +27,9 @@ exports.getAllBetHistroy = asyncHandler(async (req, res, next) => {
 exports.getBetHistroy = asyncHandler(async (req, res, next) => {
 
     console.log(req.query.retailerId, req.body.retailerId, req.params.retailerId)
+
     const bets = await Bet.find({ retailerId: req.params.retailerId });
+
     res.status(200).json({ success: true, count: bets.length, data: bets });
 });
 
