@@ -280,5 +280,6 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getUserName = asyncHandler(async (req, res, next) => {
   const users = await User.find({ userName: req.body.userName });
+  console.log(users);
   res.status(200).json({ success: true, data: users });
 });
