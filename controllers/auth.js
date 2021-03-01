@@ -268,7 +268,7 @@ exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
 
 //@desc      Get all Username
 //@routes    GET /api/auth/transactions
-//Access     Private/
+//Access     Private/Admin
 exports.getTransactions = asyncHandler(async (req, res, next) => {
   const users = await Payment.find({ $or: [{ toId: req.user.id }, { fromId: req.user.id }] });
   res.status(200).json({ success: true, data: users });
@@ -277,10 +277,8 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 
 //@desc      Get all Username
 //@routes    GET /api/users/userName
-//Access     Private/
+//Access     Private/Admin
 exports.getUserName = asyncHandler(async (req, res, next) => {
-
-  console.log(req.body.userName, req.query.userName, req.params.userName)
-  const users = await User.find({ userName: { $regex: '.*' + req.body.userName + '.*' } });
+  const users = await User.find({ userName: req.body.userName }).select({ username });
   res.status(200).json({ success: true, data: users });
 });
