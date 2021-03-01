@@ -21,7 +21,7 @@ const PaymentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "Pending"
+        default: "success"
     }
 }, { timestamps: true })
 

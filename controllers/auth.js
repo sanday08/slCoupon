@@ -266,7 +266,7 @@ exports.updateTransactionPin = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
-//@desc      Get all Username
+//@desc      Get all transactions
 //@routes    GET /api/auth/transactions
 //Access     Private/Admin
 exports.getTransactions = asyncHandler(async (req, res, next) => {
@@ -282,4 +282,11 @@ exports.getUserName = asyncHandler(async (req, res, next) => {
   const users = await User.find({ $where: "/^" + req.body.userName + ".*/.test(this.userName)" })
   console.log(users);
   res.status(200).json({ success: true, data: users });
+});
+//@desc      Get Single users
+//@routes    GET /api/users/:id
+//Access     Private/for users
+exports.getUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id).select("name");
+  res.status(200).json({ success: true, data: user });
 });
