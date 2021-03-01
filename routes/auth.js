@@ -24,7 +24,7 @@ router.post("/retailer/login", loginRetailer);
 router.get("/logout", logout);
 router.get("/retailerLogout/:id", logoutRetailer);
 router.get("/transactions", protect, getTransactions);
-router.route("/:id").get(getUser)
+router.route("user/:id").get(getUser)
 router.route("/me").get(protect, authorize("Admin"), getMe);
 router.put("updatedetails", protect, updateDetails);
 router.put("/updatepassword", protect, updatePassword);
