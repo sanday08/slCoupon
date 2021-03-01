@@ -279,7 +279,8 @@ exports.getTransactions = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/userName
 //Access     Private/
 exports.getUserName = asyncHandler(async (req, res, next) => {
+  let search = "/" + req.body.userName + "/";
   console.log(req.body.userName, req.query.userName, req.params.userName)
-  const users = await User.find({ userName: "/^" + req.body.userName + "/" });
+  const users = await User.find({ userName: search });
   res.status(200).json({ success: true, data: users });
 });
