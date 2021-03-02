@@ -35,7 +35,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  console.log("distributerCredit: ", distributerCredit, "     ", "retailer: ", req.body.creditPoint)
+  console.log("distributerCredit: ", distributer.creditPoint, "     ", "retailer: ", req.body.creditPoint)
   if (distributer.creditPoint < req.body.creditPoint) {
     return next(
       new ErrorResponse(
