@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const ErrorRespose = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
 const Payment = require("../models/Payment");
 
