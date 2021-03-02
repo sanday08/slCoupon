@@ -1,5 +1,5 @@
 const express = require('express');
-const{getRetailers,getDistributers,addDistributerCreditPoint,reduceDistributerCreditPoint}=require("../controllers/superDistributers")
+const { getDistributers, addDistributerCreditPoint, reduceDistributerCreditPoint, getSingleDistributers } = require("../controllers/superDistributers")
 const { protect, authorize } = require("../middleware/auth");
 
 
@@ -11,5 +11,5 @@ router.use(authorize("superDistributer"));
 router.route("/addCreditPoint").post(addDistributerCreditPoint);
 router.route("/reduceCreditPoint").post(reduceDistributerCreditPoint);
 router.route("/distributers").get(getDistributers);
-router.route("/retailers").get(getRetailers);
+router.route("/distributers/:id").get(getSingleDistributers);
 module.exports = router;

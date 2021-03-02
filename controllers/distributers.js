@@ -11,6 +11,19 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: users });
 });
 
+
+
+//@desc      Get Single Distributer via Disributer
+//@routes    GET /api/superDistributers/distributers/:id
+//Access     Private/SuperDistributer
+exports.getSingleRetailers = asyncHandler(async (req, res, next) => {
+  const users = await User.findById(req.params.id)
+  res.status(200).json({ success: true, data: users });
+});
+
+
+
+
 //@desc      POST add Credit To Retailer
 //@routes    POST /api/distributers/addCreditPoint
 //Access     Private/Distributer

@@ -4,18 +4,28 @@ const User = require("../models/User");
 const Payment = require("../models/Payment");
 
 //@desc      Get all Distributers via superDisributer
-//@routes    GET /api/users/distributer/:id
+//@routes    GET /api/superDistributers/distributers/
 //Access     Private/SuperDistributer
 exports.getDistributers = asyncHandler(async (req, res, next) => {
   const users = await User.find({ $and: [{ role: 'distributer' }, { referralId: req.user.id }] })
   res.status(200).json({ success: true, data: users });
 });
 
-//@desc      Get all retailer via Disributer
-//@routes    GET /api/users/retailer/:id
+// //@desc      Get all retailer via Disributer
+// //@routes    GET /api/superDistributers/retailer
+// //Access     Private/SuperDistributer
+// exports.getRetailers = asyncHandler(async (req, res, next) => {
+//   const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
+//   res.status(200).json({ success: true, data: users });
+// });
+
+
+
+//@desc      Get Single Distributer via Disributer
+//@routes    GET /api/superDistributers/distributers/:id
 //Access     Private/SuperDistributer
-exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
+exports.getSingleDistributers = asyncHandler(async (req, res, next) => {
+  const users = await User.findById(req.params.id)
   res.status(200).json({ success: true, data: users });
 });
 
