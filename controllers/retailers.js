@@ -62,14 +62,14 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
     if (bets) {
         console.log(bets[0].retailerId, "& this is the system Owner Id", req.user.id)
         if (bets[0].retailerId == req.user.id) {
-            if (bets.winPositions == [])
+            if (bets[0].winPositions == [])
                 result = "Result Not yet Declared";
-            else if (bets.claim) {
+            else if (bets[0].claim) {
                 result = "Ticket Already Claimed."
             }
             else {
                 await Bet.findOneAndUpdate({ ticketId: req.body.ticketId }, { claim: true });
-                if (bets.won != 0)
+                if (bets[0].won != 0)
                     result = "You won the Ticket of " + bets[0].won
                 else
                     result = "You loss The Ticket"
