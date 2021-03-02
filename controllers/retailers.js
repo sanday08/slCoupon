@@ -70,7 +70,7 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
             else {
                 await Bet.findOneAndUpdate({ ticketId: req.body.ticketId }, { claim: true });
                 if (bets.won != 0)
-                    result = "You won the Ticket of " + bets.won
+                    result = "You won the Ticket of " + bets[0].won
                 else
                     result = "You loss The Ticket"
             }
