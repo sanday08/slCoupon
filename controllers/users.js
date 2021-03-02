@@ -209,7 +209,7 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
       )
     );
   }
-  const superDistributers = await User.find(req.body.id)
+  const superDistributers = await User.findById(req.body.id)
 
   if (superDistributers.role === "superDistributer") {
     if (superDistributers.creditPoint < req.body.creditPoint) {
