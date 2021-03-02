@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const ErrorRespose = require("../utils/errorResponse");
+const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
 const WinResult = require("../models/WinResult");
 const Bet = require("../models/Bet");
@@ -11,15 +11,8 @@ const Complaint = require("../models/Complaint");
 //@routes    GET /api/retailers/betHistroy
 //Access     Private/Admin
 exports.getAllBetHistroy = asyncHandler(async (req, res, next) => {
-
-
-    const bets = await Bet.find().sort("-createdAt");
-    res.status(200).json({ success: true, count: bets.length, data: bets });
+    res.status(200).json(res.advancedResults);
 });
-
-
-
-
 
 //@desc      Get  Bet History via user
 //@routes    GET /api/retailers/betHistroy/:retailerId
