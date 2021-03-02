@@ -35,15 +35,15 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: Number,
     required: [true, "Please add a password"],
-    minlength: [8, "Password must be at least 6 characters"],
-    maxlength: [8, "password must be at least 6 characters"],
+    minlength: [6, "Password must be at least 6 characters"],
+    maxlength: [8, "password must be at least 8 characters"],
     select: false,
   },
   transactionPin: {
     type: Number,
     required: [true, "Please add a transactionPin"],
-    minlength: [4, "TransactionPin must be at least 4 characters"],
-    maxlength: [4, "TransactionPin must be at least 4 characters"]
+    minlength: [6, "TransactionPin must be at least 4 characters"],
+    maxlength: [6, "TransactionPin must be at least 4 characters"]
   },
 
   address: String,

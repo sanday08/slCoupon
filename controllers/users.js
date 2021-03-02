@@ -169,9 +169,10 @@ exports.addSuperDistributerCreditPoint = asyncHandler(async (req, res, next) => 
     );
   }
 
-  const superDistributers = await User.find({ $and: [{ role: 'superDistributer' }, { referralId: req.user.id }] })
+  const superDistributers = await User.findById(req.body.id)
+
   console.log("#####################", superDistributers);
-  if (superDistributers.length === 1) {
+  if (superDistributers.role === "superDistributer") {
     await Payment.create({ toId: req.body.id, fromId: req.user.id, creditPoint: req.body.creditPoint, macAddress: req.body.macAddress });
     const user = await User.findByIdAndUpdate(req.body.id, { $inc: { creditPoint: req.body.creditPoint } })
     res.status(200).json({ success: true, data: user });
@@ -208,9 +209,9 @@ exports.reduceSuperDistributerCreditPoint = asyncHandler(async (req, res, next) 
       )
     );
   }
-  const superDistributers = await User.find({ $and: [{ role: 'superDistributer' }, { referralId: req.user.id }] })
+  const superDistributers = await User.find(req.body.id)
 
-  if (superDistributers.length === 1) {
+  if (superDistributers.role === "superDistributer") {
     if (superDistributers.creditPoint < req.body.creditPoint) {
       return next(
         new ErrorResponse(
