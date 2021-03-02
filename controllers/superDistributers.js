@@ -23,7 +23,7 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 //@routes    POST /api/superDistributers/addCreditPoint
 //Access     Private/SuperDistributer
 exports.addDistributerCreditPoint = asyncHandler(async (req, res, next) => {
-  if (req.body.creditPoin <= 0 || req.body.creditPoint === undefined) {
+  if (req.body.creditPoint <= 0 || req.body.creditPoint === undefined) {
     return next(
       new ErrorResponse(
         `Please Add Credit Point And Credit Point should not be 0 or Negative`,
