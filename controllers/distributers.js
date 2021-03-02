@@ -15,6 +15,7 @@ exports.getRetailers = asyncHandler(async (req, res, next) => {
 //@routes    POST /api/distributers/addCreditPoint
 //Access     Private/Distributer
 exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
+  console.log("Vijay lofo 6.")
   if (req.body.creditPoint <= 0 || req.body.creditPoint === undefined) {
     return next(
       new ErrorResponse(
@@ -24,6 +25,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
     );
   }
   const retailers = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }, { _id: req.body.id }] })
+  console.log("########################", retailers)
   const distributer = await User.findById(req.user.id);
   if (req.body.transactionPin != distributer.transactionPin) {
     return next(
