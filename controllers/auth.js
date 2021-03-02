@@ -67,14 +67,14 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   }
   //Check for user
   const user = await User.findOne({ userName }).select("+password");
-
+  if (!user) {
+    return next(new ErrorResponse("Invalide credentials", 401));
+  }
   if (user.role != "retailer") {
     return next(new ErrorResponse("You are not authorized to access this application.", 401));
   }
 
-  if (!user) {
-    return next(new ErrorResponse("Invalide credentials", 401));
-  }
+
   //Check if Password matches
 
 
