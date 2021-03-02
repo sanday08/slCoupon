@@ -23,7 +23,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
-  const retailers = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }] })
+  const retailers = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }, { _id: req.body.id }] })
   const distributer = await User.findById(req.user.id);
   if (req.body.transactionPin != distributer.transactionPin) {
     return next(
@@ -81,7 +81,7 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const retailers = await User.find({ $and: [{ role: 'retailers' }, { referralId: req.user.id }] })
+  const retailers = await User.find({ $and: [{ role: 'retailers' }, { referralId: req.user.id }, { _id: req.body.id }] })
 
   if (retailers.length === 1) {
     if (retailers.creditPoint < req.body.creditPoint) {
