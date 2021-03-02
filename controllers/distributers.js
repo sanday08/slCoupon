@@ -35,6 +35,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
       )
     );
   }
+  console.log("distributerCredit: ", distributerCredit, "     ", "retailer: ", req.body.creditPoint)
   if (distributer.creditPoint < req.body.creditPoint) {
     return next(
       new ErrorResponse(
@@ -44,18 +45,13 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
     );
   }
   if (retailers.length === 1) {
-    try {
-      console.log("$$$$$$$$")
-      let payment = await Payment.create({ toId: req.body.id, fromId: req.user.id, creditPoint: req.body.creditPoint, macAddress: req.body.macAddress });
-      console.log("payment", payment)
-      const user = await User.findByIdAndUpdate(req.body.id, { $inc: { creditPoint: req.body.creditPoint } })
-      console.log("users")
-      await User.findByIdAndUpdate(req.user.id, { $inc: { creditPoint: -req.body.creditPoint } });
-      res.status(200).json({ success: true, data: user });
-    } catch (error) {
-      console.log(error)
-      console.log("**********************", error.message);
-    }
+    await Payment.create({ toId: req.body.id, fromId: req.user.id, creditPoint: req.body.creditPoint, macAddress: req.body.macAddress });
+
+    const user = await User.findByIdAndUpdate(req.body.id, { $inc: { creditPoint: req.body.creditPoint } })
+    console.log("users")
+    await User.findByIdAndUpdate(req.user.id, { $inc: { creditPoint: -req.body.creditPoint } });
+    res.status(200).json({ success: true, data: user });
+
 
   }
   else {
