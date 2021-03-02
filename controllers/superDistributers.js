@@ -1,6 +1,7 @@
 const asyncHandler = require("../middleware/async");
 const ErrorRespose = require("../utils/errorResponse");
 const User = require("../models/User");
+const Payment = require("../models/Payment");
 
 //@desc      Get all Distributers via superDisributer
 //@routes    GET /api/users/distributer/:id

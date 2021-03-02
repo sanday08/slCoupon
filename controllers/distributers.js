@@ -1,7 +1,7 @@
 const asyncHandler = require("../middleware/async");
 const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
-
+const Payment = require("../models/Payment");
 
 //@desc      Get all retailer via Disributer
 //@routes    GET /api/distributer/retailer/:id
