@@ -2,6 +2,7 @@ const express = require('express');
 const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy, addComplaint } = require("../controllers/retailers")
 const { protect, authorize } = require("../middleware/auth");
 const Bet = require("../models/Bet")
+const advancedResults = require("../middleware/advancedResults");
 
 const router = express.Router();
 
