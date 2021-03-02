@@ -8,7 +8,7 @@ const router = express.Router();
 
 //use middleware to protect, authorize
 router.use(protect);
-router.route("/ betHistroy /").get(advancedResults(Bet), getAllBetHistroy)
+router.route("/betHistroy/").get(advancedResults(Bet), getAllBetHistroy)
 router.get("/betHistroy/:retailerId", getBetHistroy)
 router.get("/online", getOnlineRetailers);
 
