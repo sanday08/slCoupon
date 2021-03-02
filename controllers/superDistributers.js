@@ -11,13 +11,13 @@ exports.getDistributers = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: users });
 });
 
-// //@desc      Get all retailer via Disributer
-// //@routes    GET /api/superDistributers/retailer
-// //Access     Private/SuperDistributer
-// exports.getRetailers = asyncHandler(async (req, res, next) => {
-//   const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
-//   res.status(200).json({ success: true, data: users });
-// });
+//@desc      Get all retailer via Disributer
+//@routes    GET /api/superDistributers/retailer
+//Access     Private/SuperDistributer
+exports.getRetailers = asyncHandler(async (req, res, next) => {
+  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
+  res.status(200).json({ success: true, data: users });
+});
 
 
 
