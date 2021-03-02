@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const ErrorRespose = require("../utils/errorResponse");
+const ErrorRespose = require("../utils/ErrorRespose");
 const User = require("../models/User");
 
 
@@ -18,7 +18,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   console.log("Vijay lofo 6.")
   if (req.body.creditPoint <= 0 || req.body.creditPoint === undefined) {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `Please Add Credit Point And Credit Point should not be 0`,
         404
       )
@@ -29,7 +29,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   const distributer = await User.findById(req.user.id);
   if (req.body.transactionPin != distributer.transactionPin) {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `Your Transaction PIn is Wrong.. `,
         401
       )
@@ -37,7 +37,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   }
   if (distributer.creditPoint < req.body.creditPoint) {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `Check Credit Point! Credit Point is insufficient..`,
         404
       )
@@ -60,7 +60,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   }
   else {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
         401
       )
@@ -76,7 +76,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
 exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   if (req.body.creditPoint <= 0 || req.body.creditPoint === undefined) {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `Please Add Credit Point And Credit Point should not be 0`,
         404
       )
@@ -85,7 +85,7 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
 
   if (req.body.transactionPin != req.user.transactionPin) {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `Your Transaction PIn is Wrong.. `,
         401
       )
@@ -97,7 +97,7 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   if (retailers.length === 1) {
     if (retailers.creditPoint < req.body.creditPoint) {
       return next(
-        new ErrorResponse(
+        new ErrorRespose(
           `Check Your Credit Point! Credit Point is insufficient..`,
           404
         )
@@ -110,7 +110,7 @@ exports.reduceRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   }
   else {
     return next(
-      new ErrorResponse(
+      new ErrorRespose(
         `You are not Authorized to Add Credit to this User or May be your Transaction PIn is Wrong..`,
         401
       )
