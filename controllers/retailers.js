@@ -56,10 +56,10 @@ exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 exports.claimeTicket = asyncHandler(async (req, res, next) => {
 
     console.log("req.body.ticketId", req.body.ticketId, req.query.ticketId, req.params.ticketId);
-    bets = await Bet.find({ ticketId: req.body.ticketId });
+    bets = await Bet.find({ ticketId: req.body.ticketId.toString().upperCase() });
     console.log("This is bets", bets)
     let result = "Ticket Id Not Found";
-    if (bets.length != 0) {
+    if (bets) {
         console.log(bets[0].retailerId, "& this is the system Owner Id", req.user.id)
         if (bets[0].retailerId == req.user.id) {
             if (bets.winPositions == [])
