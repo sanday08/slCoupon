@@ -5,7 +5,7 @@ const ComplaintSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    contant: {
+    content: {
         type: String,
         default: ""
     }
