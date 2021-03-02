@@ -7,7 +7,7 @@ const Payment = require("../models/Payment");
 //@routes    GET /api/distributer/retailer/:id
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.params.id }] })
+  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }] })
   res.status(200).json({ success: true, data: users });
 });
 
@@ -51,6 +51,7 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
     console.log("users")
     await User.findByIdAndUpdate(req.user.id, { $inc: { creditPoint: -req.body.creditPoint } });
     res.status(200).json({ success: true, data: user });
+
   }
   else {
     return next(
