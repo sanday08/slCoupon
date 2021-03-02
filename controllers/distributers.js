@@ -45,8 +45,11 @@ exports.addRetailerCreditPoint = asyncHandler(async (req, res, next) => {
   }
   if (retailers.length === 1) {
     try {
-      await Payment.create({ toId: req.body.id, fromId: req.user.id, creditPoint: req.body.creditPoint, macAddress: req.body.macAddress });
+      console.log("$$$$$$$$")
+      let payment = await Payment.create({ toId: req.body.id, fromId: req.user.id, creditPoint: req.body.creditPoint, macAddress: req.body.macAddress });
+      console.log("payment", payment)
       const user = await User.findByIdAndUpdate(req.body.id, { $inc: { creditPoint: req.body.creditPoint } })
+      console.log("users", user)
       await User.findByIdAndUpdate(req.user.id, { $inc: { creditPoint: -req.body.creditPoint } });
       res.status(200).json({ success: true, data: user });
     } catch (error) {
