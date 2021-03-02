@@ -59,8 +59,8 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
     bets = await Bet.find({ ticketId: req.body.ticketId });
     console.log("This is bets", bets)
     let result = "Ticket Id Not Found";
-    if (bets) {
-        if (bets.retailerId === req.user.id) {
+    if (bets.length != 0) {
+        if (bets.retailerId == req.user.id) {
             if (bets.winPositions == [])
                 result = "Result Not yet Declared";
             else if (bets.claim) {
