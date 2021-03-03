@@ -59,7 +59,7 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
     bets = await Bet.find({ ticketId: req.body.ticketId.toString().toUpperCase() });
     console.log("This is bets", bets)
     let result = "Ticket Id Not Found";
-    if (bets) {
+    if (bets.length != 0) {
         console.log(bets[0].retailerId, "& this is the system Owner Id", req.user.id)
         if (bets[0].retailerId == req.user.id) {
             if (bets[0].winPositions.length == 0)
