@@ -7,7 +7,10 @@ const Payment = require("../models/Payment");
 //@routes    GET /api/distributer/retailer/:id
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }] })
+  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.user.id }] }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 

@@ -134,7 +134,10 @@ exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getDistributers = asyncHandler(async (req, res, next) => {
   console.log("Vijay lunde moklu**********************************************", req.body.id, req.params.id, req.query.id);
-  const users = await User.find({ $and: [{ role: 'distributer' }, { referralId: req.query.id }] })
+  const users = await User.find({ $and: [{ role: 'distributer' }, { referralId: req.query.id }] }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 
@@ -142,7 +145,10 @@ exports.getDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/users/retailer
 //Access     Private/Admin
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
+  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 

@@ -7,7 +7,10 @@ const Payment = require("../models/Payment");
 //@routes    GET /api/superDistributers/distributers/
 //Access     Private/SuperDistributer
 exports.getDistributers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'distributer' }, { referralId: req.user.id }] })
+  const users = await User.find({ $and: [{ role: 'distributer' }, { referralId: req.user.id }] }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 
@@ -15,7 +18,10 @@ exports.getDistributers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/superDistributers/retailer
 //Access     Private/SuperDistributer
 exports.getRetailers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] })
+  const users = await User.find({ $and: [{ role: 'retailer' }, { referralId: req.query.id }] }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 

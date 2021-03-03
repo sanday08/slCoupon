@@ -7,6 +7,7 @@ router.use(protect);
 router.route("/addCreditPoint").post(addRetailerCreditPoint);
 router.route("/reduceCreditPoint").post(reduceRetailerCreditPoint);
 router.use(authorize("distributer"));
-router.route("/retailers/:id").get(getSingleRetailers);
 router.route("/retailers").get(getRetailers);
+router.route("/retailers/:id").get(getSingleRetailers);
+
 module.exports = router;
