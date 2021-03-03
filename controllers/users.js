@@ -124,7 +124,10 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getSuperDistributers = asyncHandler(async (req, res, next) => {
   console.log("Sandip Shiroya");
-  const users = await User.find({ role: 'superDistributer' })
+  const users = await User.find({ role: 'superDistributer' }).populate({
+    path: "referralId",
+    select: "userName name -_id"
+  });
   res.status(200).json({ success: true, data: users });
 });
 
