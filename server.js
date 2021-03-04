@@ -14,9 +14,33 @@ const helmet = require("helmet");
 const xss = require("xss-clean");
 const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
+let a = new Date()
+console.log("%%%%%%%%%%%%%%%%%%%%%%% new Date",);
+
+console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^new datr Hours ", a.getHours());
+//Set you offset here like +5.5 for IST
+var offsetIST = 19800000;
 
 
+//Set you offset here like -8 for PST
+var offsetPST = -8;
 
+//Create a new date from the Given string
+var d = new Date();
+
+//To convert to UTC datetime by subtracting the current Timezone offset
+var utcdate = new Date(d.getTime());
+
+//Then cinver the UTS date to the required time zone offset like back to 5.5 for IST
+var istdate = new Date(utcdate.getTime() + offsetIST)
+
+
+console.log("ist date", istdate)
+
+
+var offsetIST = 5.5;
+
+new Date(utcdate.getTime() - ((-offsetIST * 60) * 60000));
 process.env.TZ = 'Asia/Calcutta';
 
 //Load env vars
