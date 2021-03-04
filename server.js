@@ -22,9 +22,6 @@ console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^new datr Hours ", a.getHours());
 var offsetIST = 19800000;
 
 
-//Set you offset here like -8 for PST
-var offsetPST = -8;
-
 //Create a new date from the Given string
 var d = new Date();
 
@@ -38,10 +35,7 @@ var istdate = new Date(utcdate.getTime() + offsetIST)
 console.log("ist date", istdate)
 
 
-var offsetIST = 5.5;
 
-new Date(utcdate.getTime() - ((-offsetIST * 60) * 60000));
-process.env.TZ = 'Asia/Calcutta';
 
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
