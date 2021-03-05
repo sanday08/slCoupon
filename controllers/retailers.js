@@ -7,6 +7,26 @@ const Complaint = require("../models/Complaint");
 
 
 
+
+
+//@desc      Get 7Days Bet History
+//@routes    GET /api/retailers/betHistroy
+//Access     Private/Admin
+exports.get7Days = asyncHandler(async (req, res, next) => {
+
+    Bet.find({ //query today up to tonight
+        createDate: {
+            $gte: new Date(),
+            $lt: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+        }
+    })
+});
+
+
+
+
+
+
 //@desc      Get all Bet History
 //@routes    GET /api/retailers/betHistroy
 //Access     Private/Admin
