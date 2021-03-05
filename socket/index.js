@@ -104,7 +104,7 @@ io.on("connection", (socket) => {
 setInterval(async () => {
   if (new Date().getHours() > 8 && new Date().getHours() < 22) {
     if (
-      lastMinutes != new Date().getMinutes()
+      lastMinutes != new Date().getMinutes() && new Date().getMinutes() % 15 === 0
     ) {
       lastMinutes = new Date().getMinutes();
       //Winner Logic
