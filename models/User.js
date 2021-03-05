@@ -84,6 +84,10 @@ const UserSchema = new mongoose.Schema({
   isLogin: {
     type: Boolean,
     default: false
+  },
+  permissions: {
+    type: Array,
+    default: []
   }
 
   // resetPasswordToken: String,

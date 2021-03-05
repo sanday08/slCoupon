@@ -32,7 +32,7 @@ const PaymentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "success"
+        default: "Pending"
     },
     DrTime: {
         type: String,

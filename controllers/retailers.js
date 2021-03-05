@@ -16,8 +16,8 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
 
     Bet.find({ //query today up to tonight
         createDate: {
-            $gte: new Date(),
-            $lt: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+            $gte: new Date(req.params.date),
+            $lt: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)
         }
     })
 });

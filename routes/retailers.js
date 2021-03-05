@@ -19,7 +19,7 @@ router.use(authorize("retailer"));
 // router.route("/retailers").get(getRetailers);
 
 router.route("/winResultByDate/:date").get(getWinnerResultsByDate);
-router.route("/days7").get(get7Days);
+router.route("/days7/:date").get(get7Days);
 router.route("/claim").put(claimeTicket);
 router.route("/complaint").post(addComplaint);
 module.exports = router;

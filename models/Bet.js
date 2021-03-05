@@ -60,7 +60,13 @@ const BetSchema = new mongoose.Schema({
     createDate: {
         type: Date,
         default: istdate,
-    }
+    },
+    preBet: {
+        type: Boolean,
+        default: false,
+    },
+    preBetTime: String
+
 
 }, { timestamps: true })
 
