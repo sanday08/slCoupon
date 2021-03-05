@@ -14,7 +14,7 @@ const Complaint = require("../models/Complaint");
 //Access     Private/Admin
 exports.get7Days = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params.date)
-    let data = Bet.find({ //query today up to tonight
+    let data = WinResult.find({ //query today up to tonight
         createDate: {
             $gte: new Date(req.params.date),
             $lt: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)
