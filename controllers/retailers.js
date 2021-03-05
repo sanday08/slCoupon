@@ -13,13 +13,15 @@ const Complaint = require("../models/Complaint");
 //@routes    GET /api/retailers/betHistroy
 //Access     Private/Admin
 exports.get7Days = asyncHandler(async (req, res, next) => {
-
-    Bet.find({ //query today up to tonight
+    console.log("date by Piyush", req.params.date)
+    let data = Bet.find({ //query today up to tonight
         createDate: {
             $gte: new Date(req.params.date),
             $lt: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)
         }
     })
+    console.log("Result is", data);
+    return res.status(200).json({ success: true, data })
 });
 
 
