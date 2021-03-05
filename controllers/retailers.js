@@ -14,10 +14,10 @@ const Complaint = require("../models/Complaint");
 //Access     Private/Admin
 exports.get7Days = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params.date)
-    let result = WinResult.find({ //query today up to tonight
+    let result = WinResult.find({
         createDate: {
-            $gte: new Date(req.params.date),
-            $lt: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)
+            $gte: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000),
+            $lt: new Date(req.params.date),
         }
     })
     console.log("Result is", result);
