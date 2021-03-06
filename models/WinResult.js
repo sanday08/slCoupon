@@ -21,9 +21,8 @@ const WinResultSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: () => {
-            return new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
-        }
+        default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
+
 
 
 
@@ -35,7 +34,7 @@ const WinResultSchema = new mongoose.Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: () => new Date(),
     }
 }, { timestamps: true })
 
