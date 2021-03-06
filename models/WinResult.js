@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const { istdate } = require("../server");
 
-
-
 const WinResultSchema = new mongoose.Schema({
 
     A: String,
@@ -21,15 +19,15 @@ const WinResultSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: new Date(istdate).getHours().toString() + " : " + new Date(istdate).getMinutes().toString() + " : " + new Date(istdate).getSeconds().toString(),
+        default: new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getHours().toString() + " : " + new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getMinutes().toString() + " : " + new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getSeconds().toString(),
     },
     DrDate: {
         type: String,
-        default: new Date(istdate).getFullYear().toString() + "-" + (new Date(istdate).getMonth() + 1).toString() + "-" + new Date(istdate).getDate().toString(),
+        default: new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getFullYear().toString() + "-" + (new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getMonth() + 1).toString() + "-" + new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)).getDate().toString(),
     },
     createDate: {
         type: Date,
-        default: new Date(istdate),
+        default: new Date(new Date(new Date(new Date().getTime()).getTime() + 19800000)),
     }
 }, { timestamps: true })
 
