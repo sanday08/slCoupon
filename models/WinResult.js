@@ -21,15 +21,15 @@ const WinResultSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: istdate.getHours().toString() + " : " + istdate.getMinutes().toString() + " : " + istdate.getSeconds().toString(),
+        default: new Date(istdate).getHours().toString() + " : " + new Date(istdate).getMinutes().toString() + " : " + new Date(istdate).getSeconds().toString(),
     },
     DrDate: {
         type: String,
-        default: istdate.getFullYear().toString() + "-" + (istdate.getMonth() + 1).toString() + "-" + istdate.getDate().toString(),
+        default: new Date(istdate).getFullYear().toString() + "-" + (new Date(istdate).getMonth() + 1).toString() + "-" + new Date(istdate).getDate().toString(),
     },
     createDate: {
         type: Date,
-        default: istdate,
+        default: new Date(istdate),
     }
 }, { timestamps: true })
 
