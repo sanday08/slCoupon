@@ -44,3 +44,4 @@ router.route("/complaint/:id").delete(deleteComplaints);
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 module.exports = router;
+  
