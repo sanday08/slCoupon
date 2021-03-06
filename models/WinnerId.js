@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { istdate } = require("../server");
+
 
 const WinnerIdSchema = new mongoose.Schema({
     referralId: {
