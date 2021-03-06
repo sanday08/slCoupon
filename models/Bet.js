@@ -41,15 +41,15 @@ const BetSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: new Date(new Date().getTime() + 19800000).getHours().toString() + " : " + new Date(new Date().getTime() + 19800000).getMinutes().toString() + " : " + new Date(new Date().getTime() + 19800000).getSeconds().toString(),
+        default: new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString(),
     },
     DrDate: {
         type: String,
-        default: new Date(new Date().getTime() + 19800000).getFullYear().toString() + "-" + (new Date(new Date().getTime() + 19800000).getMonth() + 1).toString() + "-" + new Date(new Date().getTime() + 19800000).getDate().toString(),
+        default: new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
     },
     createDate: {
         type: Date,
-        default: new Date(new Date().getTime() + 19800000),
+        default: new Date(),
     },
     preBet: {
         type: Boolean,
