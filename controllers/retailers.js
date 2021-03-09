@@ -35,10 +35,10 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params, req.query, req.body);
-    let result = await Bet.find().aggregate([
+    let result = await Bet.aggregate([
         {
             $match: {
-                retailerId: req.user.id
+                retailerId: mongoose.Types.ObjectId(req.user.id)
             }
         }, {
             $group: {
