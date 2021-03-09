@@ -47,7 +47,7 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
                     $sum: '$betPoint'
                 },
                 totalWon: {
-                    $sum: 'won'
+                    $sum: '$won'
                 }
             }
         }
