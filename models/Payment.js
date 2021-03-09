@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { istdate } = require("../server");
 
 const PaymentSchema = new mongoose.Schema({
     toId: {
@@ -26,15 +25,15 @@ const PaymentSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: new Date(istdate).getHours().toString() + " : " + new Date(istdate).getMinutes().toString() + " : " + new Date(istdate).getSeconds().toString(),
+        default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
     },
     DrDate: {
         type: String,
-        default: new Date(istdate).getFullYear().toString() + "-" + (new Date(istdate).getMonth() + 1).toString() + "-" + new Date(istdate).getDate().toString(),
+        default: () => new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
     },
     createDate: {
         type: Date,
-        default: istdate,
+        default: () => new Date(),
     }
 }, { timestamps: true })
 

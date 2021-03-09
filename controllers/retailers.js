@@ -16,10 +16,42 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params.date)
     let result = await WinResult.find({
         createDate: {
-            $gte: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000),
-            $lt: new Date(req.params.date),
+            $gte: ISODate(new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)),
+            $lt: ISODate(new Date(req.params.date)),
         }
     })
+    console.log("Result is", result);
+    return res.status(200).json({ success: true, data: result })
+});
+
+
+
+
+
+
+
+//@desc      Get 7Days Bet History
+//@routes    GET /api/retailers/betHistroy
+//Access     Private/Admin
+exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
+    console.log("date by Piyush", req.params, req.query, req.body);
+    let result = Bet.aggregate([
+        {
+            '$match': {
+                'retailerId': req.user.id
+            }
+        }, {
+            '$group': {
+                '_id': '$DrDate',
+                'totalBetPonts': {
+                    '$sum': '$betPoint'
+                },
+                'totalWon': {
+                    '$sum': 'won'
+                }
+            }
+        }
+    ]);//await Bet.aggregate().gr
     console.log("Result is", result);
     return res.status(200).json({ success: true, data: result })
 });
