@@ -16,8 +16,8 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params.date)
     let result = await WinResult.find({
         createDate: {
-            $gte: ISODate(new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000)),
-            $lt: ISODate(new Date(req.params.date)),
+            $gte: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000),
+            $lt: new Date(req.params.date),
         }
     })
     console.log("Result is", result);
