@@ -22,11 +22,6 @@ const WinResultSchema = new mongoose.Schema({
     DrTime: {
         type: String,
         default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
-
-
-
-
-
     },
     DrDate: {
         type: String,

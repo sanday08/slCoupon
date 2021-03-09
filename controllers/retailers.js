@@ -17,7 +17,7 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
     let result = await WinResult.find({
         createDate: {
             $gte: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000),
-            $lt: new Date(req.params.date),
+            $lte: new Date(req.params.date),
         }
     })
     console.log("Result is", result);
@@ -41,7 +41,7 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
                 retailerId: mongoose.Types.ObjectId(req.user.id),
                 createdAt: {
                     $gte: new Date(req.query.dateStart),
-                    $et: new Date(req.query.dateEnd)
+                    $lte: new Date(req.query.dateEnd)
                 }
             }
 
