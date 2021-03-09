@@ -7,14 +7,21 @@ const WinnerIdSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    role: {
-        type: String,
-        enum: ["retailer", "distributer", "superDistributer"], //if you write admin than its display error "`admin` is not a valid enum value for path `role`".
-        default: "retailer",
-    },
     percent: {
         type: Number,
         default: 0
+    },
+    DrTime: {
+        type: String,
+        default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
+    },
+    DrDate: {
+        type: String,
+        default: () => new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
+    },
+    createDate: {
+        type: Date,
+        default: () => new Date(),
     }
 
 }, { timestamps: true })

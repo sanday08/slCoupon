@@ -39,7 +39,7 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
         {
             $match: {
                 retailerId: mongoose.Types.ObjectId(req.user.id),
-                createdAt: {
+                createDate: {
                     $gte: new Date(req.query.dateStart),
                     $lte: new Date(req.query.dateEnd)
                 }
