@@ -42,12 +42,12 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
             }
         }, {
             $group: {
-                _id: $DrDate,
+                _id: DrDate,
                 totalBetPonts: {
-                    $sum: $betPoint
+                    $sum: betPoint
                 },
                 totalWon: {
-                    $sum: $won
+                    $sum: won
                 }
             }
         }
