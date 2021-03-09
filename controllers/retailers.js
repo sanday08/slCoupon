@@ -37,17 +37,17 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
     console.log("date by Piyush", req.params, req.query, req.body);
     let result = Bet.aggregate([
         {
-            '$match': {
-                'retailerId': req.user.id
+            $match: {
+                retailerId: req.user.id
             }
         }, {
-            '$group': {
-                '_id': '$DrDate',
-                'totalBetPonts': {
-                    '$sum': '$betPoint'
+            $group: {
+                _id: $DrDate,
+                totalBetPonts: {
+                    $sum: $betPoint
                 },
-                'totalWon': {
-                    '$sum': 'won'
+                totalWon: {
+                    $sum: $won
                 }
             }
         }
