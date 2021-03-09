@@ -38,8 +38,13 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
     let result = await Bet.aggregate([
         {
             $match: {
-                retailerId: mongoose.Types.ObjectId(req.user.id)
+                retailerId: mongoose.Types.ObjectId(req.user.id),
+                createdAt: {
+                    $gte: new Date(req.query.dateStart),
+                    $et: new Date(req.query.dateEnd)
+                }
             }
+
         }, {
             $group: {
                 _id: '$DrDate',
