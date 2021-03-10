@@ -58,7 +58,7 @@ const BetSchema = new mongoose.Schema({
     preBetTime: String,
     isAdvance:
     {
-        type: boolean,
+        type: Boolean,
         default: false,
     }
 
