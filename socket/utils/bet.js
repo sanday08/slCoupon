@@ -45,7 +45,7 @@ async function deleteBet(retailerId, ticketId) {
 
 async function getLastWinnerResults() {
   try {
-    let result = await WinResult.find().sort({ createdDate: -1 }).limit(4);
+    let result = await WinResult.find().sort({ createdAt: -1 }).limit(4);
     console.log("results", result);
 
     if (result.length == 4) {
