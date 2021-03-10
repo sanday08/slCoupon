@@ -99,8 +99,8 @@ io.on("connection", (socket) => {
   );
 
 
-  socket.on("removeBet", async ({ retailerId, ticketId }) => {
-    await deleteBet(retailerId, ticketId);
+  socket.on("removeBet", async ({ ticketId }) => {
+    await deleteBet(ticketId);
   })
 
   //Disconnect the users
