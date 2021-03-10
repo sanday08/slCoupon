@@ -36,6 +36,11 @@ async function updateGameResult(series, betResult) {
   }
 }
 
+async function deleteBet(retailerId, ticketId) {
+  const betDetail = await Bet.deleteOne({ $and: [ticketId, { winPositions: [] }, { isAdvance: false }] });
+  console.log("CancelBet Suthiye", betDetail);
+  await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
+}
 
 
 async function getLastWinnerResults() {
@@ -60,4 +65,4 @@ async function getLastWinnerResults() {
 
 
 
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults };
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet };

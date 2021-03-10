@@ -1,6 +1,6 @@
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
-const { placeBet, winGamePay, updateGameResult, getLastWinnerResults } = require("./utils/bet");
+const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet } = require("./utils/bet");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
@@ -97,6 +97,11 @@ io.on("connection", (socket) => {
       );
     },
   );
+
+
+  socket.on("removeBet", async ({ retailerId, ticketId }) => {
+    await deleteBet(retailerId, ticketId);
+  })
 
   //Disconnect the users
   socket.on("disconnect", () => { });
