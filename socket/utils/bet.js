@@ -20,8 +20,8 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
 
 async function winGamePay(retailerId, price, ticketId) {
   try {
-    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: +price } });
-    await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: +price } });
+    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: price } });
+    await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: price } });
   } catch (err) {
     return err.message;
   }
@@ -36,9 +36,29 @@ async function updateGameResult(series, betResult) {
   }
 }
 
-async function deleteBet(ticketId) {
+async function deleteBet(retailerId, ticketId) {
   const betDetail = await Bet.findOne({ ticketId });
   console.log("CancelBet Suthiye", betDetail);
+  if (betDetail.length == 0) {
+    return "Ticket Not Exist ";
+  }
+  else if (betDetail[0].retailerId != retailerId) {
+    return "Ticket Buyed from other Retailer";
+  }
+  else if (betDetail[0].winPositions != []) {
+    return "Ticket result has been declared cannot cancel";
+  }
+  else if (betDetail[0].isAdvance == true) {
+    return "Advance Ticket cannot be cancelled";
+  }
+  else {
+
+    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail[0].betPoint } });
+    await Bet.findByIdAndDelete(betDetail[0]._id);
+    return "Ticket Cancel Sucessfull";
+  }
+
+
 
   // await User.findByIdAndUpdate(betDetail.retailerId, { $inc: { creditPoint: betDetail.betPoint } });
 }
