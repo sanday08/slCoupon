@@ -19,7 +19,7 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
             $gte: new Date(new Date(req.params.date) - 7 * 24 * 60 * 60 * 1000),
             $lte: new Date(req.params.date),
         }
-    }).sort({ createDate: -1 })
+    }).sort({ createdAt: -1 })
     console.log("Result is", result);
     return res.status(200).json({ success: true, count: result.length, data: result })
 });
