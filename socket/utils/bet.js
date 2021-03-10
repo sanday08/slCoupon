@@ -37,7 +37,7 @@ async function updateGameResult(series, betResult) {
 }
 
 async function deleteBet(retailerId, ticketId) {
-  const betDetail = await Bet.findOne(ticketId);
+  const betDetail = await Bet.findOne({ ticketId });
   console.log("CancelBet Suthiye", betDetail);
 
   await User.findByIdAndUpdate(betDetail.retailerId, { $inc: { creditPoint: betDetail.betPoint } });
