@@ -72,8 +72,12 @@ io.on("connection", (socket) => {
 
   socket.on("removeBet", async ({ retailerId, ticketId }) => {
     const result = await deleteBet(retailerId, ticketId);
-    socket.emit("removeBet", {
-      data: { result }
+    console.log(result);
+    console.log(object)
+    socket.emit("res", {
+      data: { result },
+      en: "removeBet",
+      status: 1,
     })
   })
 

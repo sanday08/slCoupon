@@ -59,6 +59,7 @@ async function deleteBet(retailerId, ticketId) {
 
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail[0].betPoint } });
     await Bet.findByIdAndDelete(betDetail[0]._id);
+
     return "Ticket Cancel Sucessfull";
   }
 
