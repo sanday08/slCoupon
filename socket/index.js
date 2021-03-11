@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
       if (!isAdvance) {
         console.log("Pila ye call karu..", series);
-        addBet(position, ticketId, totalBetPoint, retailerId);
+        addBet(position, ticketId, totalBetPoint, retailerId, series);
       }
       if (bet == 0) {
         ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
@@ -94,7 +94,7 @@ setInterval(async () => {
 
       const advancedBets = await getAdvancedBet()
       for (oneBet of advancedBets) {
-        addBet(oneBet.ticketBets, oneBet.ticketId, oneBet.betPoint, oneBet.retailerId);
+        addBet(oneBet.ticketBets, oneBet.ticketId, oneBet.betPoint, oneBet.retailerId, oneBet.seriesNo);
       }
 
 
@@ -207,7 +207,7 @@ function flushALL() {
 }
 
 //Add Bet
-function addBet(position, ticketId, totalBetPoint, retailerId) {
+function addBet(position, ticketId, totalBetPoint, retailerId, series) {
   for (let alpha in position) {
     for (let number in position[alpha]) {
       userBets = immutable.update(
