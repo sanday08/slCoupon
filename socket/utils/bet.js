@@ -42,7 +42,7 @@ async function updateGameResult(series, betResult) {
 
 async function deleteBet(retailerId, ticketId) {
   const betDetail = await Bet.findOne({ ticketId });
-  console.log("CancelBet Suthiye", betDetail, "lodu lasan", winPositions);
+  console.log("CancelBet Suthiye", betDetail, "lodu lasan", betDetail.winPositions);
   if (betDetail == null) {
     return "Ticket Not Exist ";
   }
