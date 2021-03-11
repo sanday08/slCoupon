@@ -46,19 +46,19 @@ async function deleteBet(retailerId, ticketId) {
   if (betDetail == null) {
     return "Ticket Not Exist ";
   }
-  else if (betDetail[0].retailerId != retailerId) {
+  else if (betDetail.retailerId != retailerId) {
     return "Ticket Buyed from other Retailer";
   }
-  else if (betDetail[0].winPositions != []) {
+  else if (betDetail.winPositions != []) {
     return "Ticket result has been declared cannot cancel";
   }
-  else if (betDetail[0].isAdvance == true) {
+  else if (betDetail.isAdvance == true) {
     return "Advance Ticket cannot be cancelled";
   }
   else {
 
-    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail[0].betPoint } });
-    await Bet.findByIdAndDelete(betDetail[0]._id);
+    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
+    await Bet.findByIdAndDelete(betDetail._id);
 
     return "Ticket Cancel Sucessfull";
   }
