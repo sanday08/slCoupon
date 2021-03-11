@@ -32,7 +32,10 @@ io.on("connection", (socket) => {
     socket.emit("res", {
       data: {
         user,
-        currentTime: new Date(),
+        currentTime: new Date().toLocaleTimeString("en-US", {
+          timeZone: "Asia/Calcutta",
+        }),
+
         winnerResults: await getLastWinnerResults(),
       },
       en: "join",
