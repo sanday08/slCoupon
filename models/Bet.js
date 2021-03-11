@@ -56,8 +56,12 @@ const BetSchema = new mongoose.Schema({
     {
         type: Boolean,
         default: false,
+    },
+    isCount:
+    {
+        type: Boolean,
+        default: true,
     }
-
 
 }, { timestamps: true })
 

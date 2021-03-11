@@ -2,7 +2,7 @@
 const User = require("../../models/User");
 const Bet = require("../../models/Bet");
 const WinResult = require("../../models/WinResult");
-
+const Winning = require("../../models/Winning");
 
 
 
@@ -11,7 +11,10 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
   try {
     user = await User.findById(retailerId);
     if (user.creditPoint >= betPoint) {
-      let bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance })
+      let isCount = true;
+      if (isAdvance)
+        isCount = false;
+      let bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount })
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint }, lastTicketId: ticketId, lastBetAmount: betPoint })
       return bet;
     }
@@ -34,41 +37,45 @@ async function winGamePay(retailerId, price, ticketId) {
 async function updateGameResult(series, betResult) {
   try {
     await WinResult.create({ seriesNo: parseInt(series), A: betResult[0], B: betResult[1], C: betResult[2], D: betResult[3], E: betResult[4], F: betResult[5], G: betResult[6], H: betResult[7], I: betResult[8], J: betResult[9] })
-    await Bet.updateMany({ $and: [{ seriesNo: parseInt(series) }, { winPositions: [] }] }, { winPositions: betResult })
+    await Bet.updateMany({ $and: [{ seriesNo: parseInt(series) }, { winPositions: [] }, { isCount: true }] }, { winPositions: betResult })
   } catch (err) {
     return err.message;
   }
 }
-
+//Used For cancel Bet
 async function deleteBet(retailerId, ticketId) {
   const betDetail = await Bet.findOne({ ticketId });
-
+  let result = "";
+  let success = false;
   if (betDetail == null) {
-    return "Ticket Not Exist ";
+    result = "Ticket Not Exist ";
   }
   else if (betDetail.retailerId != retailerId) {
-    return "Ticket Buyed from other Retailer";
+    result = "Ticket Buyed from other Retailer";
   }
   else if (betDetail.winPositions.length != 0) {
-    return "Ticket result has been declared cannot cancel";
+    result = "Ticket result has been declared cannot cancel";
   }
   else if (betDetail.isAdvance == true) {
-    return "Advance Ticket cannot be cancelled";
+    result = "Advance Ticket cannot be cancelled";
   }
   else {
 
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
     await Bet.findByIdAndDelete(betDetail._id);
-
-    return "Ticket Cancel Sucessfull";
+    success = true
+    result = "Ticket Cancel Sucessfull";
   }
-
-
+  if (success)
+    return { success: true, series: betDetail.seriesNo, position: betDetail.ticketBets, result, betPoint: betDetail.betPoint }
+  else
+    return { success: false, result }
 
   // await User.findByIdAndUpdate(betDetail.retailerId, { $inc: { creditPoint: betDetail.betPoint } });
 }
 
 
+//get Last winning result number 
 async function getLastWinnerResults() {
   try {
     let result = await WinResult.find().sort({ createdAt: -1 }).limit(4);
@@ -87,12 +94,14 @@ async function getLastWinnerResults() {
   }
 }
 
-
+//get Advanced Bet 
 async function getAdvancedBet(DrTime) {
-  return await Bet.find({ isAdvance, DrTime, results: [] })
-
+  await Bet.updateMany({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] }, { isCount: true });
+  return await Bet.find({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] })
+}
+async function getAdminPer() {
+  return Winning.findById("602e55e9a494988def7acc25")
 }
 
 
-
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet };
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer };

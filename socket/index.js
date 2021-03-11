@@ -1,11 +1,11 @@
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
-const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet } = require("./utils/bet");
+const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer } = require("./utils/bet");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
 let userBets = {}; //retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
-
+let winningPercent = 90;
 let allBet = {
   1: {},
   3: {},
@@ -32,10 +32,7 @@ io.on("connection", (socket) => {
     socket.emit("res", {
       data: {
         user,
-        currentTime: new Date().toLocaleTimeString("en-US", {
-          timeZone: "Asia/Calcutta",
-        }),
-
+        currentTime: new Date(),
         winnerResults: await getLastWinnerResults(),
       },
       en: "join",
@@ -72,11 +69,24 @@ io.on("connection", (socket) => {
 
   socket.on("removeBet", async ({ retailerId, ticketId }) => {
     console.log("pilva hoy gava:", retailerId)
+
     const result = await deleteBet(retailerId, ticketId);
     console.log(result);
-
+    if (result.success) {
+      adminBalance[result.series] = adminBalance[result.series] - result.betPoint;
+      for (alpha in result.position) {
+        for (number in result.position[alpha]) {
+          if (allBet[result.series][alpha][number] <= result.position[alpha][number]) {
+            delete allBet[result.series][alpha][number]
+          }
+          else {
+            allBet[result.series][alpha][number] -= result.position[alpha][number]
+          }
+        }
+      }
+    }
     socket.emit("res", {
-      data: { result },
+      data: { result: result.result },
       en: "removeBet",
       status: 1,
     })
@@ -164,6 +174,10 @@ setInterval(async () => {
     }
 
   }
+  if (new Date().getHours() > 8 && new Date().getHours() < 10) {
+    if (new Date().getMinutes() == 0)
+      winningPercent = await getAdminPer().percent;
+  }
 }, 1000);
 
 //ShuffleArray
@@ -227,7 +241,5 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
       );
     }
   }
-  adminBalance[series] =
-    adminBalance[series] +
-    Math.round(totalBetPoint - (totalBetPoint * 10) / 100, 2);
+  adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 2);
 }
