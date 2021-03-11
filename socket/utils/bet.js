@@ -49,7 +49,7 @@ async function deleteBet(retailerId, ticketId) {
   else if (betDetail.retailerId != retailerId) {
     return "Ticket Buyed from other Retailer";
   }
-  else if (betDetail.winPositions != []) {
+  else if (betDetail.winPositions.length != 0) {
     return "Ticket result has been declared cannot cancel";
   }
   else if (betDetail.isAdvance == true) {
