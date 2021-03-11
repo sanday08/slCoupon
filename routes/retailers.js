@@ -8,7 +8,7 @@ const router = express.Router();
 
 //use middleware to protect, authorize
 router.use(protect);
-router.route("/betHistroy/").get(advancedResults(Bet), getAllBetHistroy)
+router.route("/betHistroy").get(advancedResults(Bet), getAllBetHistroy)
 router.get("/betHistroy/:retailerId", getBetHistroy)
 router.get("/online", getOnlineRetailers);
 router.get("/betHistoryReports", getBetHistroyReport);
@@ -17,7 +17,6 @@ router.use(authorize("retailer"));
 // router.route("/reduceCreditPoint").post(reduceDistributerCreditPoint);
 // router.route("/distributers").get(getDistributers);
 // router.route("/retailers").get(getRetailers);
-
 router.route("/winResultByDate/:date").get(getWinnerResultsByDate);
 router.route("/days7/:date").get(get7Days);
 router.route("/claim").put(claimeTicket);

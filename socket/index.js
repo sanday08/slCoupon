@@ -1,6 +1,6 @@
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
-const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet } = require("./utils/bet");
+const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet } = require("./utils/bet");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
@@ -45,31 +45,13 @@ io.on("connection", (socket) => {
 
   socket.on(
     "placeBet",
-    async ({ retailerId, series, position, totalBetPoint }) => {
+    async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance }) => {
       let ticketId = nanoid();
-      let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position);
-      console.log("Pila ye call karu..", series);
-      for (let alpha in position) {
-        for (let number in position[alpha]) {
-          userBets = immutable.update(
-            userBets,
-            [ticketId, retailerId, series, alpha, number],
-            (v) => (v ? v + position[alpha][number] : position[alpha][number]),
-          );
-          ticketIdBase = immutable.set(
-            ticketIdBase,
-            [series, alpha, number, ticketId],
-            position[alpha][number],
-          );
-          winnerUsers[ticketId] = retailerId;
-          allBet = immutable.update(allBet, [series, alpha, number], (v) =>
-            v ? v + position[alpha][number] : position[alpha][number],
-          );
-        }
+      let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
+      if (!isAdvance) {
+        console.log("Pila ye call karu..", series);
+        addBet(position, ticketId, totalBetPoint, retailerId);
       }
-      adminBalance[series] =
-        adminBalance[series] +
-        Math.round(totalBetPoint - (totalBetPoint * 10) / 100, 2);
       if (bet == 0) {
         ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
       }
@@ -83,18 +65,7 @@ io.on("connection", (socket) => {
         status: 1,
       });
 
-      console.log(
-        "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ userBets",
-        JSON.stringify(userBets),
-      );
-      console.log(
-        "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& allBet",
-        JSON.stringify(allBet),
-      );
-      console.log(
-        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% adminBalance",
-        JSON.stringify(adminBalance),
-      );
+
     },
   );
 
@@ -115,6 +86,14 @@ setInterval(async () => {
       lastMinutes != new Date().getMinutes() && new Date().getMinutes() % 15 === 0
     ) {
       lastMinutes = new Date().getMinutes();
+
+
+      const advancedBets = await getAdvancedBet()
+      for (oneBet of advancedBets) {
+        addBet(oneBet.ticketBets, oneBet.ticketId, oneBet.betPoint, oneBet.retailerId);
+      }
+
+
       //Winner Logic
       for (let i of Object.keys(allBet)) {
         const alphaArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
@@ -221,4 +200,29 @@ function flushALL() {
   winnerNumbersArray = {}
   winnerUsers = {};
   ticketIdBase = {};
+}
+
+//Add Bet
+function addBet(position, ticketId, totalBetPoint, retailerId) {
+  for (let alpha in position) {
+    for (let number in position[alpha]) {
+      userBets = immutable.update(
+        userBets,
+        [ticketId, retailerId, series, alpha, number],
+        (v) => (v ? v + position[alpha][number] : position[alpha][number]),
+      );
+      ticketIdBase = immutable.set(
+        ticketIdBase,
+        [series, alpha, number, ticketId],
+        position[alpha][number],
+      );
+      winnerUsers[ticketId] = retailerId;
+      allBet = immutable.update(allBet, [series, alpha, number], (v) =>
+        v ? v + position[alpha][number] : position[alpha][number],
+      );
+    }
+  }
+  adminBalance[series] =
+    adminBalance[series] +
+    Math.round(totalBetPoint - (totalBetPoint * 10) / 100, 2);
 }

@@ -2,12 +2,16 @@
 const User = require("../../models/User");
 const Bet = require("../../models/Bet");
 const WinResult = require("../../models/WinResult");
-async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets) {
+
+
+
+
+async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance) {
   //Verify Token
   try {
     user = await User.findById(retailerId);
     if (user.creditPoint >= betPoint) {
-      bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets })
+      let bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance })
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint }, lastTicketId: ticketId, lastBetAmount: betPoint })
       return bet;
     }
@@ -39,7 +43,7 @@ async function updateGameResult(series, betResult) {
 async function deleteBet(retailerId, ticketId) {
   const betDetail = await Bet.findOne({ ticketId });
   console.log("CancelBet Suthiye", betDetail);
-  if (betDetail.length == 0) {
+  if (betDetail == []) {
     return "Ticket Not Exist ";
   }
   else if (betDetail[0].retailerId != retailerId) {
@@ -83,7 +87,11 @@ async function getLastWinnerResults() {
 }
 
 
+async function getAdvancedBet(DrTime) {
+  return await Bet.find({ isAdvance, DrTime, results: [] })
+
+}
 
 
 
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet };
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet };

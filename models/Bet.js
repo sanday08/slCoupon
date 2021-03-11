@@ -41,7 +41,7 @@ const BetSchema = new mongoose.Schema({
     },
     DrTime: {
         type: String,
-        default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString(),
+        default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString()
     },
     DrDate: {
         type: String,
@@ -51,11 +51,6 @@ const BetSchema = new mongoose.Schema({
         type: Date,
         default: () => new Date(),
     },
-    preBet: {
-        type: Boolean,
-        default: false,
-    },
-    preBetTime: String,
     isAdvance:
     {
         type: Boolean,
