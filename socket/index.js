@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
   socket.on("removeBet", async ({ retailerId, ticketId }) => {
     const result = await deleteBet(retailerId, ticketId);
     console.log(result);
-    console.log(object)
+
     socket.emit("res", {
       data: { result },
       en: "removeBet",
