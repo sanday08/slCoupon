@@ -5,7 +5,7 @@ const WinResult = require("../models/WinResult");
 const Bet = require("../models/Bet");
 const Complaint = require("../models/Complaint");
 const mongoose = require("mongoose");
-const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
+
 
 //@desc      Post Add Advanced Bet
 //@routes    Post /api/retailers/advancedBet
