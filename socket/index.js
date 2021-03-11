@@ -25,6 +25,11 @@ io.on("connection", (socket) => {
   console.log("SocketConnected");
 
 
+  console.log("TheDate: ", new Date());
+  console.log("The Hours: ", new Date().getHours());
+  console.log("The Minutes: ", new Date().getMinutes());
+  console.log("UtcTime", new Date().getUTCDate())
+
   //Join Event When Application is Start
   socket.on("join", async ({ token }) => {
     console.log("Socket join call");
@@ -52,6 +57,7 @@ io.on("connection", (socket) => {
         console.log("Pila ye call karu..", series);
         addBet(position, ticketId, totalBetPoint, retailerId, series);
       }
+
       if (bet == 0) {
         ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
       }

@@ -12,9 +12,15 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
     user = await User.findById(retailerId);
     if (user.creditPoint >= betPoint) {
       let isCount = true;
-      if (isAdvance)
+      let bet;
+      if (isAdvance) {
         isCount = false;
-      let bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount })
+        bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount })
+      }
+      else
+        bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, isAdvance })
+
+
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint }, lastTicketId: ticketId, lastBetAmount: betPoint })
       return bet;
     }
