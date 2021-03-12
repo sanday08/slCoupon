@@ -138,11 +138,11 @@ async function getAdminPer() {
 //Get user For winnerNumbers
 async function getUserForWinner() {
   let user = await WinnerId.find();
-  if (user != null) {
-    return { success: true, user: user[0].retailerId };
-  }
-  else
-    return { success: false }
+  // if (user != null) {
+  //   return { success: true, user: user[0].retailerId };
+  // }
+  // else
+  return { success: false }
 }
 
 module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer, getUserForWinner };
