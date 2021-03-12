@@ -13,15 +13,31 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
     if (user.creditPoint >= betPoint) {
       let isCount = true;
       let bet;
+
+      const distributer = await User.findbyId(user.referralId);
+      const superDistributer = await User.findById(distributers.referralId);
+
       if (isAdvance) {
         isCount = false;
-        bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount })
+        bet = await Bet.create({
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount,
+          distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
+          retailerCommission: betPoint * user.commissionPercentage / 100
+        })
       }
       else
-        bet = await Bet.create({ retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, isAdvance })
+        bet = await Bet.create({
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, isAdvance,
+          distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
+          retailerCommission: betPoint * user.commissionPercentage / 100
+        })
 
 
-      await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint }, lastTicketId: ticketId, lastBetAmount: betPoint })
+      await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint, commissionPoint: betPoint * user.commissionPercentage / 100 }, lastTicketId: ticketId, lastBetAmount: betPoint })
+      await User.findByIdAndUpdate(user.referralId, { $inc: { commissionPoint: betPoint * distributer.commissionPercentage / 100 } })
+      await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: betPoint * superDistributer.commissionPercentage / 100 } })
+
+
       return bet;
     }
     return 0;
@@ -67,9 +83,14 @@ async function deleteBet(retailerId, ticketId) {
   }
   else {
 
-    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
+    const retailer = await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
+    const distributer = await User.findById(retailer.referralId);
+    await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
+    await User.findByIdAndUpdate(retailerId.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
+    await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
+
     await Bet.findByIdAndDelete(betDetail._id);
-    success = true
+    success = true;
     result = "Ticket Cancel Sucessfull";
   }
   if (success)

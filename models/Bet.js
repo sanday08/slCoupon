@@ -39,7 +39,18 @@ const BetSchema = new mongoose.Schema({
         type: Object,
         required: true
     },
-
+    retailerCommission: {
+        type: Number,
+        default: 0
+    },
+    distributerCommission: {
+        type: Number,
+        default: 0
+    },
+    superDistributerCommission: {
+        type: Number,
+        default: 0
+    },
     DrTime: {
         type: String,
         default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString()

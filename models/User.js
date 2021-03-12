@@ -64,15 +64,7 @@ const UserSchema = new mongoose.Schema({
     default: 0,
     maxlength: 2
   },
-  sharingPoint: {
-    type: Number,
-    default: 0,
-    maxlength: 2
-  },
-  sharingPercentage: {
-    type: Number,
-    default: 0
-  },
+
   lastTicketId: {
     type: String,
     default: "000",

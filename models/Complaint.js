@@ -21,6 +21,11 @@ const ComplaintSchema = new mongoose.Schema({
     createDate: {
         type: Date,
         default: () => new Date(),
+    },
+    retailerId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true,
     }
 
 }, { timestamps: true })

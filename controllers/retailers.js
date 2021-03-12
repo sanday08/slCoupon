@@ -158,7 +158,7 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
 //@routes    Post /api/retailers/complaint
 //Access     Private/Admin
 exports.addComplaint = asyncHandler(async (req, res, next) => {
-    const bets = await Complaint.create({ title: req.body.title, content: req.body.content });
+    const bets = await Complaint.create({ title: req.body.title, content: req.body.content, retailerId: req.user.id });
     res.status(200).json({ success: true, count: bets.length, data: bets });
 });
 
