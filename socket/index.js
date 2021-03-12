@@ -1,6 +1,6 @@
 const { io } = require("../server");
 const { getUserInfoBytoken } = require("./utils/users");
-const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer } = require("./utils/bet");
+const { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer, getUserForWinner } = require("./utils/bet");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
@@ -82,6 +82,7 @@ io.on("connection", (socket) => {
     const result = await deleteBet(retailerId, ticketId);
     console.log(result);
     if (result.success) {
+      delete userBets[ticketId];
       adminBalance[result.series] = adminBalance[result.series] - result.betPoint;
       for (alpha in result.position) {
         for (number in result.position[alpha]) {
@@ -117,12 +118,16 @@ setInterval(async () => {
         addBet(oneBet.ticketBets, oneBet.ticketId, oneBet.betPoint, oneBet.retailerId, oneBet.seriesNo);
       }
 
+      //Get user who won
+      let winUser = getUserForWinner();
 
       //Winner Logic
+      //loop for 1,3,5,6
       for (let i of Object.keys(allBet)) {
         const alphaArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
         shuffle(alphaArray);
         console.log(alphaArray);
+        //loop for A to j Randomly and ai for index
         for (let [ai, alpha] of alphaArray.entries()) {
           let winnerNumber = Math.round(Math.random() * 99);
           if (allBet[i][alpha]) {
@@ -152,6 +157,8 @@ setInterval(async () => {
         }
       }
       console.log(winnerNumbers);
+
+      //Pay for Winner
       for (let i in winnerNumbers) {
         winnerNumbersArray[i] = getResultArray(winnerNumbers[i]);
         await updateGameResult(i, winnerNumbersArray[i]);

@@ -51,8 +51,8 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
                     $lte: new Date(req.query.dateEnd)
                 }
             }
-
-        }, {
+        },
+        {
             $group: {
                 _id: '$DrDate',
                 totalBetPonts: {
@@ -60,6 +60,9 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
                 },
                 totalWon: {
                     $sum: '$won'
+                },
+                commissionPoint: {
+                    $sum: '$commissionPoint'
                 }
             }
         }

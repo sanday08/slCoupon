@@ -3,7 +3,7 @@ const User = require("../../models/User");
 const Bet = require("../../models/Bet");
 const WinResult = require("../../models/WinResult");
 const Winning = require("../../models/Winning");
-
+const WinnerId = require("../../models/WinnerId");
 
 
 async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance) {
@@ -105,9 +105,20 @@ async function getAdvancedBet(DrTime) {
   await Bet.updateMany({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] }, { isCount: true });
   return await Bet.find({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] })
 }
+
+//Get Admin Percentage for winning Result
 async function getAdminPer() {
   return Winning.findById("602e55e9a494988def7acc25")
 }
 
+//Get user For winnerNumbers
+async function getUserForWinner() {
+  let user = await WinnerId.find();
+  if (user != null) {
+    return { success: true, user: user[0].retailerId };
+  }
+  else
+    return { success: false }
+}
 
-module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer };
+module.exports = { placeBet, winGamePay, updateGameResult, getLastWinnerResults, deleteBet, getAdvancedBet, getAdminPer, getUserForWinner };

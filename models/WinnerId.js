@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const WinnerIdSchema = new mongoose.Schema({
-    referralId: {
+    retailerId: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
         required: true,
