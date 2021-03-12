@@ -15,7 +15,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
       let bet;
 
       const distributer = await User.findById(user.referralId);
-      const superDistributer = await User.findById(distributers.referralId);
+      const superDistributer = await User.findById(distributer.referralId);
 
       if (isAdvance) {
         isCount = false;
