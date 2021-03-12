@@ -85,8 +85,9 @@ async function deleteBet(retailerId, ticketId) {
 
     const retailer = await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
     const distributer = await User.findById(retailer.referralId);
+
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
-    await User.findByIdAndUpdate(retailerId.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
+    await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
     await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
 
     await Bet.findByIdAndDelete(betDetail._id);
