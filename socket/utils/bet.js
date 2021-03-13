@@ -88,7 +88,7 @@ async function deleteBet(retailerId, ticketId) {
     console.log("start 2");
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
     console.log("start 3");
-    console.log("distributrID", retailer.referralId, distributer);
+    console.log("distributrID", retailer.referralId, distributer, "commision:", betDetail.distributterCommission);
 
     await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
     console.log("start 4");
