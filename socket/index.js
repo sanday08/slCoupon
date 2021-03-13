@@ -61,6 +61,7 @@ io.on("connection", (socket) => {
       if (bet == 0) {
         ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
       }
+      console.log("Admin Balanced is :----", adminBalance)
       socket.emit("res", {
         data: {
           ticketId,

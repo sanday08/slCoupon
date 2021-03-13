@@ -92,8 +92,8 @@ async function deleteBet(retailerId, ticketId) {
     // console.log("start 4");
     // await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
     // console.log("start 5");
-    await Bet.findByIdAndDelete(betDetail._id);
-    success = true;
+    // await Bet.findByIdAndDelete(betDetail._id);
+    // success = true;
     result = "Ticket Cancel Sucessfull";
   }
   if (success)
