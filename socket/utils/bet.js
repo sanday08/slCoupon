@@ -88,12 +88,14 @@ async function deleteBet(retailerId, ticketId) {
     console.log("start 2");
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
     console.log("start 3");
-    // await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
-    // console.log("start 4");
-    // await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
-    // console.log("start 5");
-    // await Bet.findByIdAndDelete(betDetail._id);
-    // success = true;
+    console.log("distributrID", retailer.referralId, distributer);
+
+    await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
+    console.log("start 4");
+    await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
+    console.log("start 5");
+    await Bet.findByIdAndDelete(betDetail._id);
+    success = true;
     result = "Ticket Cancel Sucessfull";
   }
   if (success)
