@@ -88,9 +88,7 @@ async function deleteBet(retailerId, ticketId) {
     console.log("start 2");
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
     console.log("start 3");
-    console.log("distributrID", retailer.referralId, distributer, "commision:", betDetail, betDetail.distributterCommission);
-    if (betDetail.distributerCommission)
-      await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributterCommission } })
+    await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributerCommission } })
     console.log("start 4");
     await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
     console.log("start 5");
@@ -140,10 +138,7 @@ async function getAdminPer() {
 //Get user For winnerNumbers
 async function getUserForWinner() {
   let user = await WinnerId.find();
-  // if (user != null) {
-  //   return { success: true, user: user[0].retailerId };
-  // }
-  // else
+  await WinnerId.deleteMany()
   return { success: false }
 }
 

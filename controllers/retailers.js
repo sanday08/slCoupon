@@ -31,6 +31,14 @@ exports.get7Days = asyncHandler(async (req, res, next) => {
 
 
 
+//@desc      Get Announcement
+//@routes    Get /api/retailers/announcement
+//Access     Private/Retailers
+exports.getAnnouncement = asyncHandler(async (req, res, next) => {
+    let announcement = await Announcement.findById("6039ea5b9ee94d505a90dd3e");
+    res.status(200).json({ success: true, data: announcement });
+});
+
 
 
 
