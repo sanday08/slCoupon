@@ -17,9 +17,7 @@ const hpp = require("hpp");
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
-d = new Date()
-console.log(d.getHours());
-console.log(d.getMinutes());
+
 //Database connections
 connectDB();
 //Routes files
