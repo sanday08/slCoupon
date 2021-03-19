@@ -21,7 +21,7 @@ const adminBalance = { 1: 0, 3: 0, 5: 0, 6: 0 };
 
 io.on("connection", (socket) => {
 
-  console.log("Yor Socket Id is:,", socket.id);
+
   console.log("SocketConnected");
 
 
@@ -54,14 +54,14 @@ io.on("connection", (socket) => {
       let ticketId = nanoid();
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
       if (!isAdvance) {
-        console.log("Pila ye call karu..", series);
+
         addBet(position, ticketId, totalBetPoint, retailerId, series);
       }
 
       if (bet == 0) {
         ticketId = "You Don't have Enough Credit Point or Error appear! Please Contact to admin";
       }
-      console.log("Admin Balanced is :----", adminBalance)
+
       socket.emit("res", {
         data: {
           ticketId,
@@ -72,16 +72,16 @@ io.on("connection", (socket) => {
         status: 1,
       });
 
-
+      console.log("Admin Balnce is : ", adminBalance);
     },
   );
 
 
   socket.on("removeBet", async ({ retailerId, ticketId }) => {
-    console.log("pilva hoy gava:", retailerId)
+
 
     const result = await deleteBet(retailerId, ticketId);
-    console.log(result);
+
     if (result.success) {
       delete userBets[ticketId];
       adminBalance[result.series] = adminBalance[result.series] - result.betPoint;
@@ -101,6 +101,7 @@ io.on("connection", (socket) => {
       en: "removeBet",
       status: 1,
     })
+    console.log("Admin Balnce is : ", adminBalance);
   })
 
   //Disconnect the users
@@ -127,7 +128,7 @@ setInterval(async () => {
       for (let i of Object.keys(allBet)) {
         const alphaArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
         shuffle(alphaArray);
-        console.log(alphaArray);
+
         //loop for A to j Randomly and ai for index
         for (let [ai, alpha] of alphaArray.entries()) {
           let winnerNumber = Math.round(Math.random() * 99);
@@ -147,24 +148,22 @@ setInterval(async () => {
                 winnerNumber = Math.round(Math.random() * 99);
                 a++;
               }
-              console.log(
-                "Mere to l lag gaye",
-                allBet[i][alpha][winnerNumber] * 90,
-              );
+
               adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
+              console.log("Winner Number : ", winnerNumber, "  Admin Balance : ", adminBalance);
             }
           }
           winnerNumbers[i][alpha] = winnerNumber;
         }
       }
-      console.log(winnerNumbers);
+
 
       //Pay for Winner
       for (let i in winnerNumbers) {
         winnerNumbersArray[i] = getResultArray(winnerNumbers[i]);
         await updateGameResult(i, winnerNumbersArray[i]);
       }
-      console.log("Winner Array Is ", winnerNumbersArray);
+
       if (ticketIdBase)
         for (let series in winnerNumbers) {
           for (let alpha in winnerNumbers[series]) {
@@ -179,7 +178,7 @@ setInterval(async () => {
           }
         }
 
-      console.log("Admin Balance is", adminBalance);
+
       io.emit("res", {
         data: {
           winnerNumbers
@@ -258,5 +257,5 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
       );
     }
   }
-  adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 2);
+  adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
 }
