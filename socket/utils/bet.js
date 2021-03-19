@@ -82,16 +82,16 @@ async function deleteBet(retailerId, ticketId) {
     result = "Advance Ticket cannot be cancelled";
   }
   else {
-    console.log("start 1");
+
     const retailer = await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
     const distributer = await User.findById(retailer.referralId);
-    console.log("start 2");
+
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
-    console.log("start 3");
+
     await User.findByIdAndUpdate(retailer.referralId, { $inc: { commissionPoint: -betDetail.distributerCommission } })
-    console.log("start 4");
+
     await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
-    console.log("start 5");
+
     await Bet.findByIdAndDelete(betDetail._id);
     success = true;
     result = "Ticket Cancel Sucessfull";
@@ -109,7 +109,7 @@ async function deleteBet(retailerId, ticketId) {
 async function getLastWinnerResults() {
   try {
     let result = await WinResult.find().sort({ createdAt: -1 }).limit(4);
-    console.log("results", result);
+
 
     if (result.length == 4) {
       return {
