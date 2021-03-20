@@ -52,6 +52,8 @@ io.on("connection", (socket) => {
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance }) => {
       let ticketId = nanoid();
+
+      console.log("Admin Balnce is :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
       if (!isAdvance) {
 
@@ -258,4 +260,5 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
     }
   }
   adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
+  console.log("Admin Balnce is joker :", adminBalance)
 }

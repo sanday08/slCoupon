@@ -17,14 +17,14 @@ const Announcement = require("../models/Announcement");
 //@routes    GET /api/retailers/betHistroy
 //Access     Private/Admin
 exports.get7Days = asyncHandler(async (req, res, next) => {
-    console.log("date by Piyush", req.params.date)
+  
     let result = await WinResult.find({
         createDate: {
             $gte: new Date(new Date(req.params.date) - 8 * 24 * 60 * 60 * 1000),
             $lte: new Date(req.params.date),
         }
     }).sort({ createdAt: -1 })
-    console.log("Result is", result);
+  
     return res.status(200).json({ success: true, count: result.length, data: result })
 });
 
@@ -75,7 +75,7 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
             }
         }
     ]);//await Bet.aggregate().gr
-    console.log("Result is", result);
+
     return res.status(200).json({ success: true, data: result })
 });
 
@@ -122,7 +122,7 @@ exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 
-    console.log(req.query.date, req.body.date, req.params.date)
+  
     const winnerHistory = await WinResult.find({ DrDate: req.params.date });
     res.status(200).json({ success: true, count: winnerHistory.length, data: winnerHistory });
 });
@@ -132,12 +132,12 @@ exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.claimeTicket = asyncHandler(async (req, res, next) => {
 
-    console.log("req.body.ticketId", req.body.ticketId, req.query.ticketId, req.params.ticketId);
+   
     bets = await Bet.find({ ticketId: req.body.ticketId.toString().toUpperCase() });
-    console.log("This is bets", bets)
+
     let result = "Ticket Id Not Found";
     if (bets.length != 0) {
-        console.log(bets[0].retailerId, "& this is the system Owner Id", req.user.id)
+
         if (bets[0].retailerId == req.user.id) {
             if (bets[0].winPositions.length == 0)
                 result = "Result Not yet Declared";
