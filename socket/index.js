@@ -152,7 +152,7 @@ setInterval(async () => {
               }
 
               adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
-              console.log("Winner Number : ", winnerNumber, "  Admin Balance : ", adminBalance);
+              console.log("Winner Number : ", winnerNumber, "  Admin Balance After the deductions : ", adminBalance);
             }
           }
           winnerNumbers[i][alpha] = winnerNumber;
