@@ -150,9 +150,10 @@ setInterval(async () => {
                 winnerNumber = Math.round(Math.random() * 99);
                 a++;
               }
-
-              adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
-              console.log("Winner Number : ", winnerNumber, "  Admin Balance After the deductions : ", adminBalance);
+              console.log("Alpha is : ", alpha, "Winner Number : ", winnerNumber, "  Admin Balance Before the deductions : ", adminBalance);
+              if (allBet[i][alpha][winnerNumber])
+                adminBalance[i] -= allBet[i][alpha][winnerNumber] * 90;
+              console.log("Alpha is : ", alpha, "Winner Number : ", winnerNumber, "  Admin Balance After the deductions : ", adminBalance);
             }
           }
           winnerNumbers[i][alpha] = winnerNumber;
