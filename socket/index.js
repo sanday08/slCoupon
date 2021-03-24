@@ -22,14 +22,8 @@ const adminBalance = { 1: 0, 3: 0, 5: 0, 6: 0 };
 io.on("connection", (socket) => {
 
 
-  console.log("SocketConnected");
 
-
-  console.log("TheDate: ", new Date());
-  console.log("The Hours: ", new Date().getHours());
-  console.log("The Minutes: ", new Date().getMinutes());
-  console.log("UtcTime", new Date().getUTCDate())
-
+  console.log("Admin Balance is ", adminBalance);
   //Join Event When Application is Start
   socket.on("join", async ({ token }) => {
     console.log("Socket join call");
@@ -53,7 +47,7 @@ io.on("connection", (socket) => {
     async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance }) => {
       let ticketId = nanoid();
 
-      console.log("Admin Balnce is :", adminBalance)
+      console.log("Admin Balnce is before :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
       if (!isAdvance) {
 
@@ -74,7 +68,7 @@ io.on("connection", (socket) => {
         status: 1,
       });
 
-      console.log("Admin Balnce is : ", adminBalance);
+      console.log("Admin Balnce is after the bet place: ", adminBalance);
     },
   );
 
@@ -104,7 +98,7 @@ io.on("connection", (socket) => {
       en: "removeBet",
       status: 1,
     })
-    console.log("Admin Balnce is : ", adminBalance);
+    console.log("Admin Balnce is after remove bet: ", adminBalance);
   })
 
   //Disconnect the users
