@@ -35,13 +35,13 @@ exports.login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ userName }).select("+password");
 
   if (!user) {
-    return next(new ErrorResponse("Invalide credentials", 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
   //Check if Password matches
 
 
   if (user.password != password) {
-    return next(new ErrorResponse("Invalide credentials", 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
 
   if (!user.isActive) {
@@ -68,7 +68,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   //Check for user
   const user = await User.findOne({ userName }).select("+password");
   if (!user) {
-    return next(new ErrorResponse("Invalide credentials", 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
   if (user.role != "retailer") {
     return next(new ErrorResponse("You are not authorized to access this application.", 401));
@@ -79,7 +79,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
 
   if (user.password != password) {
-    return next(new ErrorResponse("Invalide credentials", 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
 
   if (!user.isActive) {
@@ -219,7 +219,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     resetPasswordExpire: { $gt: Date.now() },
   });
   if (!user) {
-    return next(new ErrorResponse("Invalide Token", 400));
+    return next(new ErrorResponse("Invalid Token", 400));
   }
   //Set new Password
   user.password = req.body.password;

@@ -86,7 +86,8 @@ io.on("connection", (socket) => {
 
     if (result.success) {
       delete userBets[ticketId];
-      adminBalance[result.series] = adminBalance[result.series] - result.betPoint;
+      if (adminBalance[result.series] != NaN)
+        adminBalance[result.series] -= result.betPoint * winningPercent / 100;
       for (alpha in result.position) {
         for (number in result.position[alpha]) {
           if (allBet[result.series][alpha][number] <= result.position[alpha][number]) {
