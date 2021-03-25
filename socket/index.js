@@ -188,10 +188,10 @@ setInterval(async () => {
     }
 
   }
-  if (winningPercent == 100)
-
+  if (winningPercent == 100) {
     winningPercent = await getAdminPer();
-  console.log("winning in set interval ", winningPercent, " percent is : ", winningPercent.percent);
+    console.log("winning in set interval ", winningPercent, " percent is : ", winningPercent.percent);
+  }
 }, 1000);
 
 //ShuffleArray
