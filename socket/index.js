@@ -5,7 +5,7 @@ const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
 const immutable = require("object-path-immutable");
 let userBets = {}; //retailerID:{1:{A:{10:2,5:4}},2:{A:{10:2,5:4}},3:{A:{10:2,5:4}},4:{A:{10:2,5:4}}}
-let winningPercent = 90;
+let winningPercent = 100;
 let allBet = {
   1: {},
   3: {},
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance }) => {
       let ticketId = nanoid();
-
+      console.log("retailerId : ", retailerId, " series : ", series, " position : ", position, " totalBetPoint : ", totalBetPoint, " DrTime : ", DrTime, " isAdvance : ", isAdvance);
       console.log("Admin Balnce is before :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
       if (!isAdvance) {
@@ -188,10 +188,8 @@ setInterval(async () => {
     }
 
   }
-  if (new Date().getHours() > 8 && new Date().getHours() < 10) {
-    if (new Date().getMinutes() == 0)
-      winningPercent = await getAdminPer().percent;
-  }
+  if (new Date().getMinutes() == 100)
+    winningPercent = await getAdminPer().percent;
 }, 1000);
 
 //ShuffleArray
