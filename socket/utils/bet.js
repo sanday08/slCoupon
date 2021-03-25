@@ -36,7 +36,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint, commissionPoint: betPoint * user.commissionPercentage / 100 }, lastTicketId: ticketId, lastBetAmount: betPoint })
       await User.findByIdAndUpdate(user.referralId, { $inc: { commissionPoint: betPoint * distributer.commissionPercentage / 100 } })
       await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: betPoint * superDistributer.commissionPercentage / 100 } })
-
+      console.log("bet datata is ", bet);
 
       return bet;
     }
