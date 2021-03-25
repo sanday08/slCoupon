@@ -253,6 +253,7 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
       );
     }
   }
+  console.log("Winning percent : ", winningPercent);
   if (adminBalance[series] != NaN)
     adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
   else
