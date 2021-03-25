@@ -193,6 +193,7 @@ setInterval(async () => {
 
     console.log("winning in set interval ", p, " percent is : ", p.percent);
     winningPercent = p.percent;
+    console.log(winningPercent);
   }
 }, 1000);
 
