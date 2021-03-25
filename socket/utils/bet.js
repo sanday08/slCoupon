@@ -16,7 +16,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
 
       const distributer = await User.findById(user.referralId);
       const superDistributer = await User.findById(distributer.referralId);
-
+      console.log("sandip 1")
       if (isAdvance) {
         isCount = false;
         bet = await Bet.create({
@@ -32,7 +32,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
 
-
+      console.log("sandip 2")
       await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: -betPoint, commissionPoint: betPoint * user.commissionPercentage / 100 }, lastTicketId: ticketId, lastBetAmount: betPoint })
       await User.findByIdAndUpdate(user.referralId, { $inc: { commissionPoint: betPoint * distributer.commissionPercentage / 100 } })
       await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: betPoint * superDistributer.commissionPercentage / 100 } })
