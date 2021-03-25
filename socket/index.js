@@ -188,7 +188,7 @@ setInterval(async () => {
     }
 
   }
-  if (new Date().getMinutes() == 100)
+  if (winningPercent == 100)
     winningPercent = await getAdminPer().percent;
 }, 1000);
 
@@ -253,6 +253,9 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
       );
     }
   }
-  adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
+  if (adminBalance[series] != NaN)
+    adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
+  else
+    adminBalance[series] = Math.round(totalBetPoint * winningPercent / 100, 0)
   console.log("Admin Balnce is joker :", adminBalance)
 }
