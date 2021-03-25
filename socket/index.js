@@ -189,8 +189,9 @@ setInterval(async () => {
 
   }
   if (winningPercent == 100)
-    console.log("winning in set interval ", winningPercent);
-  winningPercent = await getAdminPer().percent;
+
+    winningPercent = await getAdminPer();
+  console.log("winning in set interval ", winningPercent, " percent is : ", winningPercent.percent);
 }, 1000);
 
 //ShuffleArray
@@ -255,9 +256,8 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
     }
   }
   console.log("Winning percent : ", winningPercent);
-  if (adminBalance[series] != NaN)
-    adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
-  else
-    adminBalance[series] = Math.round(totalBetPoint * winningPercent / 100, 0)
+
+  adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
+
   console.log("Admin Balnce is joker :", adminBalance)
 }
