@@ -49,6 +49,7 @@ io.on("connection", (socket) => {
       console.log("retailerId : ", retailerId, " series : ", series, " position : ", position, " totalBetPoint : ", totalBetPoint, " DrTime : ", DrTime, " isAdvance : ", isAdvance);
       console.log("Admin Balnce is before :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
+      console.log("clueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", bet);
       if (!isAdvance) {
 
         addBet(position, ticketId, totalBetPoint, retailerId, series);
