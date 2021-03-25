@@ -190,8 +190,9 @@ setInterval(async () => {
   }
   if (winningPercent == 100) {
     let p = await getAdminPer();
+
+    console.log("winning in set interval ", p, " percent is : ", p.percent);
     winningPercent = p.percent;
-    console.log("winning in set interval ", winningPercent, " percent is : ", p.percent);
   }
 }, 1000);
 
