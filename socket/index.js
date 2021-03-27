@@ -130,7 +130,7 @@ setInterval(async () => {
         for (let [ai, alpha] of alphaArray.entries()) {
           let winnerNumber = Math.round(Math.random() * 99);
           //conver single number to string
-          if (winnerNumber.toString().length() == 1)
+          if (winnerNumber.toString().length == 1)
             winnerNumber = "0" + winnerNumber.toString();
           if (allBet[i][alpha]) {
             // mene dala
@@ -147,7 +147,7 @@ setInterval(async () => {
               ) {
                 winnerNumber = Math.round(Math.random() * 99);
                 //conver single number to string
-                if (winnerNumber.toString().length() == 1)
+                if (winnerNumber.toString().length == 1)
                   winnerNumber = "0" + winnerNumber.toString();
                 a++;
               }
