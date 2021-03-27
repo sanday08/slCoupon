@@ -49,7 +49,6 @@ io.on("connection", (socket) => {
       console.log("retailerId : ", retailerId, " series : ", series, " position : ", position, " totalBetPoint : ", totalBetPoint, " DrTime : ", DrTime, " isAdvance : ", isAdvance);
       console.log("Admin Balnce is before :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
-      console.log("clueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", bet);
       if (!isAdvance) {
 
         addBet(position, ticketId, totalBetPoint, retailerId, series);
@@ -130,12 +129,15 @@ setInterval(async () => {
         //loop for A to j Randomly and ai for index
         for (let [ai, alpha] of alphaArray.entries()) {
           let winnerNumber = Math.round(Math.random() * 99);
+          //conver single number to string
+          if (winnerNumber.toString().length() == 1)
+            winnerNumber = "0" + winnerNumber.toString();
           if (allBet[i][alpha]) {
             // mene dala
             if (ai > 6) {
               const entryKeys = Object.keys(allBet[i][alpha]);
               const random = Math.floor(Math.random() * entryKeys.length);
-              winnerNumber = parseInt(entryKeys[random]);
+              winnerNumber = entryKeys[random];
             }
             if (allBet[i][alpha][winnerNumber]) {
               let a = 0;
@@ -144,6 +146,9 @@ setInterval(async () => {
                 a < 100
               ) {
                 winnerNumber = Math.round(Math.random() * 99);
+                //conver single number to string
+                if (winnerNumber.toString().length() == 1)
+                  winnerNumber = "0" + winnerNumber.toString();
                 a++;
               }
               console.log("Alpha is : ", alpha, "Winner Number : ", winnerNumber, "  Admin Balance Before the deductions : ", adminBalance);

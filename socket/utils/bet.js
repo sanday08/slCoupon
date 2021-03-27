@@ -8,7 +8,7 @@ const WinnerId = require("../../models/WinnerId");
 
 async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance) {
   //Verify Token
-  console.log("Sandip Jayntibhai Shiroya")
+
   try {
     user = await User.findById(retailerId);
     if (user.creditPoint >= betPoint) {
