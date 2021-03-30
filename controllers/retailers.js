@@ -17,14 +17,14 @@ const Announcement = require("../models/Announcement");
 //@routes    GET /api/retailers/betHistroy
 //Access     Private/Admin
 exports.get7Days = asyncHandler(async (req, res, next) => {
-  
+
     let result = await WinResult.find({
         createDate: {
             $gte: new Date(new Date(req.params.date) - 8 * 24 * 60 * 60 * 1000),
             $lte: new Date(req.params.date),
         }
     }).sort({ createdAt: -1 })
-  
+
     return res.status(200).json({ success: true, count: result.length, data: result })
 });
 
@@ -70,7 +70,7 @@ exports.getBetHistroyReport = asyncHandler(async (req, res, next) => {
                     $sum: '$won'
                 },
                 commissionPoint: {
-                    $sum: '$commissionPoint'
+                    $sum: '$retailerCommission'
                 }
             }
         }
@@ -122,7 +122,7 @@ exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 
-  
+
     const winnerHistory = await WinResult.find({ DrDate: req.params.date });
     res.status(200).json({ success: true, count: winnerHistory.length, data: winnerHistory });
 });
@@ -132,7 +132,7 @@ exports.getWinnerResultsByDate = asyncHandler(async (req, res, next) => {
 //Access     Private/Admin
 exports.claimeTicket = asyncHandler(async (req, res, next) => {
 
-   
+
     bets = await Bet.find({ ticketId: req.body.ticketId.toString().toUpperCase() });
 
     let result = "Ticket Id Not Found";
