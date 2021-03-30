@@ -63,7 +63,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   console.log("Version Code", version);
   if (versionCode != version.version) {
     return next(
-      new ErrorResponse("Please Update your Apllication.."),
+      new ErrorResponse("Please Update your Application.."),
       400
     );
   }
