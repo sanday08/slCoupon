@@ -59,7 +59,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
   const { userName, password, versionCode } = req.body;
   //userName and password fields are required
-  const version = await Version.findOne({ _id: "6062f3bcd178d0c92aef6361" });
+  const version = await Version.findById("6062f3bcd178d0c92aef6361");
   console.log("Version Code", version);
   if (versionCode != version.version) {
     return next(
