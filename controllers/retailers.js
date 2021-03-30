@@ -91,6 +91,8 @@ exports.getAllBetHistroy = asyncHandler(async (req, res, next) => {
     res.status(200).json(res.advancedResults);
 });
 
+
+
 //@desc      Get  Bet History via user
 //@routes    GET /api/retailers/betHistroy/:retailerId
 //Access     Private/Admin
@@ -111,6 +113,19 @@ exports.getBetHistroy = asyncHandler(async (req, res, next) => {
 exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
     const users = await User.find({ isLogin: true });
     res.status(200).json({ success: true, count: users.length, data: users });
+});
+
+
+
+
+//@desc      Get Single Ticket Info via Ticket Id
+//@routes    GET /api/retailers/ticket
+//Access     Private/Admin
+exports.getTicket = asyncHandler(async (req, res, next) => {
+    console.log("sandip shiroya")
+    const bets = await Bet.find({ ticketId: req.params.ticketId });
+    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", bets, req.params.ticketId);
+    res.status(200).json({ success: true, data: bets });
 });
 
 
