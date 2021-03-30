@@ -134,7 +134,7 @@ setInterval(async () => {
             winnerNumber = "0" + winnerNumber.toString();
           if (allBet[i][alpha]) {
             // mene dala
-            if (ai > 6) {
+            if (ai < 5) {
               const entryKeys = Object.keys(allBet[i][alpha]);
               const random = Math.floor(Math.random() * entryKeys.length);
               winnerNumber = entryKeys[random];
