@@ -122,9 +122,7 @@ exports.getOnlineRetailers = asyncHandler(async (req, res, next) => {
 //@routes    GET /api/retailers/ticket
 //Access     Private/Admin
 exports.getTicket = asyncHandler(async (req, res, next) => {
-    console.log("sandip shiroya")
     const bets = await Bet.find({ ticketId: req.params.ticketId });
-    console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", bets, req.params.ticketId);
     res.status(200).json({ success: true, data: bets });
 });
 

@@ -3,7 +3,7 @@ const ErrorResponse = require("../utils/errorResponse");
 const User = require("../models/User");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
-
+const Version = require("../models/Version");
 //@desc    Register a User
 //@route   Post /api/auth
 //@access  Private
@@ -57,8 +57,16 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 exports.loginRetailer = asyncHandler(async (req, res, next) => {
 
-  const { userName, password } = req.body;
+  const { userName, password, versionCode } = req.body;
   //userName and password fields are required
+  const version = Version.findById(versionCode);
+  console.log("Version Code", version);
+  if (versionCode != version.version) {
+    return next(
+      new ErrorResponse("Please Update your Apllication.."),
+      400
+    );
+  }
   if (!userName && !password) {
     return next(
       new ErrorResponse("userName and password fields must be required"),
