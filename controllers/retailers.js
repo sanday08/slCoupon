@@ -46,10 +46,9 @@ exports.getAnnouncement = asyncHandler(async (req, res, next) => {
 exports.getReprintData = asyncHandler(async (req, res, next) => {
     var now = new Date();
     var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    console.log("Dr Time is: ", req.params.drTime);
-    console.log("Start Date", startOfToday);
-    let bets = await Bet.find({ DrTime: req.params.drTime });
-    console.log("Data is", bets);
+
+    let bets = await Bet.find({ DrTime: req.params.drTime, createdAt: { $gte: startOfToday } });
+
     res.status(200).json({ success: true, data: bets });
 });
 
