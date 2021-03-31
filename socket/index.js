@@ -71,7 +71,13 @@ io.on("connection", (socket) => {
       console.log("Admin Balnce is after the bet place: ", adminBalance);
     },
   );
-
+  socket.on("beep", () => {
+    socket.emit("res", {
+      data: {},
+      en: "bop",
+      status: 1,
+    })
+  })
 
   socket.on("removeBet", async ({ retailerId, ticketId }) => {
 
