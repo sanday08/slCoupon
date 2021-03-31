@@ -44,11 +44,11 @@ io.on("connection", (socket) => {
 
   socket.on(
     "placeBet",
-    async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance }) => {
+    async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance, highLow, highLowValue }) => {
       let ticketId = nanoid();
       console.log("retailerId : ", retailerId, " series : ", series, " position : ", position, " totalBetPoint : ", totalBetPoint, " DrTime : ", DrTime, " isAdvance : ", isAdvance);
       console.log("Admin Balnce is before :", adminBalance)
-      let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance);
+      let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance, highLow, highLowValue);
       if (!isAdvance) {
 
         addBet(position, ticketId, totalBetPoint, retailerId, series);

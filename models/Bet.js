@@ -73,7 +73,8 @@ const BetSchema = new mongoose.Schema({
     {
         type: Boolean,
         default: true,
-    }
+    },
+    highLow: { type: Boolean, default: true, }, highLowValue: { type: Number, default: 0 }
 
 }, { timestamps: true })
 

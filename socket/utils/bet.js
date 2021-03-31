@@ -6,7 +6,7 @@ const Winning = require("../../models/Winning");
 const WinnerId = require("../../models/WinnerId");
 
 
-async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance) {
+async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance, highLow, highLowValue) {
   //Verify Token
 
   try {
@@ -21,14 +21,14 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
       if (isAdvance) {
         isCount = false;
         bet = await Bet.create({
-          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount,
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, highLow, highLowValue, isCount,
           distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
       }
       else
         bet = await Bet.create({
-          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), DrTime, ticketBets, isAdvance,
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), DrTime, highLow, highLowValue, ticketBets, isAdvance,
           distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
