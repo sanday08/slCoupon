@@ -28,7 +28,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
       }
       else
         bet = await Bet.create({
-          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, isAdvance,
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), DrTime, ticketBets, isAdvance,
           distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
