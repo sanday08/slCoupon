@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
   socket.on("beep", () => {
     socket.emit("res", {
       data: {},
-      en: "bop",
+      en: "boop",
       status: 1,
     })
   })
