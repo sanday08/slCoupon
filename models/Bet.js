@@ -51,11 +51,11 @@ const BetSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    DrTime: {
+    cTime: {
         type: String,
         default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString()
     },
-    cTime: String,
+    DrTime: String,
     DrDate: {
         type: String,
         default: () => new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),
