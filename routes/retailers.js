@@ -1,5 +1,5 @@
 const express = require('express');
-const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy, addComplaint, get7Days, getTicket, getBetHistroyReport, getAnnouncement } = require("../controllers/retailers")
+const { getWinnerResultsByDate, claimeTicket, getBetHistroy, getOnlineRetailers, getAllBetHistroy, addComplaint, get7Days, getTicket, getReprintData, getBetHistroyReport, getAnnouncement } = require("../controllers/retailers")
 const { protect, authorize } = require("../middleware/auth");
 const Bet = require("../models/Bet")
 const advancedResults = require("../middleware/advancedResults");
@@ -23,4 +23,5 @@ router.route("/claim").put(claimeTicket);
 router.route("/complaint").post(addComplaint);
 router.route("/announcement").get(getAnnouncement);
 router.route("/ticket/:ticketId").get(getTicket);
+router.route("/reprint/:drTime").get(getReprintData);
 module.exports = router;
