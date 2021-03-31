@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
     socket.emit("res", {
       data: {
         user,
-        currentTime: new Date().toLocaleTimeString("en-US", {
+        currentTime: new Date().toLocaleTimeString("en-GB", {
           timeZone: "Asia/Calcutta",
         }),
 
