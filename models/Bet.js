@@ -55,6 +55,7 @@ const BetSchema = new mongoose.Schema({
         type: String,
         default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString()
     },
+    cTime: String,
     DrDate: {
         type: String,
         default: () => new Date().getFullYear().toString() + "-" + (new Date().getMonth() + 1).toString() + "-" + new Date().getDate().toString(),

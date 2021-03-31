@@ -6,7 +6,7 @@ const Winning = require("../../models/Winning");
 const WinnerId = require("../../models/WinnerId");
 
 
-async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, DrTime, isAdvance) {
+async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, cTime, isAdvance) {
   //Verify Token
 
   try {
@@ -21,14 +21,14 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
       if (isAdvance) {
         isCount = false;
         bet = await Bet.create({
-          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, DrTime, isAdvance, isCount,
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), ticketBets, cTime, isAdvance, isCount,
           distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
       }
       else
         bet = await Bet.create({
-          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), DrTime, ticketBets, isAdvance,
+          retailerId, ticketId, betPoint, startPoint: user.creditPoint, userName: user.userName, name: user.name, seriesNo: parseInt(seriesNo), cTime, ticketBets, isAdvance,
           distributerCommission: betPoint * distributer.commissionPercentage / 100, superDistributerCommission: betPoint * superDistributer.commissionPercentage / 100,
           retailerCommission: betPoint * user.commissionPercentage / 100
         })
@@ -126,9 +126,9 @@ async function getLastWinnerResults() {
 }
 
 //get Advanced Bet 
-async function getAdvancedBet(DrTime) {
-  await Bet.updateMany({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] }, { isCount: true });
-  return await Bet.find({ $and: [{ isAdvance: true }, { DrTime }, { results: [] }] })
+async function getAdvancedBet(cTime) {
+  await Bet.updateMany({ $and: [{ isAdvance: true }, { cTime }, { results: [] }] }, { isCount: true });
+  return await Bet.find({ $and: [{ isAdvance: true }, { cTime }, { results: [] }] })
 }
 
 //Get Admin Percentage for winning Result
