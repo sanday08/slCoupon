@@ -169,14 +169,14 @@ exports.claimeTicket = asyncHandler(async (req, res, next) => {
             if (bets[0].winPositions.length == 0)
                 result = "Result Not yet Declared";
             else if (bets[0].claim) {
-                result = "Ticket Already Claimed."
+                result = "Ticket has been claimed already.";
             }
             else {
                 await Bet.findOneAndUpdate({ ticketId: req.body.ticketId }, { claim: true });
                 if (bets[0].won != 0)
-                    result = "You won the Ticket of " + bets[0].won
+                    result = "Congratulations, you have won ₹" + bets[0].won
                 else
-                    result = "You loss The Ticket"
+                    result = "No Win"
             }
         }
         else
