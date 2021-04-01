@@ -137,6 +137,7 @@ setInterval(async () => {
           //conver single number to string
           if (winnerNumber.toString().length == 1)
             winnerNumber = "0" + winnerNumber.toString();
+          else winnerNumber = winnerNumber.toString();
           if (allBet[i][alpha]) {
             // mene dala
             if (ai < 5) {
@@ -154,6 +155,7 @@ setInterval(async () => {
                 //conver single number to string
                 if (winnerNumber.toString().length == 1)
                   winnerNumber = "0" + winnerNumber.toString();
+                else winnerNumber = winnerNumber.toString();
                 a++;
               }
               console.log("Alpha is : ", alpha, "Winner Number : ", winnerNumber, "  Admin Balance Before the deductions : ", adminBalance);
