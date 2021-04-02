@@ -23,7 +23,6 @@ io.on("connection", (socket) => {
 
 
 
-  console.log("Admin Balance is ", adminBalance);
   //Join Event When Application is Start
   socket.on("join", async ({ token }) => {
     console.log("Socket join call");
@@ -46,7 +45,6 @@ io.on("connection", (socket) => {
     "placeBet",
     async ({ retailerId, series, position, totalBetPoint, DrTime, isAdvance, highLow, highLowValue }) => {
       let ticketId = nanoid();
-      console.log("retailerId : ", retailerId, " series : ", series, " position : ", position, " totalBetPoint : ", totalBetPoint, " DrTime : ", DrTime, " isAdvance : ", isAdvance);
       console.log("Admin Balnce is before :", adminBalance)
       let bet = await placeBet(retailerId, ticketId, totalBetPoint, series, position, DrTime, isAdvance, highLow, highLowValue);
       if (!isAdvance) {
@@ -204,9 +202,8 @@ setInterval(async () => {
   if (new Date().getHours() == 7 && new Date().getMinutes() == 1) {
     let p = await getAdminPer();
 
-    console.log("winning in set interval ", p, " percent is : ", p.percent);
     winningPercent = p.percent;
-    console.log(winningPercent);
+
   }
 }, 1000);
 
@@ -271,9 +268,8 @@ function addBet(position, ticketId, totalBetPoint, retailerId, series) {
       );
     }
   }
-  console.log("Winning percent : ", winningPercent);
+
 
   adminBalance[series] += Math.round(totalBetPoint * winningPercent / 100, 0);
 
-  console.log("Admin Balnce is joker :", adminBalance)
 }

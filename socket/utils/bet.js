@@ -50,6 +50,7 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
 
 async function winGamePay(retailerId, price, ticketId) {
   try {
+    console.log("winGame pay call");
     await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: price } });
     await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: price } });
   } catch (err) {
