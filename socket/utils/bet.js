@@ -48,11 +48,13 @@ async function placeBet(retailerId, ticketId, betPoint, seriesNo, ticketBets, Dr
   }
 }
 
-async function winGamePay(retailerId, price, ticketId) {
+async function winGamePay(price, ticketId) {
   try {
-    console.log("winGame pay call", retailerId, price, ticketId);
-    await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: price } });
-    await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: price } });
+
+    const user = await Bet.findOneAndUpdate({ ticketId }, { $inc: { won: price } });
+    console.log("winGame pay call", user.retailerId, price, ticketId);
+    await User.findByIdAndUpdate(user.retailerId, { $inc: { creditPoint: price } });
+
   } catch (err) {
     return err.message;
   }
