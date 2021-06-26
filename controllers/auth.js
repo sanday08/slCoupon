@@ -60,7 +60,7 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   const { userName, password, versionCode } = req.body;
   //userName and password fields are required
   const version = await Version.findById("6062f3bcd178d0c92aef6361");
-  console.log("Version Code", version);
+  console.log("Version Code", version, "  : ", req.body);
   if (versionCode != version.version) {
     return next(
       new ErrorResponse("Please Update your Application.."),
@@ -74,7 +74,8 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
     );
   }
   //Check for user
-  const user = await User.findOne({ userName }).select("+password");
+  const user = await User.findOne({ $where: "/^" + userName + ".*/.test(this.userName)" }).select("+password");
+
   if (!user) {
     return next(new ErrorResponse("Invalid credentials", 401));
   }
