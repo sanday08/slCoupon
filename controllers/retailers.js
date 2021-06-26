@@ -53,7 +53,14 @@ exports.getReprintData = asyncHandler(async (req, res, next) => {
 });
 
 
+//@desc      Get Current Draw Records
+//@routes    Get /api/retailers/history/:drDate
+//Access     Private/Retailers
+exports.getDateWiseHistory = asyncHandler(async (req, res, next) => {
+    let bets = await Bet.find({ createdAt: req.params.drDate, retailerId: req.user.id });
 
+    res.status(200).json({ success: true, data: bets });
+});
 
 
 

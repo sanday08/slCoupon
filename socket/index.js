@@ -199,7 +199,7 @@ setInterval(async () => {
     }
 
   }
-  if (new Date().getHours() == 7 && new Date().getMinutes() == 1) {
+  if (new Date().getMinutes() == 1) {
     let p = await getAdminPer();
 
     winningPercent = p.percent;

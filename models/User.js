@@ -26,17 +26,13 @@ const UserSchema = new mongoose.Schema({
     default: "retailer",
   },
   userName: {
-    type: Number,
+    type: String,
     required: [true, "Please add a userName"],
     unique: true,
-    maxlength: [5, "UserName must be at least 6 characters"],
-    minlength: [5, "UserName must be at least 6 characters"],
   },
   password: {
-    type: Number,
+    type: String,
     required: [true, "Please add a password"],
-    minlength: [6, "Password must be at least 6 characters"],
-    maxlength: [8, "password must be at least 8 characters"],
     select: false,
   },
   transactionPin: {
