@@ -57,7 +57,7 @@ exports.getReprintData = asyncHandler(async (req, res, next) => {
 //@routes    Get /api/retailers/history/:drDate
 //Access     Private/Retailers
 exports.getDateWiseHistory = asyncHandler(async (req, res, next) => {
-    let today = new Date(req.params.drDate);
+    let today = Date(req.params.drDate);
     let bets = await Bet.find({ createdAt: today, retailerId: req.user.id });
 
     res.status(200).json({ success: true, data: bets });
