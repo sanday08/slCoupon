@@ -19,13 +19,14 @@ const Announcement = require("../models/Announcement");
 exports.get7Days = asyncHandler(async (req, res, next) => {
     var parts = (req.params.date).split('-');
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
+    console.log("My Date is ", mydate, "  :  ", new Date(new Date(mydate) - 8 * 24 * 60 * 60 * 1000))
     let result = await WinResult.find({
         createDate: {
             $gte: new Date(new Date(mydate) - 8 * 24 * 60 * 60 * 1000),
             $lte: new Date(req.params.date),
         }
     }).sort({ createdAt: -1 })
-
+    console.log("************************", result);
     return res.status(200).json({ success: true, count: result.length, data: result })
 });
 
