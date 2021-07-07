@@ -61,12 +61,12 @@ exports.loginRetailer = asyncHandler(async (req, res, next) => {
   //userName and password fields are required
   const version = await Version.findById("6062f3bcd178d0c92aef6361");
   console.log("Version Code", version, "  : ", req.body);
-  if (versionCode != version.version) {
-    return next(
-      new ErrorResponse("Please Update your Application.."),
-      400
-    );
-  }
+  // if (versionCode != version.version) {
+  //   return next(
+  //     new ErrorResponse("Please Update your Application.."),
+  //     400
+  //   );
+  // }
   if (!userName && !password) {
     return next(
       new ErrorResponse("userName and password fields must be required"),
