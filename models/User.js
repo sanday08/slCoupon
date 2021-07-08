@@ -69,6 +69,11 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  ticketCancel: {
+    type: Number,
+    default: 0
+  },
+  lastDate: { type: String, default: new Date().getFullYear().toString() + '-' + new Date().getMonth() + 1 + '-' + new Date().getDate().toString() },
   isLogin: {
     type: Boolean,
     default: false

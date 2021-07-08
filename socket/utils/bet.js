@@ -70,8 +70,16 @@ async function updateGameResult(series, betResult) {
 }
 //Used For cancel Bet
 async function deleteBet(retailerId, ticketId) {
-  const betDetail = await Bet.findOne({ ticketId });
   let result = "";
+  const user = await User.findById(retailerId);
+  const today = new Date().getFullYear().toString() + '-' + new Date().getMonth() + 1 + '-' + new Date().getDate().toString();
+  if (user.lastDate == today && user.ticketCancel >= 3) {
+    result = "Cancel Ticket not possible because you can cancel only 3 tickets per day. ";
+    return { success: false, result }
+  }
+
+  const betDetail = await Bet.findOne({ ticketId });
+
   let success = false;
   if (betDetail == null) {
     result = "Ticket Not Exist ";
@@ -86,8 +94,14 @@ async function deleteBet(retailerId, ticketId) {
     result = "Advance Ticket cannot be cancelled";
   }
   else {
+    //change the lasttoday and incremant of cancelbet 
 
-    const retailer = await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
+    if (user.lastDate == today)
+      await User.findByIdAndUpdate(retailerId, { $inc: { ticketCancel: 1 } });
+    else
+      await User.findByIdAndUpdate(retailerId, { ticketCancel: 1, lastDate: today });
+
+    let retailer = await User.findByIdAndUpdate(retailerId, { $inc: { creditPoint: betDetail.betPoint } });
     const distributer = await User.findById(retailer.referralId);
 
     await User.findByIdAndUpdate(retailerId, { $inc: { commissionPoint: -betDetail.retailerCommission } })
