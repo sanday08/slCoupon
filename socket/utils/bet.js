@@ -110,7 +110,7 @@ async function deleteBet(retailerId, ticketId) {
 
     await User.findByIdAndUpdate(distributer.referralId, { $inc: { commissionPoint: -betDetail.superDistributerCommission } })
 
-    await Bet.findByIdAndDelete(betDetail._id);
+    await Bet.findByIdAndUpdate(betDetail._id, { isCanceled: true });
     success = true;
     result = "Ticket Cancel Sucessfull";
   }
