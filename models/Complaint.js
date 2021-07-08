@@ -10,6 +10,10 @@ const ComplaintSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    status: {
+        type: Number,
+        default: 0
+    },
     DrTime: {
         type: String,
         default: () => new Date().getHours().toString() + " : " + new Date().getMinutes().toString() + " : " + new Date().getSeconds().toString()
